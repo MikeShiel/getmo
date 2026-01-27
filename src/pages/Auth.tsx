@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Gamepad2, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { z } from 'zod';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
+import getmoLogo from '@/assets/getmo-logo.png';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -176,7 +177,7 @@ function SignupForm({ onToggle }: { onToggle: () => void }) {
     } else {
       toast({
         title: "Account created! 🎉",
-        description: "Welcome to NeonPlay!",
+        description: "Welcome to Getmo!",
       });
       navigate('/');
     }
@@ -281,10 +282,7 @@ export default function Auth() {
         <div className="glass-card p-8 w-full max-w-md animated-border">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 mb-4">
-              <Gamepad2 className="h-10 w-10 text-primary" />
-              <span className="font-display text-2xl font-bold neon-text-cyan">
-                NeonPlay
-              </span>
+              <img src={getmoLogo} alt="Getmo" className="h-10" />
             </div>
             <h1 className="text-2xl font-bold">
               {isLogin ? t('auth.login') : t('auth.signup')}

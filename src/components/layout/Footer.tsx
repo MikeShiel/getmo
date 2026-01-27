@@ -15,7 +15,7 @@ export function Footer() {
             <Link to="/" className="flex items-center gap-2 mb-4">
               <Gamepad2 className="h-8 w-8 text-primary" />
               <span className="font-display text-xl font-bold neon-text-cyan">
-                NeonPlay
+                Getmo
               </span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-sm">
@@ -68,7 +68,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-border/50 mt-8 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {currentYear} NeonPlay. {t('footer.rights')}
+            © {currentYear} Getmo. {t('footer.rights')}
           </p>
         </div>
       </div>
