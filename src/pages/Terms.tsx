@@ -15,14 +15,14 @@ export default function Terms() {
 
           <h2 className="text-xl font-semibold mt-8 mb-4 text-foreground">1. Acceptance of Terms</h2>
           <p className="text-muted-foreground mb-4">
-            By accessing and using NeonPlay, you accept and agree to be bound by the terms and 
+            By accessing and using Getmo, you accept and agree to be bound by the terms and 
             provision of this agreement. If you do not agree to abide by these terms, please 
             do not use this service.
           </p>
 
           <h2 className="text-xl font-semibold mt-8 mb-4 text-foreground">2. Use License</h2>
           <p className="text-muted-foreground mb-4">
-            Permission is granted to temporarily access the games and materials on NeonPlay 
+            Permission is granted to temporarily access the games and materials on Getmo 
             for personal, non-commercial transitory viewing only. This is the grant of a 
             license, not a transfer of title.
           </p>
