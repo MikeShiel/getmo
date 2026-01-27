@@ -2,6 +2,7 @@ import { Layout } from '@/components/layout/Layout';
 import { HeroBanner } from '@/components/games/HeroBanner';
 import { GameRow } from '@/components/games/GameRow';
 import { ProductEntryGrid } from '@/components/home/ProductEntryGrid';
+import { PlayAndEarnTeaser } from '@/components/earn/PlayAndEarnTeaser';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
   getFeaturedGames, 
@@ -47,6 +48,9 @@ const Index = () => {
         title={t('home.trending')} 
         games={trendingGames} 
       />
+
+      {/* Play & Earn Teaser - Full width banner */}
+      <PlayAndEarnTeaser />
 
       {/* Most Loved Games */}
       <GameRow 
