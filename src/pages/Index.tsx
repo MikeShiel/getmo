@@ -1,5 +1,5 @@
 import { Layout } from '@/components/layout/Layout';
-import { HeroSection } from '@/components/games/HeroSection';
+import { HeroBanner } from '@/components/games/HeroBanner';
 import { GameRow } from '@/components/games/GameRow';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
@@ -17,13 +17,19 @@ const Index = () => {
   const trendingGames = getTrendingGames();
   const mostLovedGames = getMostLovedGames();
 
-  // Get featured games for the hero
-  const heroGames = featuredGames.length > 0 ? featuredGames : trendingGames;
+  // Pick one featured game for the hero banner
+  const heroFeaturedGame = featuredGames[0] || trendingGames[0];
 
   return (
     <Layout>
-      {/* Hero Section with multiple games */}
-      <HeroSection games={heroGames} />
+      {/* Hero Banner - Quick play CTA */}
+      <HeroBanner featuredGame={heroFeaturedGame} />
+
+      {/* Featured Games Section */}
+      <GameRow 
+        title="Featured Games" 
+        games={featuredGames.length > 0 ? featuredGames : trendingGames} 
+      />
 
       {/* Free Games Section - Highlighted */}
       <GameRow 
