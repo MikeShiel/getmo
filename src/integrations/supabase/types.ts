@@ -135,7 +135,16 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      get_public_profiles: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          gamer_name: string
+          id: string
+          xp_level: number
+          xp_points: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
