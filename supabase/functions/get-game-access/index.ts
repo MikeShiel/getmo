@@ -83,12 +83,12 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Validate JWT and get user claims
-    const token = authHeader.replace('Bearer ', '')
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token)
+    // Validate JWT using getUser for proper token validation
+    // This validates the token signature, expiry, and fetches current user data
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
     
-    if (claimsError || !claimsData?.claims) {
-      console.error('Auth validation failed:', claimsError)
+    if (userError || !user) {
+      console.error('Auth validation failed:', userError)
       return new Response(
         JSON.stringify({ 
           canPlay: false, 
@@ -99,7 +99,7 @@ Deno.serve(async (req) => {
       )
     }
 
-    const userId = claimsData.claims.sub
+    const userId = user.id
     console.log('Authenticated user:', userId)
 
     // Check premium status from profiles table
