@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { XPBar } from './XPBar';
+import { UserStatsModal } from '@/components/stats/UserStatsModal';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [statsModalOpen, setStatsModalOpen] = useState(false);
   const { user, profile, signOut } = useAuth();
   const { t } = useTheme();
   const navigate = useNavigate();
@@ -31,9 +33,13 @@ export function Navbar() {
             />
           </Link>
 
-          {/* XP Bar - Desktop */}
+          {/* XP Bar - Desktop (clickable) */}
           <div className="hidden md:block flex-1 max-w-md mx-8">
-            <XPBar level={profile?.xp_level || 1} xp={profile?.xp_points || 0} />
+            <XPBar 
+              level={profile?.xp_level || 1} 
+              xp={profile?.xp_points || 0} 
+              onClick={() => setStatsModalOpen(true)}
+            />
           </div>
 
           {/* Desktop Nav */}
@@ -84,9 +90,13 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
-            {/* XP Bar - Mobile */}
+            {/* XP Bar - Mobile (clickable) */}
             <div className="mb-4">
-              <XPBar level={profile?.xp_level || 1} xp={profile?.xp_points || 0} />
+              <XPBar 
+                level={profile?.xp_level || 1} 
+                xp={profile?.xp_points || 0}
+                onClick={() => { setStatsModalOpen(true); setIsMenuOpen(false); }}
+              />
             </div>
 
             <div className="flex flex-col gap-2">
@@ -122,6 +132,9 @@ export function Navbar() {
           </div>
         )}
       </div>
+
+      {/* User Stats Modal */}
+      <UserStatsModal open={statsModalOpen} onOpenChange={setStatsModalOpen} />
     </nav>
   );
 }

@@ -30,6 +30,7 @@ export type Database = {
           thumbnail: string | null
           title: string
           updated_at: string
+          xp_reward: number | null
         }
         Insert: {
           created_at?: string
@@ -46,6 +47,7 @@ export type Database = {
           thumbnail?: string | null
           title: string
           updated_at?: string
+          xp_reward?: number | null
         }
         Update: {
           created_at?: string
@@ -62,6 +64,7 @@ export type Database = {
           thumbnail?: string | null
           title?: string
           updated_at?: string
+          xp_reward?: number | null
         }
         Relationships: []
       }
