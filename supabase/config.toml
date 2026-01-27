@@ -1,1 +1,4 @@
 project_id = "eftubycegpfbaqizflsf"
+
+[functions.get-game-access]
+verify_jwt = false
