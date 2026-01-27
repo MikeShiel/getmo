@@ -15,6 +15,7 @@ import { SubscribeModal } from '@/components/modals/SubscribeModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const profileSchema = z.object({
   gamerName: z.string().min(3, 'Gamer name must be at least 3 characters').max(20),
@@ -83,12 +84,52 @@ export default function Profile() {
   };
 
   const handlePasswordChange = async (data: PasswordFormData) => {
-    // Mock password change - in production would use supabase.auth.updateUser
-    toast({
-      title: "Password changed! 🔐",
-      description: "Your password has been updated successfully.",
-    });
-    passwordForm.reset();
+    setIsSaving(true);
+    try {
+      // Verify current password by attempting re-authentication
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user?.email || '',
+        password: data.currentPassword,
+      });
+
+      if (signInError) {
+        toast({
+          variant: "destructive",
+          title: "Authentication failed",
+          description: "Current password is incorrect.",
+        });
+        setIsSaving(false);
+        return;
+      }
+
+      // Update to new password
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: data.newPassword,
+      });
+
+      if (updateError) {
+        toast({
+          variant: "destructive",
+          title: "Password change failed",
+          description: updateError.message,
+        });
+        setIsSaving(false);
+        return;
+      }
+
+      toast({
+        title: "Password changed! 🔐",
+        description: "Your password has been updated successfully.",
+      });
+      passwordForm.reset();
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "An unexpected error occurred.",
+      });
+    }
+    setIsSaving(false);
   };
 
   const handlePreferenceChange = async (key: 'language' | 'theme_preference', value: string) => {
