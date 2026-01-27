@@ -1,7 +1,7 @@
 import { Layout } from '@/components/layout/Layout';
 import { HeroBanner } from '@/components/games/HeroBanner';
 import { GameRow } from '@/components/games/GameRow';
-import { PlayAndEarnSection } from '@/components/earn/PlayAndEarnSection';
+import { PlayAndEarnTeaser } from '@/components/earn/PlayAndEarnTeaser';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
   getFeaturedGames, 
@@ -39,8 +39,8 @@ const Index = () => {
         highlight={true}
       />
 
-      {/* Play & Earn Section - After Free Games */}
-      <PlayAndEarnSection />
+      {/* Play & Earn Teaser - CTA to dedicated page */}
+      <PlayAndEarnTeaser />
 
       {/* Trending Games */}
       <GameRow 
