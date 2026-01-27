@@ -23,7 +23,7 @@ const Index = () => {
   return (
     <Layout>
       {/* Hero Banner - Quick play CTA */}
-      <HeroBanner featuredGame={heroFeaturedGame} />
+      <HeroBanner featuredGame={heroFeaturedGame} freeGames={freeGames} />
 
       {/* Featured Games Section */}
       <GameRow 
