@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import PlayAndEarn from "./pages/PlayAndEarn";
+import PlayAndWin from "./pages/PlayAndWin";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/play-and-earn" element={<PlayAndEarn />} />
+                  <Route path="/play-and-win" element={<PlayAndWin />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
