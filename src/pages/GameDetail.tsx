@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Maximize2, Minimize2, Volume2, VolumeX, ArrowLeft, Star, Users } from 'lucide-react';
+import { Maximize2, Minimize2, Volume2, VolumeX, ArrowLeft, Users } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { GameCard } from '@/components/games/GameCard';
@@ -8,13 +8,14 @@ import { SubscribeModal } from '@/components/modals/SubscribeModal';
 import { ExitIntentModal } from '@/components/modals/ExitIntentModal';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameAccess } from '@/hooks/useGameAccess';
 import { getGameById, getGamesByGenre, Game } from '@/data/mockGames';
 
 export default function GameDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTheme();
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
 
   const [game, setGame] = useState<Game | null>(null);
   const [recommendedGames, setRecommendedGames] = useState<Game[]>([]);
@@ -22,11 +23,13 @@ export default function GameDetail() {
   const [isMuted, setIsMuted] = useState(false);
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
-  const [canPlay, setCanPlay] = useState(false);
   const [selectedScreenshot, setSelectedScreenshot] = useState(0);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Server-side validated game access
+  const { canPlay, gameUrl, reason, loading: accessLoading } = useGameAccess(id);
 
   useEffect(() => {
     if (id) {
@@ -39,23 +42,6 @@ export default function GameDetail() {
       }
     }
   }, [id]);
-
-  useEffect(() => {
-    if (game) {
-      // Determine if user can play
-      if (game.is_free) {
-        setCanPlay(true);
-      } else if (profile?.is_premium) {
-        setCanPlay(true);
-      } else if (user) {
-        // Registered but not premium - show subscribe modal when trying to play
-        setCanPlay(false);
-      } else {
-        // Guest - can't play premium games
-        setCanPlay(false);
-      }
-    }
-  }, [game, user, profile]);
 
   // Exit intent detection
   useEffect(() => {
@@ -82,16 +68,14 @@ export default function GameDetail() {
   }, []);
 
   const handlePlayClick = () => {
-    if (!canPlay && !game?.is_free) {
-      if (user) {
-        setShowSubscribeModal(true);
-      } else {
-        navigate('/auth');
-      }
+    if (reason === 'login_required') {
+      navigate('/auth');
+    } else if (reason === 'subscription_required') {
+      setShowSubscribeModal(true);
     }
   };
 
-  if (!game) {
+  if (!game || accessLoading) {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-20 text-center">
@@ -122,10 +106,10 @@ export default function GameDetail() {
               ref={containerRef}
               className="relative rounded-xl overflow-hidden glass-card aspect-video"
             >
-              {canPlay ? (
+              {canPlay && gameUrl ? (
                 <iframe
                   ref={iframeRef}
-                  src={game.game_url}
+                  src={gameUrl}
                   className="w-full h-full"
                   title={game.title}
                   allow="fullscreen; autoplay"
@@ -139,11 +123,11 @@ export default function GameDetail() {
                   />
                   <div className="relative z-10 text-center p-8">
                     <h3 className="text-2xl font-bold mb-4 neon-text-pink">
-                      {game.is_free ? t('auth.login') : t('subscribe.title')}
+                      {reason === 'login_required' ? t('auth.login') : t('subscribe.title')}
                     </h3>
                     <p className="text-muted-foreground mb-6">
-                      {game.is_free 
-                        ? 'Sign in to play this free game'
+                      {reason === 'login_required' 
+                        ? 'Sign in to play this game'
                         : 'Subscribe to unlock this premium game'
                       }
                     </p>
@@ -151,7 +135,7 @@ export default function GameDetail() {
                       onClick={handlePlayClick}
                       className="bg-primary hover:bg-primary/90 neon-glow-cyan"
                     >
-                      {game.is_free ? t('auth.login') : t('subscribe.cta')}
+                      {reason === 'login_required' ? t('auth.login') : t('subscribe.cta')}
                     </Button>
                   </div>
                 </div>
@@ -194,10 +178,6 @@ export default function GameDetail() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center gap-1 mb-1">
-                    <Star className="h-5 w-5 text-yellow-500 fill-current" />
-                    <span className="text-xl font-bold">{game.rating}</span>
-                  </div>
                   <div className="flex items-center gap-1 text-muted-foreground text-sm">
                     <Users className="h-4 w-4" />
                     <span>{(game.play_count / 1000).toFixed(0)}K plays</span>
