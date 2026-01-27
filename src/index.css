@@ -40,8 +40,15 @@
 
     /* Border and Input */
     --border: 268 20% 22%;
-    --input: 268 20% 18%;
+    --input: 268 25% 12%;
     --ring: 268 84% 45%;
+    
+    /* Chart colors */
+    --chart-1: 268 84% 45%;
+    --chart-2: 45 99% 55%;
+    --chart-3: 150 80% 45%;
+    --chart-4: 200 80% 50%;
+    --chart-5: 340 80% 55%;
 
     --radius: 0.75rem;
 
