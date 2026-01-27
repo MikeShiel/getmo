@@ -1,7 +1,7 @@
 import { Layout } from '@/components/layout/Layout';
 import { HeroBanner } from '@/components/games/HeroBanner';
 import { GameRow } from '@/components/games/GameRow';
-import { PlayAndEarnTeaser } from '@/components/earn/PlayAndEarnTeaser';
+import { ProductEntryGrid } from '@/components/home/ProductEntryGrid';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
   getFeaturedGames, 
@@ -26,6 +26,9 @@ const Index = () => {
       {/* Hero Banner - Quick play CTA */}
       <HeroBanner featuredGame={heroFeaturedGame} freeGames={freeGames} />
 
+      {/* 3-Card Product Entry Grid */}
+      <ProductEntryGrid />
+
       {/* Featured Games Section */}
       <GameRow 
         title="Featured Games" 
@@ -38,9 +41,6 @@ const Index = () => {
         games={freeGames} 
         highlight={true}
       />
-
-      {/* Play & Earn Teaser - CTA to dedicated page */}
-      <PlayAndEarnTeaser />
 
       {/* Trending Games */}
       <GameRow 
