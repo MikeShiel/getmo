@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
 import getmoLogo from '@/assets/getmo-logo.png';
+import { PasswordStrengthIndicator } from '@/components/auth/PasswordStrengthIndicator';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -240,6 +241,7 @@ function SignupForm({ onToggle }: { onToggle: () => void }) {
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
+        <PasswordStrengthIndicator password={password} />
         {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
       </div>
 
