@@ -1,13 +1,22 @@
-import { Link } from 'react-router-dom';
-import { Play, Zap, Gamepad2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Play, Zap, Shuffle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Game } from '@/data/mockGames';
 
 interface HeroBannerProps {
   featuredGame?: Game;
+  freeGames?: Game[];
 }
 
-export function HeroBanner({ featuredGame }: HeroBannerProps) {
+export function HeroBanner({ featuredGame, freeGames = [] }: HeroBannerProps) {
+  const navigate = useNavigate();
+
+  const playRandomGame = () => {
+    if (freeGames.length > 0) {
+      const randomIndex = Math.floor(Math.random() * freeGames.length);
+      navigate(`/game/${freeGames[randomIndex].id}`);
+    }
+  };
   return (
     <section className="relative py-12 md:py-20 overflow-hidden">
       {/* Animated background */}
@@ -59,16 +68,16 @@ export function HeroBanner({ featuredGame }: HeroBannerProps) {
                 </Link>
               )}
               
-              <Link to="/#free-games">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="gap-2 border-secondary/50 hover:bg-secondary/10 text-lg px-8"
-                >
-                  <Gamepad2 className="h-5 w-5" />
-                  Try Free Games
-                </Button>
-              </Link>
+              
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={playRandomGame}
+                className="gap-2 border-secondary/50 hover:bg-secondary/10 text-lg px-8"
+              >
+                <Shuffle className="h-5 w-5" />
+                Play Random Game
+              </Button>
             </div>
 
             {/* Stats */}
