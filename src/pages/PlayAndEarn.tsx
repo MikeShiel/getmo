@@ -28,7 +28,7 @@ const PlayAndEarn = () => {
             <div className="hidden sm:flex items-center gap-6">
               <div className="flex items-center gap-2 text-sm">
                 <TrendingUp className="h-4 w-4 text-green-400" />
-                <span className="text-muted-foreground">Community:</span>
+                <span className="text-muted-foreground">Clan:</span>
                 <span className="text-foreground font-medium">
                   ${communityProgress.toLocaleString()} / ${communityGoal.toLocaleString()}
                 </span>

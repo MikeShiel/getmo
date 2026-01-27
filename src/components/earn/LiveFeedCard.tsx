@@ -84,7 +84,7 @@ export function LiveFeedCard() {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-secondary" />
-            <span className="text-sm font-medium text-foreground">Weekly Community Goal</span>
+            <span className="text-sm font-medium text-foreground">Weekly Clan Goal</span>
           </div>
           <span className="text-xs text-muted-foreground">
             ${communityProgress.toLocaleString()} / ${communityGoal.toLocaleString()}
