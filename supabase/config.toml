@@ -1,4 +1,4 @@
 project_id = "eftubycegpfbaqizflsf"
 
-[functions.get-game-access]
-verify_jwt = false
+# Note: get-game-access intentionally allows unauthenticated access for free games
+# The function performs manual JWT validation with getUser() for premium games
