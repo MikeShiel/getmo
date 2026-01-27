@@ -1,11 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download } from 'lucide-react';
+import { Menu, X, User, Download, Users } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useSocial } from '@/components/social/SocialContext';
 import { XPBar } from './XPBar';
 import { UserStatsModal } from '@/components/stats/UserStatsModal';
+import { SocialHubModal } from '@/components/social/SocialHubModal';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
@@ -13,12 +15,18 @@ export function Navbar() {
   const [statsModalOpen, setStatsModalOpen] = useState(false);
   const { user, profile, signOut } = useAuth();
   const { t } = useTheme();
+  const { hasNotification, currentClan, isSocialHubOpen, openSocialHub, closeSocialHub } = useSocial();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
+
+  // Display name with optional clan tag
+  const displayName = currentClan 
+    ? `[${currentClan.tag}] ${profile?.gamer_name || 'Player'}`
+    : (profile?.gamer_name || 'Player');
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
@@ -44,6 +52,25 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Social Button */}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="gap-2 relative"
+              onClick={openSocialHub}
+            >
+              <Users className="h-4 w-4" />
+              Social
+              {hasNotification && (
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-4 w-4 bg-destructive text-destructive-foreground text-[10px] font-bold items-center justify-center">
+                    1
+                  </span>
+                </span>
+              )}
+            </Button>
+
             <Button variant="ghost" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
               {t('nav.install')}
@@ -54,7 +81,9 @@ export function Navbar() {
                 <Link to="/profile">
                   <Button variant="ghost" size="sm" className="gap-2">
                     <User className="h-4 w-4" />
-                    {profile?.gamer_name || 'Player'}
+                    <span className={currentClan ? 'text-primary font-medium' : ''}>
+                      {displayName}
+                    </span>
                   </Button>
                 </Link>
                 <Button 
@@ -100,6 +129,21 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-2">
+              {/* Social Button - Mobile */}
+              <Button 
+                variant="ghost" 
+                className="justify-start gap-2 relative"
+                onClick={() => { openSocialHub(); setIsMenuOpen(false); }}
+              >
+                <Users className="h-4 w-4" />
+                Social
+                {hasNotification && (
+                  <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
+                    1
+                  </span>
+                )}
+              </Button>
+
               <Button variant="ghost" className="justify-start gap-2">
                 <Download className="h-4 w-4" />
                 {t('nav.install')}
@@ -110,7 +154,7 @@ export function Navbar() {
                   <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
                     <Button variant="ghost" className="w-full justify-start gap-2">
                       <User className="h-4 w-4" />
-                      {t('nav.profile')}
+                      {displayName}
                     </Button>
                   </Link>
                   <Button 
@@ -135,6 +179,9 @@ export function Navbar() {
 
       {/* User Stats Modal */}
       <UserStatsModal open={statsModalOpen} onOpenChange={setStatsModalOpen} />
+      
+      {/* Social Hub Modal */}
+      <SocialHubModal open={isSocialHubOpen} onOpenChange={closeSocialHub} />
     </nav>
   );
 }
