@@ -40,7 +40,7 @@ const mockUsernames = [
 const mockRewards = ['$5 Amazon', '$10 PSN', '$5 Xbox', '$10 Zara', '$15 Steam', '$5 Spotify'];
 
 export function PlayAndEarnProvider({ children }: { children: ReactNode }) {
-  const [tokens, setTokens] = useState(0);
+  const [tokens, setTokens] = useState(10000); // Starting with 10,000 tokens for testing
   const [rewardHistory, setRewardHistory] = useState<RewardActivity[]>(() => {
     // Generate initial mock activities
     const initial: RewardActivity[] = [];
