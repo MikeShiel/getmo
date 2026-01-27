@@ -1,13 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Layout } from '@/components/layout/Layout';
+import { HeroSection } from '@/components/games/HeroSection';
+import { GameRow } from '@/components/games/GameRow';
+import { useTheme } from '@/contexts/ThemeContext';
+import { 
+  getFeaturedGames, 
+  getFreeGames, 
+  getTrendingGames, 
+  getMostLovedGames 
+} from '@/data/mockGames';
 
 const Index = () => {
+  const { t } = useTheme();
+  
+  const featuredGames = getFeaturedGames();
+  const freeGames = getFreeGames();
+  const trendingGames = getTrendingGames();
+  const mostLovedGames = getMostLovedGames();
+
+  // Get the first featured game for the hero
+  const heroGame = featuredGames[0];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <Layout>
+      {/* Hero Section */}
+      {heroGame && <HeroSection game={heroGame} />}
+
+      {/* Free Games Section - Highlighted */}
+      <GameRow 
+        title={t('home.freeGames')} 
+        games={freeGames} 
+        highlight={true}
+      />
+
+      {/* Trending Games */}
+      <GameRow 
+        title={t('home.trending')} 
+        games={trendingGames} 
+      />
+
+      {/* Most Loved Games */}
+      <GameRow 
+        title={t('home.mostLoved')} 
+        games={mostLovedGames} 
+      />
+    </Layout>
   );
 };
 
