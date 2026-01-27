@@ -17,13 +17,13 @@ const Index = () => {
   const trendingGames = getTrendingGames();
   const mostLovedGames = getMostLovedGames();
 
-  // Get the first featured game for the hero
-  const heroGame = featuredGames[0];
+  // Get featured games for the hero
+  const heroGames = featuredGames.length > 0 ? featuredGames : trendingGames;
 
   return (
     <Layout>
-      {/* Hero Section */}
-      {heroGame && <HeroSection game={heroGame} />}
+      {/* Hero Section with multiple games */}
+      <HeroSection games={heroGames} />
 
       {/* Free Games Section - Highlighted */}
       <GameRow 

@@ -58,8 +58,8 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         neon: {
-          cyan: "hsl(var(--neon-cyan))",
-          pink: "hsl(var(--neon-pink))",
+          primary: "hsl(var(--neon-primary))",
+          secondary: "hsl(var(--neon-secondary))",
           purple: "hsl(var(--neon-purple))",
           green: "hsl(var(--neon-green))",
         },
@@ -100,10 +100,10 @@ export default {
         },
         "glow-pulse": {
           "0%, 100%": { 
-            boxShadow: "0 0 5px hsl(var(--neon-cyan) / 0.5), 0 0 20px hsl(var(--neon-cyan) / 0.2)" 
+            boxShadow: "0 0 5px hsl(var(--neon-primary) / 0.5), 0 0 20px hsl(var(--neon-primary) / 0.2)" 
           },
           "50%": { 
-            boxShadow: "0 0 20px hsl(var(--neon-cyan) / 0.8), 0 0 40px hsl(var(--neon-cyan) / 0.4)" 
+            boxShadow: "0 0 20px hsl(var(--neon-primary) / 0.8), 0 0 40px hsl(var(--neon-primary) / 0.4)" 
           },
         },
       },
@@ -118,7 +118,7 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-neon': 'linear-gradient(135deg, hsl(var(--neon-cyan)) 0%, hsl(var(--neon-purple)) 50%, hsl(var(--neon-pink)) 100%)',
+        'gradient-neon': 'linear-gradient(135deg, hsl(var(--neon-primary)) 0%, hsl(var(--neon-secondary)) 100%)',
       },
     },
   },

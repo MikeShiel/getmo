@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Star, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Game } from '@/data/mockGames';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -38,7 +38,7 @@ export function GameCard({ game, size = 'md' }: GameCardProps) {
         
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <div className="bg-primary rounded-full p-3 neon-glow-cyan">
+          <div className="bg-primary rounded-full p-3 neon-glow-primary">
             <Play className="h-6 w-6 text-primary-foreground fill-current" />
           </div>
         </div>
@@ -60,10 +60,6 @@ export function GameCard({ game, size = 'md' }: GameCardProps) {
         </h3>
         <div className="flex items-center justify-between mt-1">
           <span className="text-xs text-muted-foreground">{game.genre}</span>
-          <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 text-yellow-500 fill-current" />
-            <span className="text-xs text-muted-foreground">{game.rating}</span>
-          </div>
         </div>
       </div>
     </Link>

@@ -30,7 +30,7 @@ export function GameRow({ title, games, highlight = false }: GameRowProps) {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className={`text-2xl font-bold ${highlight ? 'neon-text-cyan' : ''}`}>
+          <h2 className={`text-2xl font-bold ${highlight ? 'neon-text-primary' : ''}`}>
             {title}
           </h2>
           <div className="flex gap-2">
