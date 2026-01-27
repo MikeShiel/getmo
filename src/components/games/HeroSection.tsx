@@ -1,80 +1,86 @@
 import { Link } from 'react-router-dom';
-import { Play, Star } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Game } from '@/data/mockGames';
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface HeroSectionProps {
-  game: Game;
+  games: Game[];
 }
 
-export function HeroSection({ game }: HeroSectionProps) {
+export function HeroSection({ games }: HeroSectionProps) {
   const { t } = useTheme();
 
+  // Take up to 4 games for the hero grid
+  const heroGames = games.slice(0, 4);
+
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src={game.thumbnail}
-          alt={game.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-      </div>
+    <section className="relative py-8 overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
 
-      {/* Content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-2xl">
-          {/* Featured Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 mb-4">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-            </span>
-            <span className="text-sm text-primary font-medium">Featured Game</span>
-          </div>
+        {/* Section Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-8 w-1 bg-secondary rounded-full" />
+          <h2 className="text-2xl font-bold text-foreground">Featured Games</h2>
+        </div>
 
-          {/* Title */}
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-4 neon-text-cyan">
-            {game.title}
-          </h1>
+        {/* Hero Games Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {heroGames.map((game) => (
+            <Link
+              key={game.id}
+              to={`/game/${game.id}`}
+              className="group relative aspect-[3/4] rounded-xl overflow-hidden glass-card"
+            >
+              {/* Game Thumbnail */}
+              <img
+                src={game.thumbnail}
+                alt={game.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
 
-          {/* Metadata */}
-          <div className="flex items-center gap-4 mb-4">
-            <span className="text-muted-foreground">{game.genre}</span>
-            <span className="text-muted-foreground">•</span>
-            <span className="text-muted-foreground">{game.publisher}</span>
-            <span className="text-muted-foreground">•</span>
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 text-yellow-500 fill-current" />
-              <span className="text-muted-foreground">{game.rating}</span>
-            </div>
-          </div>
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
-          {/* Description */}
-          <p className="text-lg text-muted-foreground mb-8 line-clamp-3">
-            {game.description}
-          </p>
+              {/* Content */}
+              <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                {/* Badge */}
+                <div className="absolute top-3 left-3">
+                  {game.is_free ? (
+                    <span className="badge-free">{t('game.free')}</span>
+                  ) : (
+                    <span className="badge-premium">{t('game.premium')}</span>
+                  )}
+                </div>
 
-          {/* CTA */}
-          <div className="flex gap-4">
-            <Link to={`/game/${game.id}`}>
-              <Button 
-                size="lg" 
-                className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground neon-glow-cyan text-lg px-8"
-              >
-                <Play className="h-5 w-5 fill-current" />
-                {t('home.hero.cta')}
-              </Button>
+                {/* Play button on hover */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="bg-primary rounded-full p-4 neon-glow-primary transform scale-90 group-hover:scale-100 transition-transform">
+                    <Play className="h-8 w-8 text-primary-foreground fill-current" />
+                  </div>
+                </div>
+
+                {/* Game Info */}
+                <div className="relative z-10">
+                  <h3 className="font-bold text-lg text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                    {game.title}
+                  </h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">{game.genre}</span>
+                    <span className="text-muted-foreground">•</span>
+                    <span className="text-sm text-muted-foreground">{game.publisher}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Hover border effect */}
+              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-primary/50 transition-colors" />
             </Link>
-          </div>
+          ))}
         </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }

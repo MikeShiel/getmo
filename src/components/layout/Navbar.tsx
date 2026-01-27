@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Gamepad2 } from 'lucide-react';
+import { Menu, X, User, Download } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { XPBar } from './XPBar';
+import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,13 +24,11 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative">
-              <Gamepad2 className="h-8 w-8 text-primary transition-all group-hover:scale-110" />
-              <div className="absolute inset-0 blur-lg bg-primary/50 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <span className="font-display text-xl font-bold neon-text-cyan hidden sm:block">
-              NeonPlay
-            </span>
+            <img 
+              src={getmoLogo} 
+              alt="Getmo" 
+              className="h-10 transition-all group-hover:scale-105"
+            />
           </Link>
 
           {/* XP Bar - Desktop */}
@@ -65,7 +64,7 @@ export function Navbar() {
               <Link to="/auth">
                 <Button 
                   size="sm" 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground neon-glow-cyan"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground neon-glow-primary"
                 >
                   {t('nav.login')}
                 </Button>
