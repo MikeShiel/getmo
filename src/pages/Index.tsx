@@ -1,6 +1,7 @@
 import { Layout } from '@/components/layout/Layout';
 import { HeroBanner } from '@/components/games/HeroBanner';
 import { GameRow } from '@/components/games/GameRow';
+import { PlayAndEarnSection } from '@/components/earn/PlayAndEarnSection';
 import { useTheme } from '@/contexts/ThemeContext';
 import { 
   getFeaturedGames, 
@@ -37,6 +38,9 @@ const Index = () => {
         games={freeGames} 
         highlight={true}
       />
+
+      {/* Play & Earn Section - After Free Games */}
+      <PlayAndEarnSection />
 
       {/* Trending Games */}
       <GameRow 
