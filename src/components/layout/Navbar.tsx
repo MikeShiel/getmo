@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Users } from 'lucide-react';
+import { Menu, X, User, Download, Users, Ticket } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -70,6 +70,13 @@ export function Navbar() {
                 </span>
               )}
             </Button>
+
+            <Link to="/vouchers">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Ticket className="h-4 w-4" />
+                Vouchers
+              </Button>
+            </Link>
 
             <Button variant="ghost" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
@@ -143,6 +150,13 @@ export function Navbar() {
                   </span>
                 )}
               </Button>
+
+              <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Ticket className="h-4 w-4" />
+                  Vouchers
+                </Button>
+              </Link>
 
               <Button variant="ghost" className="justify-start gap-2">
                 <Download className="h-4 w-4" />
