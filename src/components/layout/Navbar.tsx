@@ -71,6 +71,13 @@ export function Navbar() {
               )}
             </Button>
 
+            <Link to="/vouchers">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Ticket className="h-4 w-4" />
+                Vouchers
+              </Button>
+            </Link>
+
             <Button variant="ghost" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
               {t('nav.install')}
