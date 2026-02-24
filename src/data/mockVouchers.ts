@@ -53,6 +53,20 @@ export const mockVouchers: Voucher[] = [
       { id: 'steam-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
     ],
     tags: ['Popular', 'PC'],
+    regions: [
+      { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', currencySymbol: '$', priceMultiplier: 1 },
+      { code: 'EU', name: 'Europe', flag: '🇪🇺', currency: 'EUR', currencySymbol: '€', priceMultiplier: 0.95 },
+      { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', currencySymbol: '£', priceMultiplier: 0.85 },
+      { code: 'TR', name: 'Turkey', flag: '🇹🇷', currency: 'TRY', currencySymbol: '₺', priceMultiplier: 0.35 },
+      { code: 'AR', name: 'Argentina', flag: '🇦🇷', currency: 'ARS', currencySymbol: 'ARS$', priceMultiplier: 0.25 },
+    ],
+    instructions: [
+      'Log in to your Steam account on desktop or mobile.',
+      'Navigate to your account name → "Account Details".',
+      'Click "Add funds to your Steam Wallet".',
+      'Select "Redeem a Steam Wallet Code" and enter your code.',
+      'Funds will be added instantly to your wallet balance.',
+    ],
   },
   {
     id: 'v-playstation-1',
