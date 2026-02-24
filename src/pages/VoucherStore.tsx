@@ -9,14 +9,14 @@ import { getVouchersByCategory, getSpotlightVouchers } from '@/data/mockVouchers
 import { TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2, Gift, CreditCard, Monitor, ChevronRight } from 'lucide-react';
 
 const categories = [
-  { label: 'Gaming', icon: Gamepad2 },
-  { label: 'Gift Cards', icon: Gift },
-  { label: 'Subscriptions', icon: CreditCard },
-  { label: 'PC', icon: Monitor },
-  { label: 'PlayStation', icon: Gamepad2 },
-  { label: 'Xbox', icon: Gamepad2 },
-  { label: 'Nintendo', icon: Gamepad2 },
-  { label: 'Mobile', icon: Monitor },
+  { label: 'Gaming', icon: Gamepad2, slug: 'gaming' },
+  { label: 'Gift Cards', icon: Gift, slug: 'gift-cards' },
+  { label: 'Subscriptions', icon: CreditCard, slug: 'subscriptions' },
+  { label: 'PC', icon: Monitor, slug: 'pc' },
+  { label: 'PlayStation', icon: Gamepad2, slug: 'playstation' },
+  { label: 'Xbox', icon: Gamepad2, slug: 'xbox' },
+  { label: 'Nintendo', icon: Gamepad2, slug: 'nintendo' },
+  { label: 'Mobile', icon: Monitor, slug: 'mobile' },
 ];
 
 const sections = [
