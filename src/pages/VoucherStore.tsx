@@ -5,7 +5,7 @@ import { VoucherCard } from '@/components/vouchers/VoucherCard';
 import { VoucherSpotlight } from '@/components/vouchers/VoucherSpotlight';
 import { VoucherFilterOverlay } from '@/components/vouchers/VoucherFilterOverlay';
 import { Button } from '@/components/ui/button';
-import { getVouchersByCategory, getSpotlightVouchers } from '@/data/mockVouchers';
+import { mockVouchers, getVouchersByCategory, getSpotlightVouchers } from '@/data/mockVouchers';
 import { TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2, Gift, CreditCard, Monitor, ChevronRight } from 'lucide-react';
 
 const categories = [
