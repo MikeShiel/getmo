@@ -104,13 +104,13 @@ export default function VoucherStore() {
                   <Icon className="h-5 w-5 text-primary" />
                   <h2 className="text-xl font-bold font-[Orbitron]">{title}</h2>
                 </div>
-                <button
-                  onClick={() => setFilterOpen(true)}
+                <Link
+                  to={`/vouchers/category/${key}`}
                   className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   View All
                   <ChevronRight className="h-4 w-4" />
-                </button>
+                </Link>
               </div>
               <p className="text-xs text-muted-foreground mb-4">{subtitle}</p>
 
