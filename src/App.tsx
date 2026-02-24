@@ -16,6 +16,8 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import PlayAndEarn from "./pages/PlayAndEarn";
 import PlayAndWin from "./pages/PlayAndWin";
+import VoucherStore from "./pages/VoucherStore";
+import VoucherDetail from "./pages/VoucherDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
