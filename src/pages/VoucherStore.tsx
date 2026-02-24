@@ -42,7 +42,10 @@ const sections = [
 
 export default function VoucherStore() {
   const [filterOpen, setFilterOpen] = useState(false);
-  const spotlightVouchers = getSpotlightVouchers();
+  // Show more featured vouchers in the hero – spotlight + any with discounts
+  const allSpotlight = getSpotlightVouchers();
+  const discounted = mockVouchers.filter(v => v.discountPercent && !v.spotlight);
+  const spotlightVouchers = [...allSpotlight, ...discounted].slice(0, 12);
 
   return (
     <Layout>
