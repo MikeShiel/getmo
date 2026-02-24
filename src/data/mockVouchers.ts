@@ -33,7 +33,6 @@ export interface Voucher {
   regions?: VoucherRegion[];
   instructions?: string[];
 }
-}
 
 export const mockVouchers: Voucher[] = [
   // ─── BEST SELLERS ───
