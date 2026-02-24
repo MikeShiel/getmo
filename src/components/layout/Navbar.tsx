@@ -151,6 +151,13 @@ export function Navbar() {
                 )}
               </Button>
 
+              <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Ticket className="h-4 w-4" />
+                  Vouchers
+                </Button>
+              </Link>
+
               <Button variant="ghost" className="justify-start gap-2">
                 <Download className="h-4 w-4" />
                 {t('nav.install')}

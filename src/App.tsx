@@ -42,6 +42,8 @@ const App = () => (
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/play-and-earn" element={<PlayAndEarn />} />
                   <Route path="/play-and-win" element={<PlayAndWin />} />
+                  <Route path="/vouchers" element={<VoucherStore />} />
+                  <Route path="/vouchers/:id" element={<VoucherDetail />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
