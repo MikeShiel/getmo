@@ -8,79 +8,78 @@ interface VoucherSpotlightProps {
 }
 
 export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
-  const featured = vouchers.slice(0, 5);
+  const featured = vouchers.slice(0, 4);
   if (featured.length === 0) return null;
 
   return (
     <section className="container mx-auto px-4 py-8">
-      <div className="flex items-center gap-2 mb-5">
+      <div className="flex items-center gap-2 mb-6">
         <Zap className="h-5 w-5 text-secondary" />
         <h2 className="text-xl font-bold font-[Orbitron] uppercase tracking-wider">Featured Deals</h2>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
         {featured.map((voucher) => (
           <Link
             key={voucher.id}
             to={`/vouchers/${voucher.id}`}
             className="group relative"
           >
-            <div className="relative rounded-xl overflow-hidden border-2 border-border/30 hover:border-primary/50 transition-all duration-300 bg-card hover:shadow-[0_0_20px_hsl(var(--neon-primary)/0.15)]">
-              {/* Image */}
+            <div className="relative rounded-2xl overflow-hidden border-2 border-border/40 hover:border-primary/60 transition-all duration-300 bg-card hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.2)]">
+              {/* Image — tall aspect ratio like G2A */}
               <div className="relative aspect-[3/4] overflow-hidden">
                 <img
                   src={voucher.thumbnail}
                   alt={voucher.brand}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
+                {/* Bottom gradient for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
+                {/* Wishlist */}
                 <button
-                  className="absolute top-3 left-3 z-10 p-1.5 rounded-full bg-background/60 backdrop-blur-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="absolute top-4 left-4 z-10 p-2 rounded-full bg-background/50 backdrop-blur-sm text-muted-foreground hover:text-primary transition-colors"
                   onClick={(e) => e.preventDefault()}
                 >
-                  <Heart className="h-4 w-4" />
+                  <Heart className="h-5 w-5" />
                 </button>
 
+                {/* Discount badge — orange corner like reference */}
                 {voucher.discountPercent && (
-                  <div className="absolute top-2 right-2 z-10">
-                    <Badge className="bg-destructive text-destructive-foreground border-0 text-xs font-bold px-2 py-0.5 font-[Orbitron] rounded-md">
+                  <div className="absolute top-0 right-0 z-10">
+                    <div className="bg-destructive text-destructive-foreground text-sm font-bold font-[Orbitron] px-4 py-2 rounded-bl-xl">
                       -{voucher.discountPercent}%
-                    </Badge>
+                    </div>
                   </div>
                 )}
 
+                {/* Type badge */}
                 {voucher.type === 'subscriptions' && (
-                  <div className="absolute top-2 left-12 z-10">
-                    <Badge className="bg-muted/80 text-foreground border-0 text-[10px] uppercase tracking-wider backdrop-blur-sm">
+                  <div className="absolute top-3 left-16 z-10">
+                    <Badge className="bg-muted/80 text-foreground border-0 text-[10px] uppercase tracking-widest backdrop-blur-sm px-3 py-1">
                       Account
                     </Badge>
                   </div>
                 )}
-              </div>
 
-              {/* Info */}
-              <div className="p-3 space-y-1.5">
-                <h3 className="font-bold text-sm text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">
-                  {voucher.brand}
-                  {voucher.variants[0] && (
-                    <span className="font-normal text-muted-foreground"> {voucher.variants[0].label}</span>
-                  )}
-                </h3>
+                {/* Bottom content overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                  <h3 className="font-bold text-lg md:text-xl text-white leading-tight font-[Orbitron] uppercase mb-2 drop-shadow-lg">
+                    {voucher.brand}
+                    {voucher.variants[0] && (
+                      <span className="block text-base font-semibold normal-case opacity-90">
+                        {voucher.variants[0].label}
+                      </span>
+                    )}
+                  </h3>
 
-                <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                  <span>{voucher.platform}</span>
-                  <span>•</span>
-                  <span>{voucher.type === 'subscriptions' ? 'Account' : 'Key'}</span>
-                  <span>•</span>
-                  <span>{voucher.regions?.[0]?.name?.toUpperCase() || 'GLOBAL'}</span>
-                </div>
-
-                <div className="pt-1">
-                  <span className="text-sm font-bold text-secondary font-[Orbitron]">
-                    {voucher.variants[0].pointsCost.toLocaleString()}
-                  </span>
-                  <span className="text-xs text-muted-foreground ml-1">pts</span>
+                  <div className="flex items-center gap-1.5 text-xs text-white/70">
+                    <span>{voucher.platform}</span>
+                    <span>•</span>
+                    <span>{voucher.type === 'subscriptions' ? 'Account' : 'Key'}</span>
+                    <span>•</span>
+                    <span>{voucher.regions?.[0]?.name?.toUpperCase() || 'GLOBAL'}</span>
+                  </div>
                 </div>
               </div>
             </div>
