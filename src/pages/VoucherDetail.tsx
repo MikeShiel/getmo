@@ -71,6 +71,9 @@ export default function VoucherDetail() {
                     {tag}
                   </Badge>
                 ))}
+                <Badge className="text-xs uppercase tracking-wider bg-muted/80 text-foreground border-border/50">
+                  {voucher.platform}
+                </Badge>
               </div>
             )}
 

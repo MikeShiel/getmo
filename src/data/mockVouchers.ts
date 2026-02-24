@@ -5,14 +5,21 @@ export interface VoucherVariant {
   dollarValue: number;
 }
 
+export type VoucherCategory = 'best-sellers' | 'recently-added' | 'trending';
+export type VoucherType = 'games' | 'gift-cards' | 'subscriptions';
+
 export interface Voucher {
   id: string;
   brand: string;
   description: string;
   thumbnail: string;
-  category: 'best-sellers' | 'recently-added' | 'trending';
+  category: VoucherCategory;
+  type: VoucherType;
+  platform: string;
   variants: VoucherVariant[];
   tags?: string[];
+  discountPercent?: number;
+  spotlight?: boolean;
 }
 
 export const mockVouchers: Voucher[] = [
@@ -20,8 +27,12 @@ export const mockVouchers: Voucher[] = [
     id: 'v-steam-1',
     brand: 'Steam',
     description: 'Unlock thousands of PC games on the world\'s largest gaming platform.',
-    thumbnail: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800&h=500&fit=crop',
     category: 'best-sellers',
+    type: 'games',
+    platform: 'PC',
+    spotlight: true,
+    discountPercent: 15,
     variants: [
       { id: 'steam-5', label: '$5', pointsCost: 500, dollarValue: 5 },
       { id: 'steam-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
@@ -34,8 +45,12 @@ export const mockVouchers: Voucher[] = [
     id: 'v-playstation-1',
     brand: 'PlayStation Store',
     description: 'Level up your console library with PS5 & PS4 games, DLCs, and add-ons.',
-    thumbnail: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=800&h=500&fit=crop',
     category: 'best-sellers',
+    type: 'games',
+    platform: 'PlayStation',
+    spotlight: true,
+    discountPercent: 20,
     variants: [
       { id: 'ps-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
       { id: 'ps-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
@@ -47,8 +62,10 @@ export const mockVouchers: Voucher[] = [
     id: 'v-xbox-1',
     brand: 'Xbox Gift Card',
     description: 'Fuel your Xbox experience with games, movies, and Game Pass subscriptions.',
-    thumbnail: 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=800&h=500&fit=crop',
     category: 'best-sellers',
+    type: 'gift-cards',
+    platform: 'Xbox',
     variants: [
       { id: 'xbox-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
       { id: 'xbox-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
@@ -60,8 +77,10 @@ export const mockVouchers: Voucher[] = [
     id: 'v-nintendo-1',
     brand: 'Nintendo eShop',
     description: 'Grab the latest Switch titles and indie gems from the Nintendo eShop.',
-    thumbnail: 'https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?w=800&h=500&fit=crop',
     category: 'trending',
+    type: 'games',
+    platform: 'Switch',
     variants: [
       { id: 'nin-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
       { id: 'nin-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
@@ -73,8 +92,10 @@ export const mockVouchers: Voucher[] = [
     id: 'v-roblox-1',
     brand: 'Roblox',
     description: 'Get Robux to customize your avatar and access premium experiences.',
-    thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=500&fit=crop',
     category: 'trending',
+    type: 'games',
+    platform: 'Multi',
     variants: [
       { id: 'rbx-5', label: '400 Robux', pointsCost: 500, dollarValue: 5 },
       { id: 'rbx-10', label: '800 Robux', pointsCost: 1000, dollarValue: 10 },
@@ -86,8 +107,10 @@ export const mockVouchers: Voucher[] = [
     id: 'v-spotify-1',
     brand: 'Spotify Premium',
     description: 'Ad-free music, offline listening, and on-demand podcasts.',
-    thumbnail: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?w=800&h=500&fit=crop',
     category: 'recently-added',
+    type: 'subscriptions',
+    platform: 'Multi',
     variants: [
       { id: 'spot-10', label: '1 Month', pointsCost: 1000, dollarValue: 10 },
       { id: 'spot-30', label: '3 Months', pointsCost: 2800, dollarValue: 30 },
@@ -98,8 +121,11 @@ export const mockVouchers: Voucher[] = [
     id: 'v-amazon-1',
     brand: 'Amazon',
     description: 'Shop millions of products—from tech to everyday essentials.',
-    thumbnail: 'https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?w=800&h=500&fit=crop',
     category: 'recently-added',
+    type: 'gift-cards',
+    platform: 'Multi',
+    discountPercent: 10,
     variants: [
       { id: 'amz-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
       { id: 'amz-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
@@ -112,8 +138,10 @@ export const mockVouchers: Voucher[] = [
     id: 'v-netflix-1',
     brand: 'Netflix',
     description: 'Binge your favorite shows, movies, and originals—no interruptions.',
-    thumbnail: 'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=800&h=500&fit=crop',
     category: 'recently-added',
+    type: 'subscriptions',
+    platform: 'Multi',
     variants: [
       { id: 'nfx-15', label: '1 Month', pointsCost: 1500, dollarValue: 15 },
       { id: 'nfx-30', label: '2 Months', pointsCost: 2800, dollarValue: 30 },
@@ -124,8 +152,12 @@ export const mockVouchers: Voucher[] = [
     id: 'v-valorant-1',
     brand: 'Valorant Points',
     description: 'Get VP for skins, battle passes, and agents in Riot\'s tactical shooter.',
-    thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop',
     category: 'trending',
+    type: 'games',
+    platform: 'PC',
+    spotlight: true,
+    discountPercent: 25,
     variants: [
       { id: 'val-5', label: '475 VP', pointsCost: 500, dollarValue: 5 },
       { id: 'val-10', label: '1000 VP', pointsCost: 1000, dollarValue: 10 },
@@ -136,10 +168,23 @@ export const mockVouchers: Voucher[] = [
   },
 ];
 
-export function getVouchersByCategory(category: Voucher['category']) {
+export function getVouchersByCategory(category: VoucherCategory) {
   return mockVouchers.filter(v => v.category === category);
+}
+
+export function getSpotlightVouchers() {
+  return mockVouchers.filter(v => v.spotlight);
 }
 
 export function getVoucherById(id: string) {
   return mockVouchers.find(v => v.id === id);
+}
+
+export function searchVouchers(query: string, type?: VoucherType, maxPrice?: number) {
+  return mockVouchers.filter(v => {
+    const matchesQuery = !query || v.brand.toLowerCase().includes(query.toLowerCase()) || v.description.toLowerCase().includes(query.toLowerCase());
+    const matchesType = !type || v.type === type;
+    const matchesPrice = !maxPrice || v.variants.some(variant => variant.pointsCost <= maxPrice);
+    return matchesQuery && matchesType && matchesPrice;
+  });
 }
