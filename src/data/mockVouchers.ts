@@ -84,6 +84,22 @@ export const mockVouchers: Voucher[] = [
       { id: 'ps-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
     ],
     tags: ['Console', 'Hot'],
+    regions: [
+      { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', currencySymbol: '$', priceMultiplier: 1 },
+      { code: 'EU', name: 'Europe', flag: '🇪🇺', currency: 'EUR', currencySymbol: '€', priceMultiplier: 0.95 },
+      { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', currencySymbol: '£', priceMultiplier: 0.85 },
+      { code: 'JP', name: 'Japan', flag: '🇯🇵', currency: 'JPY', currencySymbol: '¥', priceMultiplier: 1.5 },
+      { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦', currency: 'SAR', currencySymbol: 'SAR', priceMultiplier: 0.38 },
+      { code: 'AE', name: 'UAE', flag: '🇦🇪', currency: 'AED', currencySymbol: 'AED', priceMultiplier: 0.37 },
+      { code: 'TR', name: 'Turkey', flag: '🇹🇷', currency: 'TRY', currencySymbol: '₺', priceMultiplier: 0.35 },
+    ],
+    instructions: [
+      'Sign in to the PlayStation Store on your console or web browser.',
+      'Go to your avatar icon → "Redeem Codes".',
+      'Enter the 12-digit voucher code exactly as shown.',
+      'Confirm the redemption—funds appear in your PSN Wallet.',
+      'Important: Your PSN account region must match the voucher region.',
+    ],
   },
   {
     id: 'v-xbox-1',
