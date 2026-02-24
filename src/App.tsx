@@ -18,6 +18,7 @@ import PlayAndEarn from "./pages/PlayAndEarn";
 import PlayAndWin from "./pages/PlayAndWin";
 import VoucherStore from "./pages/VoucherStore";
 import VoucherDetail from "./pages/VoucherDetail";
+import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
