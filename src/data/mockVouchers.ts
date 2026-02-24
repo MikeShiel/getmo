@@ -8,6 +8,16 @@ export interface VoucherVariant {
 export type VoucherCategory = 'best-sellers' | 'recently-added' | 'trending';
 export type VoucherType = 'games' | 'gift-cards' | 'subscriptions';
 
+export interface VoucherRegion {
+  code: string;
+  name: string;
+  flag: string;
+  currency: string;
+  currencySymbol: string;
+  /** multiplier applied to pointsCost for this region (1 = default) */
+  priceMultiplier: number;
+}
+
 export interface Voucher {
   id: string;
   brand: string;
@@ -20,6 +30,9 @@ export interface Voucher {
   tags?: string[];
   discountPercent?: number;
   spotlight?: boolean;
+  regions?: VoucherRegion[];
+  instructions?: string[];
+}
 }
 
 export const mockVouchers: Voucher[] = [
