@@ -53,12 +53,30 @@ export default function VoucherDetail() {
 
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {/* Image */}
-          <div className="glass-card overflow-hidden rounded-2xl">
-            <img
-              src={voucher.thumbnail}
-              alt={voucher.brand}
-              className="w-full aspect-[4/3] object-cover"
-            />
+          <div className="space-y-4">
+            <div className="glass-card overflow-hidden rounded-2xl">
+              <img
+                src={voucher.thumbnail}
+                alt={voucher.brand}
+                className="w-full aspect-[4/3] object-cover"
+              />
+            </div>
+
+            {/* Redemption Instructions */}
+            <div className="glass-card rounded-xl p-4 space-y-3">
+              <h3 className="text-sm font-bold font-[Orbitron] text-foreground uppercase tracking-wide">
+                How to Redeem
+              </h3>
+              <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
+                <li>Complete your purchase — your code will be sent via <span className="text-foreground font-medium">SMS</span> instantly.</li>
+                <li>Open the <span className="text-foreground font-medium">{voucher.platform}</span> app or website and navigate to <span className="text-foreground font-medium">Redeem Code</span>.</li>
+                <li>Enter the code exactly as received and confirm.</li>
+                <li>Your balance or subscription will be credited immediately.</li>
+              </ol>
+              <p className="text-xs text-muted-foreground/70 pt-1 border-t border-border/30">
+                Codes are single-use and non-refundable. Contact support if you experience any issues.
+              </p>
+            </div>
           </div>
 
           {/* Details */}
