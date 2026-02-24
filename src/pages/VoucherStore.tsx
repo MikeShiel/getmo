@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { VoucherCard } from '@/components/vouchers/VoucherCard';
 import { VoucherSpotlight } from '@/components/vouchers/VoucherSpotlight';
