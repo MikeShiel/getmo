@@ -18,6 +18,7 @@ import PlayAndEarn from "./pages/PlayAndEarn";
 import PlayAndWin from "./pages/PlayAndWin";
 import VoucherStore from "./pages/VoucherStore";
 import VoucherDetail from "./pages/VoucherDetail";
+import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
                   <Route path="/play-and-earn" element={<PlayAndEarn />} />
                   <Route path="/play-and-win" element={<PlayAndWin />} />
                   <Route path="/vouchers" element={<VoucherStore />} />
+                  <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
                   <Route path="/vouchers/:id" element={<VoucherDetail />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

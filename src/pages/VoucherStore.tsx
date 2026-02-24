@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { VoucherCard } from '@/components/vouchers/VoucherCard';
 import { VoucherSpotlight } from '@/components/vouchers/VoucherSpotlight';
@@ -8,14 +9,14 @@ import { getVouchersByCategory, getSpotlightVouchers } from '@/data/mockVouchers
 import { TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2, Gift, CreditCard, Monitor, ChevronRight } from 'lucide-react';
 
 const categories = [
-  { label: 'Gaming', icon: Gamepad2 },
-  { label: 'Gift Cards', icon: Gift },
-  { label: 'Subscriptions', icon: CreditCard },
-  { label: 'PC', icon: Monitor },
-  { label: 'PlayStation', icon: Gamepad2 },
-  { label: 'Xbox', icon: Gamepad2 },
-  { label: 'Nintendo', icon: Gamepad2 },
-  { label: 'Mobile', icon: Monitor },
+  { label: 'Gaming', icon: Gamepad2, slug: 'gaming' },
+  { label: 'Gift Cards', icon: Gift, slug: 'gift-cards' },
+  { label: 'Subscriptions', icon: CreditCard, slug: 'subscriptions' },
+  { label: 'PC', icon: Monitor, slug: 'pc' },
+  { label: 'PlayStation', icon: Gamepad2, slug: 'playstation' },
+  { label: 'Xbox', icon: Gamepad2, slug: 'xbox' },
+  { label: 'Nintendo', icon: Gamepad2, slug: 'nintendo' },
+  { label: 'Mobile', icon: Monitor, slug: 'mobile' },
 ];
 
 const sections = [
@@ -73,10 +74,10 @@ export default function VoucherStore() {
       {/* Category Quick-Links */}
       <section className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
-          {categories.map(({ label, icon: Icon }) => (
-            <button
+          {categories.map(({ label, icon: Icon, slug }) => (
+            <Link
               key={label}
-              onClick={() => setFilterOpen(true)}
+              to={`/vouchers/category/${slug}`}
               className="flex flex-col items-center gap-2 p-3 rounded-xl glass-card border border-border/30 hover:border-primary/50 hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-full bg-muted/60 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -85,7 +86,7 @@ export default function VoucherStore() {
               <span className="text-[11px] font-medium text-muted-foreground group-hover:text-foreground transition-colors text-center leading-tight">
                 {label}
               </span>
-            </button>
+            </Link>
           ))}
         </div>
       </section>
@@ -103,13 +104,13 @@ export default function VoucherStore() {
                   <Icon className="h-5 w-5 text-primary" />
                   <h2 className="text-xl font-bold font-[Orbitron]">{title}</h2>
                 </div>
-                <button
-                  onClick={() => setFilterOpen(true)}
+                <Link
+                  to={`/vouchers/category/${key}`}
                   className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   View All
                   <ChevronRight className="h-4 w-4" />
-                </button>
+                </Link>
               </div>
               <p className="text-xs text-muted-foreground mb-4">{subtitle}</p>
 
