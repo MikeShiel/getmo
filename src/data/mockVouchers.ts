@@ -8,6 +8,16 @@ export interface VoucherVariant {
 export type VoucherCategory = 'best-sellers' | 'recently-added' | 'trending';
 export type VoucherType = 'games' | 'gift-cards' | 'subscriptions';
 
+export interface VoucherRegion {
+  code: string;
+  name: string;
+  flag: string;
+  currency: string;
+  currencySymbol: string;
+  /** multiplier applied to pointsCost for this region (1 = default) */
+  priceMultiplier: number;
+}
+
 export interface Voucher {
   id: string;
   brand: string;
@@ -20,6 +30,8 @@ export interface Voucher {
   tags?: string[];
   discountPercent?: number;
   spotlight?: boolean;
+  regions?: VoucherRegion[];
+  instructions?: string[];
 }
 
 export const mockVouchers: Voucher[] = [
@@ -41,6 +53,20 @@ export const mockVouchers: Voucher[] = [
       { id: 'steam-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
     ],
     tags: ['Popular', 'PC'],
+    regions: [
+      { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', currencySymbol: '$', priceMultiplier: 1 },
+      { code: 'EU', name: 'Europe', flag: '🇪🇺', currency: 'EUR', currencySymbol: '€', priceMultiplier: 0.95 },
+      { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', currencySymbol: '£', priceMultiplier: 0.85 },
+      { code: 'TR', name: 'Turkey', flag: '🇹🇷', currency: 'TRY', currencySymbol: '₺', priceMultiplier: 0.35 },
+      { code: 'AR', name: 'Argentina', flag: '🇦🇷', currency: 'ARS', currencySymbol: 'ARS$', priceMultiplier: 0.25 },
+    ],
+    instructions: [
+      'Log in to your Steam account on desktop or mobile.',
+      'Navigate to your account name → "Account Details".',
+      'Click "Add funds to your Steam Wallet".',
+      'Select "Redeem a Steam Wallet Code" and enter your code.',
+      'Funds will be added instantly to your wallet balance.',
+    ],
   },
   {
     id: 'v-playstation-1',
@@ -58,6 +84,22 @@ export const mockVouchers: Voucher[] = [
       { id: 'ps-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
     ],
     tags: ['Console', 'Hot'],
+    regions: [
+      { code: 'US', name: 'United States', flag: '🇺🇸', currency: 'USD', currencySymbol: '$', priceMultiplier: 1 },
+      { code: 'EU', name: 'Europe', flag: '🇪🇺', currency: 'EUR', currencySymbol: '€', priceMultiplier: 0.95 },
+      { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', currency: 'GBP', currencySymbol: '£', priceMultiplier: 0.85 },
+      { code: 'JP', name: 'Japan', flag: '🇯🇵', currency: 'JPY', currencySymbol: '¥', priceMultiplier: 1.5 },
+      { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦', currency: 'SAR', currencySymbol: 'SAR', priceMultiplier: 0.38 },
+      { code: 'AE', name: 'UAE', flag: '🇦🇪', currency: 'AED', currencySymbol: 'AED', priceMultiplier: 0.37 },
+      { code: 'TR', name: 'Turkey', flag: '🇹🇷', currency: 'TRY', currencySymbol: '₺', priceMultiplier: 0.35 },
+    ],
+    instructions: [
+      'Sign in to the PlayStation Store on your console or web browser.',
+      'Go to your avatar icon → "Redeem Codes".',
+      'Enter the 12-digit voucher code exactly as shown.',
+      'Confirm the redemption—funds appear in your PSN Wallet.',
+      'Important: Your PSN account region must match the voucher region.',
+    ],
   },
   {
     id: 'v-xbox-1',
