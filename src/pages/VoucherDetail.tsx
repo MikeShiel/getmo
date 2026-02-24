@@ -131,7 +131,7 @@ export default function VoucherDetail() {
               onClick={handleCheckout}
             >
               <Zap className="h-5 w-5" />
-              Purchase Buy Now
+              Buy Now
             </Button>
 
             {/* Trust badges */}
