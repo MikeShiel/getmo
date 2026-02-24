@@ -5,7 +5,18 @@ import { VoucherSpotlight } from '@/components/vouchers/VoucherSpotlight';
 import { VoucherFilterOverlay } from '@/components/vouchers/VoucherFilterOverlay';
 import { Button } from '@/components/ui/button';
 import { getVouchersByCategory, getSpotlightVouchers } from '@/data/mockVouchers';
-import { TrendingUp, Clock, Sparkles, Search, SlidersHorizontal } from 'lucide-react';
+import { TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2, Gift, CreditCard, Monitor, ChevronRight } from 'lucide-react';
+
+const categories = [
+  { label: 'Gaming', icon: Gamepad2 },
+  { label: 'Gift Cards', icon: Gift },
+  { label: 'Subscriptions', icon: CreditCard },
+  { label: 'PC', icon: Monitor },
+  { label: 'PlayStation', icon: Gamepad2 },
+  { label: 'Xbox', icon: Gamepad2 },
+  { label: 'Nintendo', icon: Gamepad2 },
+  { label: 'Mobile', icon: Monitor },
+];
 
 const sections = [
   {
@@ -59,6 +70,26 @@ export default function VoucherStore() {
       {/* Spotlight Hero */}
       <VoucherSpotlight vouchers={spotlightVouchers} />
 
+      {/* Category Quick-Links */}
+      <section className="container mx-auto px-4 py-6">
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
+          {categories.map(({ label, icon: Icon }) => (
+            <button
+              key={label}
+              onClick={() => setFilterOpen(true)}
+              className="flex flex-col items-center gap-2 p-3 rounded-xl glass-card border border-border/30 hover:border-primary/50 hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)] transition-all duration-200 group"
+            >
+              <div className="w-10 h-10 rounded-full bg-muted/60 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <span className="text-[11px] font-medium text-muted-foreground group-hover:text-foreground transition-colors text-center leading-tight">
+                {label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       {/* Segmented Vertical Feed */}
       <div className="container mx-auto px-4 pb-20 space-y-12">
         {sections.map(({ key, title, subtitle, icon: Icon }) => {
@@ -67,9 +98,18 @@ export default function VoucherStore() {
 
           return (
             <section key={key}>
-              <div className="flex items-center gap-3 mb-1">
-                <Icon className="h-5 w-5 text-primary" />
-                <h2 className="text-xl font-bold font-[Orbitron]">{title}</h2>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-3">
+                  <Icon className="h-5 w-5 text-primary" />
+                  <h2 className="text-xl font-bold font-[Orbitron]">{title}</h2>
+                </div>
+                <button
+                  onClick={() => setFilterOpen(true)}
+                  className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                >
+                  View All
+                  <ChevronRight className="h-4 w-4" />
+                </button>
               </div>
               <p className="text-xs text-muted-foreground mb-4">{subtitle}</p>
 
