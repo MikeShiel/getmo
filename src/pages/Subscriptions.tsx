@@ -59,6 +59,7 @@ export default function Subscriptions() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [downgradeOpen, setDowngradeOpen] = useState(false);
+  const [cancelOpen, setCancelOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
   // Quick entry form
@@ -180,6 +181,15 @@ export default function Subscriptions() {
     toast({
       title: 'Subscription updated',
       description: `Your plan has been switched to Games Now.`,
+    });
+  };
+
+  const confirmCancel = async () => {
+    setCancelOpen(false);
+    await updateProfile({ is_premium: false } as any);
+    toast({
+      title: 'Subscription cancelled',
+      description: `Your access continues until ${billingEndDate}. We'll miss you!`,
     });
   };
 
@@ -394,6 +404,28 @@ export default function Subscriptions() {
             ))}
           </div>
         </div>
+
+        {/* Cancel Subscription */}
+        {user && (isPremium || true) && (
+          <div className="max-w-3xl mx-auto mt-16 pt-8 border-t border-border/50">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-sm font-semibold text-muted-foreground mb-1">Need to cancel?</h3>
+                <p className="text-xs text-muted-foreground/70">
+                  You'll keep access until the end of your billing period ({billingEndDate}).
+                </p>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-destructive hover:text-destructive hover:bg-destructive/10 text-xs"
+                onClick={() => setCancelOpen(true)}
+              >
+                Cancel Subscription
+              </Button>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ====== Quick Entry Modal (Logged Out) ====== */}
