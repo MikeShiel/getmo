@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { SubscribeModal } from '@/components/modals/SubscribeModal';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
@@ -37,7 +37,7 @@ export default function Profile() {
   const { user, profile, loading, updateProfile } = useAuth();
   const navigate = useNavigate();
   const { t, theme, language, setTheme, setLanguage } = useTheme();
-  const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const profileForm = useForm<ProfileFormData>({
