@@ -81,12 +81,8 @@ export default function Subscriptions() {
 
   const handlePlanClick = (plan: SelectedPlan) => {
     if (!user) {
-      setSelectedPlan(plan);
-      setQuickEntryOpen(true);
-      setQuickEntryMode('email');
-      setEntryEmail('');
-      setEntryPassword('');
-      setEntryGamerName('');
+      // Redirect to auth page with return to subscriptions
+      navigate('/auth?redirect=/subscriptions');
       return;
     }
     // Logged in
