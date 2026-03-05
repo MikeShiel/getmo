@@ -18,6 +18,7 @@ import {
   Zap,
   ChevronRight,
   AlertTriangle,
+  ShieldCheck,
 } from 'lucide-react';
 import {
   Dialog,
