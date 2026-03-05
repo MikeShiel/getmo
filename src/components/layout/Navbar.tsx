@@ -91,6 +91,12 @@ export function Navbar() {
                     <span className={currentClan ? 'text-primary font-medium' : ''}>
                       {displayName}
                     </span>
+                    {profile?.is_premium && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary text-secondary-foreground">
+                        <Crown className="h-3 w-3" />
+                        GN+
+                      </span>
+                    )}
                   </Button>
                 </Link>
                 <Button 
