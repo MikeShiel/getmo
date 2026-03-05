@@ -20,6 +20,7 @@ import VoucherStore from "./pages/VoucherStore";
 import VoucherDetail from "./pages/VoucherDetail";
 import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
+import Subscriptions from "./pages/Subscriptions";
 
 const queryClient = new QueryClient();
 
