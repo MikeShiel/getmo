@@ -38,7 +38,6 @@ export default function Profile() {
   const navigate = useNavigate();
   const { t, theme, language, setTheme, setLanguage } = useTheme();
   const [isSaving, setIsSaving] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
 
   const profileForm = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -412,10 +411,6 @@ export default function Profile() {
         </Tabs>
       </div>
 
-      <SubscribeModal 
-        open={showSubscribeModal} 
-        onOpenChange={setShowSubscribeModal} 
-      />
     </Layout>
   );
 }
