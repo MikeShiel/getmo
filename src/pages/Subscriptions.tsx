@@ -51,7 +51,7 @@ const comparisonFeatures: PlanFeature[] = [
 type SelectedPlan = 'casual' | 'plus' | null;
 
 export default function Subscriptions() {
-  const { user, profile, signIn, signUp } = useAuth();
+  const { user, profile, signIn, signUp, updateProfile, refreshProfile } = useAuth();
   const navigate = useNavigate();
 
   // Modals
