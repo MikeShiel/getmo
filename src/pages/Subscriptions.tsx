@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -130,23 +130,38 @@ export default function Subscriptions() {
     }
   };
 
-  const handleCheckoutAuthorize = () => {
+  const handleCheckoutAuthorize = useCallback(async () => {
     setCheckoutLoading(true);
+    
+    // Simulate payment processing
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Actually update premium status in the database
+    const { error } = await updateProfile({ is_premium: true } as any);
+    
+    setCheckoutLoading(false);
+    setCheckoutComplete(true);
+    
     setTimeout(() => {
-      setCheckoutLoading(false);
-      setCheckoutComplete(true);
-      setTimeout(() => {
-        setCheckoutOpen(false);
-        setCheckoutComplete(false);
-        setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 3500);
+      setCheckoutOpen(false);
+      setCheckoutComplete(false);
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3500);
+      
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: "Please try again.",
+        });
+      } else {
         toast({
           title: "Welcome to the inner circle! 🎮",
           description: "Your access is now live. Enjoy 150+ premium titles and cloud gaming!",
         });
-      }, 1500);
-    }, 2000);
-  };
+      }
+    }, 1500);
+  }, [updateProfile]);
 
   // Upgrade flow (logged in, switching from casual to plus)
   const handleUpgrade = () => {
