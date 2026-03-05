@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Users, Ticket } from 'lucide-react';
+import { Menu, X, User, Download, Users, Ticket, Crown } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -91,6 +91,12 @@ export function Navbar() {
                     <span className={currentClan ? 'text-primary font-medium' : ''}>
                       {displayName}
                     </span>
+                    {profile?.is_premium && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary text-secondary-foreground">
+                        <Crown className="h-3 w-3" />
+                        GN+
+                      </span>
+                    )}
                   </Button>
                 </Link>
                 <Button 
@@ -169,6 +175,12 @@ export function Navbar() {
                     <Button variant="ghost" className="w-full justify-start gap-2">
                       <User className="h-4 w-4" />
                       {displayName}
+                      {profile?.is_premium && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary text-secondary-foreground">
+                          <Crown className="h-3 w-3" />
+                          GN+
+                        </span>
+                      )}
                     </Button>
                   </Link>
                   <Button 
