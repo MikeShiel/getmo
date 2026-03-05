@@ -36,6 +36,7 @@ type PasswordFormData = z.infer<typeof passwordSchema>;
 export default function Profile() {
   const { user, profile, loading, updateProfile } = useAuth();
   const navigate = useNavigate();
+  const { t, theme, language, setTheme, setLanguage } = useTheme();
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
