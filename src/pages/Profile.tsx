@@ -333,6 +333,13 @@ export default function Profile() {
                       <Gamepad2 className="h-4 w-4 mr-2" />
                       Downgrade to Games Now
                     </Button>
+                    <Button 
+                      variant="ghost" 
+                      className="w-full text-destructive hover:text-destructive hover:bg-destructive/10"
+                      onClick={() => navigate('/subscriptions?action=cancel')}
+                    >
+                      Cancel my subscription
+                    </Button>
                   </div>
                 </div>
               ) : (
