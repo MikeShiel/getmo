@@ -406,7 +406,7 @@ export default function Subscriptions() {
         </div>
 
         {/* Cancel Subscription */}
-        {user && (isPremium || true) && (
+        {user && (
           <div className="max-w-3xl mx-auto mt-16 pt-8 border-t border-border/50">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
