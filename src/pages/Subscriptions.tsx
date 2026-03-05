@@ -66,9 +66,9 @@ export default function Subscriptions() {
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
     toast({
-      title: '🎮 Level Up! You're now Games Now Plus!',
+      title: "🎮 Level Up! You're now Games Now Plus!",
       description:
-        'You've unlocked Cloud Gaming and 150+ Premium titles instantly.',
+        "You've unlocked Cloud Gaming and 150+ Premium titles instantly.",
     });
   };
 
@@ -180,7 +180,7 @@ export default function Subscriptions() {
                 onClick={() =>
                   user
                     ? toast({
-                        title: 'You're on Games Now',
+                        title: "You're on Games Now",
                         description: 'This is your current plan.',
                       })
                     : navigate('/auth')
