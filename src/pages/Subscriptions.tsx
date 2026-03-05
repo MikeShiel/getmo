@@ -736,6 +736,45 @@ export default function Subscriptions() {
         </DialogContent>
       </Dialog>
 
+      {/* ====== Cancel Subscription Dialog ====== */}
+      <Dialog open={cancelOpen} onOpenChange={setCancelOpen}>
+        <DialogContent className="glass-card border-destructive/30 max-w-md">
+          <DialogHeader>
+            <div className="flex justify-center mb-3">
+              <div className="p-3 rounded-full bg-destructive/20">
+                <AlertTriangle className="h-8 w-8 text-destructive" />
+              </div>
+            </div>
+            <DialogTitle className="text-xl font-[Orbitron] text-center text-foreground">
+              Cancel Subscription?
+            </DialogTitle>
+            <DialogDescription className="text-center text-muted-foreground text-sm">
+              Are you sure? You'll lose access to all games after your current billing period ends on <strong className="text-foreground">{billingEndDate}</strong>.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="glass-card rounded-lg p-4 my-2">
+            <p className="text-sm font-semibold text-foreground mb-2">You'll lose:</p>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-destructive shrink-0" /> Access to 2000+ games</li>
+              <li className="flex items-center gap-2"><X className="h-4 w-4 text-destructive shrink-0" /> Ad-free gaming experience</li>
+              {isPremium && <li className="flex items-center gap-2"><X className="h-4 w-4 text-destructive shrink-0" /> Cloud saves & premium titles</li>}
+            </ul>
+          </div>
+          <div className="flex flex-col gap-2 mt-2">
+            <Button onClick={() => setCancelOpen(false)} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              Keep My Subscription
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full text-destructive hover:text-destructive hover:bg-destructive/10"
+              onClick={confirmCancel}
+            >
+              Yes, Cancel Subscription
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <style>{`
         @keyframes confetti-fall {
           0% { transform: translateY(0) rotate(0deg); opacity: 1; }
