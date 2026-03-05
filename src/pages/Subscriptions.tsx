@@ -174,11 +174,12 @@ export default function Subscriptions() {
     setCheckoutOpen(true);
   };
 
-  const confirmDowngrade = () => {
+  const confirmDowngrade = async () => {
     setDowngradeOpen(false);
+    await updateProfile({ is_premium: false } as any);
     toast({
       title: 'Subscription updated',
-      description: `You'll keep Games Now Plus benefits until ${billingEndDate}. Your plan will then switch to Games Now automatically.`,
+      description: `Your plan has been switched to Games Now.`,
     });
   };
 
