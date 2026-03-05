@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save } from 'lucide-react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save, Gamepad2, Sparkles, Zap } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -35,7 +35,7 @@ type PasswordFormData = z.infer<typeof passwordSchema>;
 
 export default function Profile() {
   const { user, profile, loading, updateProfile } = useAuth();
-  const { t, theme, language, setTheme, setLanguage } = useTheme();
+  const navigate = useNavigate();
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -293,44 +293,61 @@ export default function Profile() {
                 <div>
                   <h3 className="text-lg font-semibold">{t('profile.currentPlan')}</h3>
                   <p className="text-muted-foreground">
-                    {profile?.is_premium ? t('profile.premium') : t('profile.free')}
+                    {profile?.is_premium ? 'Games Now Plus' : 'Free Plan'}
                   </p>
                 </div>
                 <div className={`px-4 py-2 rounded-full ${
                   profile?.is_premium 
-                    ? 'bg-gradient-neon text-white' 
+                    ? 'bg-secondary text-secondary-foreground' 
                     : 'bg-muted text-muted-foreground'
                 }`}>
-                  <Crown className="h-5 w-5" />
+                  {profile?.is_premium ? <Crown className="h-5 w-5" /> : <Gamepad2 className="h-5 w-5" />}
                 </div>
               </div>
 
               {profile?.is_premium ? (
                 <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="h-4 w-4 text-secondary" />
+                    <span className="text-sm font-semibold text-secondary">GN+ PREMIUM</span>
+                  </div>
+                  <div className="flex justify-between p-3 bg-input rounded-lg">
+                    <span className="text-muted-foreground">Plan</span>
+                    <span className="font-semibold">Games Now Plus</span>
+                  </div>
+                  <div className="flex justify-between p-3 bg-input rounded-lg">
+                    <span className="text-muted-foreground">Amount</span>
+                    <span>€5.00/month</span>
+                  </div>
                   <div className="flex justify-between p-3 bg-input rounded-lg">
                     <span className="text-muted-foreground">Billing date</span>
                     <span>1st of each month</span>
                   </div>
-                  <div className="flex justify-between p-3 bg-input rounded-lg">
-                    <span className="text-muted-foreground">Amount</span>
-                    <span>$5.00/month</span>
+
+                  <div className="pt-2 space-y-3">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => navigate('/subscriptions')}
+                    >
+                      <Gamepad2 className="h-4 w-4 mr-2" />
+                      Downgrade to Games Now
+                    </Button>
                   </div>
-                  <Button variant="destructive" className="w-full">
-                    Cancel Subscription
-                  </Button>
                 </div>
               ) : (
                 <div className="text-center py-8">
                   <Crown className="h-16 w-16 mx-auto mb-4 text-secondary" />
                   <h4 className="text-xl font-semibold mb-2">Unlock Premium Gaming</h4>
                   <p className="text-muted-foreground mb-6">
-                    Get unlimited access to all games for just $5/month
+                    Get 150+ premium titles, cloud gaming, and cross-device saves for just €5/month
                   </p>
                   <Button 
-                    onClick={() => setShowSubscribeModal(true)}
-                    className="bg-gradient-neon hover:opacity-90 text-white neon-glow-pink"
+                    onClick={() => navigate('/subscriptions')}
+                    className="gradient-neon hover:opacity-90 text-primary-foreground font-bold neon-glow-primary"
                   >
-                    {t('profile.upgrade')}
+                    <Zap className="h-4 w-4 mr-2" />
+                    Upgrade to Premium
                   </Button>
                 </div>
               )}
