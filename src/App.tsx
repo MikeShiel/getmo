@@ -20,6 +20,7 @@ import VoucherStore from "./pages/VoucherStore";
 import VoucherDetail from "./pages/VoucherDetail";
 import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
+import Subscriptions from "./pages/Subscriptions";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
                   <Route path="/vouchers" element={<VoucherStore />} />
                   <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
                   <Route path="/vouchers/:id" element={<VoucherDetail />} />
+                  <Route path="/subscriptions" element={<Subscriptions />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
