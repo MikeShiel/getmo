@@ -63,7 +63,7 @@ function LoginForm({ onToggle }: { onToggle: () => void }) {
         title: "Welcome back! 🎮",
         description: "You've successfully logged in.",
       });
-      navigate('/');
+      // Redirect handled by Navigate in parent component
     }
   };
 
@@ -180,7 +180,7 @@ function SignupForm({ onToggle }: { onToggle: () => void }) {
         title: "Account created! 🎉",
         description: "Welcome to Getmo!",
       });
-      navigate('/');
+      // Redirect handled by Navigate in parent component
     }
   };
 
@@ -273,9 +273,11 @@ export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const { user } = useAuth();
   const { t } = useTheme();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get('redirect') || '/';
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={redirectTo} replace />;
   }
 
   return (
