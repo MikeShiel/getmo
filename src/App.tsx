@@ -21,6 +21,7 @@ import VoucherDetail from "./pages/VoucherDetail";
 import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
 import Subscriptions from "./pages/Subscriptions";
+import Rewards from "./pages/Rewards";
 
 const queryClient = new QueryClient();
 
