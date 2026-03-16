@@ -46,7 +46,7 @@ export function Navbar() {
             <XPBar 
               level={profile?.xp_level || 1} 
               xp={profile?.xp_points || 0} 
-              onClick={() => setStatsModalOpen(true)}
+              onClick={() => navigate('/rewards')}
             />
           </div>
 

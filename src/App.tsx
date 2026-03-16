@@ -21,6 +21,7 @@ import VoucherDetail from "./pages/VoucherDetail";
 import VoucherCategory from "./pages/VoucherCategory";
 import NotFound from "./pages/NotFound";
 import Subscriptions from "./pages/Subscriptions";
+import Rewards from "./pages/Rewards";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
                   <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
                   <Route path="/vouchers/:id" element={<VoucherDetail />} />
                   <Route path="/subscriptions" element={<Subscriptions />} />
+                  <Route path="/rewards" element={<Rewards />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
