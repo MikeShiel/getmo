@@ -14,7 +14,7 @@ export function Navbar() {
   const [statsModalOpen, setStatsModalOpen] = useState(false);
   const { user, profile, signOut } = useAuth();
   const { t } = useTheme();
-  const { hasNotification, currentClan, isSocialHubOpen, openSocialHub, closeSocialHub } = useSocial();
+  const { currentClan } = useSocial();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
