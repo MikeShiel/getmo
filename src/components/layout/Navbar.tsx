@@ -51,24 +51,6 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4">
-            {/* Social Button */}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="gap-2 relative"
-              onClick={openSocialHub}
-            >
-              <Users className="h-4 w-4" />
-              Social
-              {hasNotification && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-4 w-4 bg-destructive text-destructive-foreground text-[10px] font-bold items-center justify-center">
-                    1
-                  </span>
-                </span>
-              )}
-            </Button>
 
             <Link to="/vouchers">
               <Button variant="ghost" size="sm" className="gap-2">
