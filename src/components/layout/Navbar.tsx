@@ -123,20 +123,6 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-2">
-              {/* Social Button - Mobile */}
-              <Button 
-                variant="ghost" 
-                className="justify-start gap-2 relative"
-                onClick={() => { openSocialHub(); setIsMenuOpen(false); }}
-              >
-                <Users className="h-4 w-4" />
-                Social
-                {hasNotification && (
-                  <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
-                    1
-                  </span>
-                )}
-              </Button>
 
               <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
