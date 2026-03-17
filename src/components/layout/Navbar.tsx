@@ -172,9 +172,6 @@ export function Navbar() {
 
       {/* User Stats Modal */}
       <UserStatsModal open={statsModalOpen} onOpenChange={setStatsModalOpen} />
-      
-      {/* Social Hub Modal */}
-      <SocialHubModal open={isSocialHubOpen} onOpenChange={closeSocialHub} />
     </nav>
   );
 }
