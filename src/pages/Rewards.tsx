@@ -3,6 +3,7 @@ import { Layout } from '@/components/layout/Layout';
 import { UserXPHeader } from '@/components/rewards/UserXPHeader';
 import { XPEventFeed } from '@/components/rewards/XPEventFeed';
 import { XPRulesReference } from '@/components/rewards/XPRulesReference';
+import { DailyObjectives } from '@/components/rewards/DailyObjectives';
 import { GlobalLeaderboard } from '@/components/rewards/GlobalLeaderboard';
 import { GameLeaderboard } from '@/components/rewards/GameLeaderboard';
 import { MyProgress } from '@/components/rewards/MyProgress';
