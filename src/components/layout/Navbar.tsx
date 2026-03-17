@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Users, Ticket, Crown } from 'lucide-react';
+import { Menu, X, User, Download, Ticket, Crown } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -7,7 +7,6 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useSocial } from '@/components/social/SocialContext';
 import { XPBar } from './XPBar';
 import { UserStatsModal } from '@/components/stats/UserStatsModal';
-import { SocialHubModal } from '@/components/social/SocialHubModal';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
