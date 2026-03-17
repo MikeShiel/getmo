@@ -69,13 +69,16 @@ export default function Rewards() {
 
 function OverviewTab() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
-      <div className="lg:col-span-5">
-        <XPEventFeed />
+    <div className="space-y-6 animate-fade-in">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-5">
+          <DailyObjectives />
+        </div>
+        <div className="lg:col-span-7">
+          <XPEventFeed />
+        </div>
       </div>
-      <div className="lg:col-span-7">
-        <XPRulesReference />
-      </div>
+      <XPRulesReference />
     </div>
   );
 }
