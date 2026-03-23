@@ -550,8 +550,6 @@ function MyVouchersTabContent() {
         </div>
       )}
 
-      {/* Order History */}
-      <OrderHistorySection vouchers={vouchers} />
 
       {/* Reveal Confirmation Modal */}
       <Dialog open={!!confirmRevealId} onOpenChange={(open) => !open && setConfirmRevealId(null)}>
