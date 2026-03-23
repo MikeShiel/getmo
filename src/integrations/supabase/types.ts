@@ -68,6 +68,35 @@ export type Database = {
         }
         Relationships: []
       }
+      key_reveal_logs: {
+        Row: {
+          id: string
+          purchased_voucher_id: string
+          revealed_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          purchased_voucher_id: string
+          revealed_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          purchased_voucher_id?: string
+          revealed_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "key_reveal_logs_purchased_voucher_id_fkey"
+            columns: ["purchased_voucher_id"]
+            isOneToOne: false
+            referencedRelation: "purchased_vouchers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -107,6 +136,51 @@ export type Database = {
           user_id?: string
           xp_level?: number | null
           xp_points?: number | null
+        }
+        Relationships: []
+      }
+      purchased_vouchers: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          key_code: string
+          platform: string
+          purchased_at: string
+          redeemed_at: string | null
+          status: string
+          user_id: string
+          variant_label: string | null
+          voucher_id: string
+          voucher_type: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          key_code: string
+          platform?: string
+          purchased_at?: string
+          redeemed_at?: string | null
+          status?: string
+          user_id: string
+          variant_label?: string | null
+          voucher_id: string
+          voucher_type?: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          key_code?: string
+          platform?: string
+          purchased_at?: string
+          redeemed_at?: string | null
+          status?: string
+          user_id?: string
+          variant_label?: string | null
+          voucher_id?: string
+          voucher_type?: string
         }
         Relationships: []
       }
