@@ -80,12 +80,6 @@ export function Navbar() {
                     )}
                   </Button>
                 </Link>
-                <Link to="/vouchers?tab=my-vouchers">
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    <Ticket className="h-4 w-4" />
-                    My Vouchers
-                  </Button>
-                </Link>
                 <Button 
                   variant="outline" 
                   size="sm" 
