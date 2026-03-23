@@ -386,11 +386,6 @@ export default function MyVouchers() {
   const [revealCount, setRevealCount] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // Redirect if not logged in
-  if (!loading && !user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   // Load vouchers from DB, fallback to mock
   useEffect(() => {
     if (!user) return;
