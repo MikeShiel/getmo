@@ -503,6 +503,11 @@ export default function MyVouchers() {
     { id: 'expired', label: 'Expired' },
   ];
 
+  // Redirect if not logged in (after all hooks)
+  if (!loading && !user) {
+    return <Navigate to="/auth" replace />;
+  }
+
   if (loading) {
     return (
       <Layout>
