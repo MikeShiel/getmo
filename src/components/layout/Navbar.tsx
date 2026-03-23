@@ -150,12 +150,6 @@ export function Navbar() {
                       )}
                     </Button>
                   </Link>
-                  <Link to="/vouchers?tab=my-vouchers" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start gap-2">
-                      <Ticket className="h-4 w-4" />
-                      My Vouchers
-                    </Button>
-                  </Link>
                   <Button 
                     variant="outline" 
                     onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
