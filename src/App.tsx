@@ -51,7 +51,7 @@ const App = () => (
                   <Route path="/vouchers/:id" element={<VoucherDetail />} />
                   <Route path="/subscriptions" element={<Subscriptions />} />
                   <Route path="/rewards" element={<Rewards />} />
-                  <Route path="/my-vouchers" element={<MyVouchers />} />
+                  <Route path="/my-vouchers" element={<MyVouchers />} /> {/* Legacy redirect handled by standalone page */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
