@@ -38,8 +38,8 @@ const App = () => (
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
-                <SaveProgressModal />
                 <BrowserRouter>
+                <SaveProgressModal />
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/game/:id" element={<GameDetail />} />
