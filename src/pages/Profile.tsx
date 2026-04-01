@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save, Gamepad2, Sparkles, Zap } from 'lucide-react';
+import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save, Gamepad2, Sparkles, Zap, UserPlus } from 'lucide-react';
+import { useGuest } from '@/contexts/GuestContext';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
