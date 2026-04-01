@@ -101,11 +101,7 @@ export default function GameDetail() {
   }, []);
 
   const handlePlayClick = () => {
-    if (reason === 'login_required') {
-      navigate('/auth');
-    } else if (reason === 'subscription_required') {
-      setShowSubscribeModal(true);
-    }
+    // All games are free to play — no gates
   };
 
   if (!game || accessLoading) {
