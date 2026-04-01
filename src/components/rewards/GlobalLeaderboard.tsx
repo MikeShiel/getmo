@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { Crown, TrendingUp, TrendingDown, Minus, Shield } from 'lucide-react';
+import { Crown, TrendingUp, TrendingDown, Minus, Shield, UserPlus } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGuest } from '@/contexts/GuestContext';
 
 type TimeFilter = 'all_time' | 'this_week';
 
@@ -11,6 +13,7 @@ interface LeaderEntry {
   xp: number;
   trend: 'up' | 'down' | 'same';
   isCurrentUser?: boolean;
+  isGuestEntry?: boolean;
 }
 
 const MOCK_ALL_TIME: LeaderEntry[] = [
@@ -55,13 +58,47 @@ const RankBadge = ({ rank }: { rank: number }) => {
 export function GlobalLeaderboard() {
   const [filter, setFilter] = useState<TimeFilter>('all_time');
   const { profile } = useAuth();
+  const { isGuest, displayXp, displayName, setShowSaveProgressModal } = useGuest();
   const data = filter === 'all_time' ? MOCK_ALL_TIME : MOCK_WEEKLY;
 
-  // Mark current user for highlight
-  const entries = data.map(e => ({
-    ...e,
-    isCurrentUser: profile?.gamer_name === e.gamer_name,
-  }));
+  // Insert guest entry into leaderboard based on XP
+  const entriesWithGuest = (() => {
+    const sorted = [...data];
+    
+    if (isGuest && displayXp > 0) {
+      // Find where the guest would rank
+      let guestRank = sorted.length + 1;
+      for (let i = 0; i < sorted.length; i++) {
+        if (displayXp >= sorted[i].xp) {
+          guestRank = sorted[i].rank;
+          break;
+        }
+      }
+      
+      const guestEntry: LeaderEntry = {
+        rank: guestRank,
+        gamer_name: displayName,
+        xp: displayXp,
+        trend: 'same',
+        isCurrentUser: true,
+        isGuestEntry: true,
+      };
+
+      // Insert guest and re-rank
+      sorted.push(guestEntry);
+      sorted.sort((a, b) => b.xp - a.xp);
+      sorted.forEach((e, i) => { e.rank = i + 1; });
+      
+      // Keep top 11 to accommodate guest
+      return sorted.slice(0, 11);
+    }
+
+    // Mark current authenticated user
+    return sorted.map(e => ({
+      ...e,
+      isCurrentUser: profile?.gamer_name === e.gamer_name,
+    }));
+  })();
 
   return (
     <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm h-full">
@@ -93,38 +130,59 @@ export function GlobalLeaderboard() {
       {/* Header */}
       <div className="grid grid-cols-12 gap-2 px-4 py-2 text-xs text-muted-foreground border-b border-border/30">
         <span className="col-span-1">Rank</span>
-        <span className="col-span-5">Player</span>
+        <span className="col-span-4">Player</span>
         <span className="col-span-3 text-right">Total XP</span>
-        <span className="col-span-3 text-right">Trend</span>
+        <span className="col-span-4 text-right">Trend</span>
       </div>
 
       <ScrollArea className="h-[350px]">
         <div className="divide-y divide-border/20">
-          {entries.map((entry) => (
+          {entriesWithGuest.map((entry) => (
             <div
-              key={entry.rank}
+              key={`${entry.gamer_name}-${entry.rank}`}
               className={`grid grid-cols-12 gap-2 items-center px-4 py-3 transition-colors hover:bg-muted/20 ${
-                entry.isCurrentUser ? 'bg-primary/10 border-l-2 border-l-primary' : ''
+                entry.isCurrentUser 
+                  ? entry.isGuestEntry 
+                    ? 'bg-secondary/10 border-l-2 border-l-secondary' 
+                    : 'bg-primary/10 border-l-2 border-l-primary' 
+                  : ''
               }`}
             >
               <div className="col-span-1">
                 <RankBadge rank={entry.rank} />
               </div>
-              <div className="col-span-5 flex items-center gap-2">
+              <div className="col-span-4 flex items-center gap-2">
                 <div className="w-7 h-7 rounded-lg bg-muted/50 border border-border/30 flex items-center justify-center">
                   <Shield className="h-3.5 w-3.5 text-muted-foreground" />
                 </div>
-                <span className={`text-sm font-medium truncate ${entry.isCurrentUser ? 'text-primary' : 'text-foreground'}`}>
+                <span className={`text-sm font-medium truncate ${
+                  entry.isCurrentUser 
+                    ? entry.isGuestEntry ? 'text-secondary' : 'text-primary'
+                    : 'text-foreground'
+                }`}>
                   {entry.gamer_name}
-                  {entry.isCurrentUser && <span className="text-xs text-primary/70 ml-1">(You)</span>}
+                  {entry.isCurrentUser && !entry.isGuestEntry && <span className="text-xs text-primary/70 ml-1">(You)</span>}
+                  {entry.isGuestEntry && <span className="text-xs text-secondary/70 ml-1">(Guest)</span>}
                 </span>
               </div>
               <div className="col-span-3 text-right">
                 <span className="text-sm font-bold text-foreground">{entry.xp.toLocaleString()}</span>
                 <span className="text-xs text-muted-foreground ml-1">XP</span>
               </div>
-              <div className="col-span-3 flex justify-end">
-                <TrendIcon trend={entry.trend} />
+              <div className="col-span-4 flex justify-end items-center gap-2">
+                {entry.isGuestEntry ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setShowSaveProgressModal(true)}
+                    className="h-7 text-xs gap-1 border-secondary/50 text-secondary hover:bg-secondary/10"
+                  >
+                    <UserPlus className="h-3 w-3" />
+                    Claim Rank
+                  </Button>
+                ) : (
+                  <TrendIcon trend={entry.trend} />
+                )}
               </div>
             </div>
           ))}

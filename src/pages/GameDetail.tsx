@@ -8,14 +8,17 @@ import { SubscribeModal } from '@/components/modals/SubscribeModal';
 import { ExitIntentModal } from '@/components/modals/ExitIntentModal';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGuest } from '@/contexts/GuestContext';
 import { useGameAccess } from '@/hooks/useGameAccess';
 import { getGameById, getGamesByGenre, Game } from '@/data/mockGames';
+import { toast } from 'sonner';
 
 export default function GameDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTheme();
   const { user } = useAuth();
+  const { isGuest, addXp, nudgeSignup } = useGuest();
 
   const [game, setGame] = useState<Game | null>(null);
   const [recommendedGames, setRecommendedGames] = useState<Game[]>([]);
@@ -24,6 +27,7 @@ export default function GameDetail() {
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
   const [selectedScreenshot, setSelectedScreenshot] = useState(0);
+  const [hasPlayed, setHasPlayed] = useState(false);
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,6 +46,35 @@ export default function GameDetail() {
       }
     }
   }, [id]);
+
+  // Track when game loads (simulate play session)
+  useEffect(() => {
+    if (canPlay && gameUrl && !hasPlayed) {
+      setHasPlayed(true);
+      // Award guest XP for playing
+      if (isGuest) {
+        addXp(game?.xp_reward || 50);
+      }
+    }
+  }, [canPlay, gameUrl, hasPlayed, isGuest, addXp, game]);
+
+  // Post-game nudge for guests
+  useEffect(() => {
+    if (!hasPlayed || !isGuest) return;
+
+    const timer = setTimeout(() => {
+      toast('⚠️ Progress not saved', {
+        description: 'Create a free account to save your XP and compete on leaderboards.',
+        action: {
+          label: 'Save Now',
+          onClick: () => nudgeSignup(),
+        },
+        duration: 8000,
+      });
+    }, 30000); // Show after 30 seconds of play
+
+    return () => clearTimeout(timer);
+  }, [hasPlayed, isGuest, nudgeSignup]);
 
   // Exit intent detection
   useEffect(() => {
