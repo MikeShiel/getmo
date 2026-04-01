@@ -53,7 +53,7 @@ export default function GameDetail() {
       setHasPlayed(true);
       // Award guest XP for playing
       if (isGuest) {
-        addXp(game?.xp_reward || 50);
+        addXp(50);
       }
     }
   }, [canPlay, gameUrl, hasPlayed, isGuest, addXp, game]);
