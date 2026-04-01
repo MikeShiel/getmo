@@ -1,10 +1,12 @@
 import { useAuth } from '@/contexts/AuthContext';
+import { useGuest } from '@/contexts/GuestContext';
 import { Zap, Shield, TrendingUp } from 'lucide-react';
 
 export function UserXPHeader() {
   const { profile } = useAuth();
-  const currentXp = profile?.xp_points || 0;
-  const currentLevel = profile?.xp_level || 1;
+  const { displayName, displayXp, displayLevel } = useGuest();
+  const currentXp = displayXp;
+  const currentLevel = displayLevel;
   const xpForNextLevel = 1000;
   const xpInLevel = currentXp % xpForNextLevel;
   const xpProgress = (xpInLevel / xpForNextLevel) * 100;
