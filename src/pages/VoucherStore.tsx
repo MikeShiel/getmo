@@ -767,10 +767,12 @@ export default function VoucherStore() {
       {/* Tab content */}
       {activeTab === 'store' ? (
         <StoreTabContent />
-      ) : (
+      ) : user ? (
         <div className="container mx-auto px-4 py-8">
           <MyVouchersTabContent />
         </div>
+      ) : (
+        <GuestMyVouchersPrompt />
       )}
     </Layout>
   );
