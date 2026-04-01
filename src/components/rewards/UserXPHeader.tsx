@@ -40,7 +40,7 @@ export function UserXPHeader() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-foreground font-orbitron">
-                {profile?.gamer_name || 'Player'}
+                {displayName}
               </h1>
               <p className="text-sm text-muted-foreground flex items-center gap-1">
                 <TrendingUp className="h-3 w-3 text-primary" />

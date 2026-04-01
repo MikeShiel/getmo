@@ -14,6 +14,8 @@ export default function VoucherDetail() {
   const navigate = useNavigate();
   const voucher = getVoucherById(id || '');
 
+  const { isGuest, setShowSaveProgressModal } = useGuest();
+
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [redemptionOpen, setRedemptionOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -34,6 +36,10 @@ export default function VoucherDetail() {
   const selectedVariant = voucher.variants.find(v => v.id === selectedVariantId) || voucher.variants[0];
 
   const handleCheckout = () => {
+    if (isGuest) {
+      setShowSaveProgressModal(true);
+      return;
+    }
     setIsProcessing(true);
     setRedemptionOpen(true);
     // Simulate processing
