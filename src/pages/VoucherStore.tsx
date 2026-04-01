@@ -11,7 +11,7 @@ import {
   TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2,
   Gift, CreditCard, Monitor, ChevronRight, X, ShoppingCart, Ticket,
   ShoppingBag, Filter, Eye, EyeOff, Copy, Check, AlertTriangle,
-  ChevronDown, ChevronUp, Flag, KeyRound
+  ChevronDown, ChevronUp, Flag, KeyRound, UserPlus
 } from 'lucide-react';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
@@ -22,8 +22,35 @@ import {
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGuest } from '@/contexts/GuestContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+
+function GuestMyVouchersPrompt() {
+  const { setShowSaveProgressModal } = useGuest();
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="glass-card p-8 max-w-md mx-auto text-center space-y-6">
+        <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto">
+          <Ticket className="h-8 w-8 text-primary" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold font-orbitron mb-2">Your Vouchers Await</h2>
+          <p className="text-muted-foreground">
+            Create a free account to purchase vouchers and manage your game keys all in one place.
+          </p>
+        </div>
+        <button
+          onClick={() => setShowSaveProgressModal(true)}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors"
+        >
+          <UserPlus className="h-4 w-4" />
+          Create Free Account
+        </button>
+      </div>
+    </div>
+  );
+}
 
 // ── Types ──
 interface PurchasedVoucher {
@@ -767,10 +794,12 @@ export default function VoucherStore() {
       {/* Tab content */}
       {activeTab === 'store' ? (
         <StoreTabContent />
-      ) : (
+      ) : user ? (
         <div className="container mx-auto px-4 py-8">
           <MyVouchersTabContent />
         </div>
+      ) : (
+        <GuestMyVouchersPrompt />
       )}
     </Layout>
   );

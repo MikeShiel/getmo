@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save, Gamepad2, Sparkles, Zap } from 'lucide-react';
+import { User, Mail, Lock, Crown, Globe, Sun, Moon, Save, Gamepad2, Sparkles, Zap, UserPlus } from 'lucide-react';
+import { useGuest } from '@/contexts/GuestContext';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,9 +50,34 @@ export default function Profile() {
     defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
-  // Redirect if not logged in
+  const { setShowSaveProgressModal } = useGuest();
+
+  // Show prompt for guests instead of hard redirect
   if (!loading && !user) {
-    return <Navigate to="/auth" replace />;
+    return (
+      <Layout>
+        <div className="min-h-[60vh] flex items-center justify-center py-12 px-4">
+          <div className="glass-card p-8 max-w-md text-center space-y-6">
+            <div className="w-16 h-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto">
+              <User className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold font-orbitron mb-2">Create Your Profile</h2>
+              <p className="text-muted-foreground">
+                Sign up for a free account to customize your gamer profile, track your progress, and manage your subscription.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowSaveProgressModal(true)}
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors"
+            >
+              <UserPlus className="h-4 w-4" />
+              Create Free Account
+            </button>
+          </div>
+        </div>
+      </Layout>
+    );
   }
 
   if (loading) {

@@ -7,11 +7,14 @@ import { RedemptionModal } from '@/components/earn/RedemptionModal';
 import { getVoucherById } from '@/data/mockVouchers';
 import { ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useGuest } from '@/contexts/GuestContext';
 
 export default function VoucherDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const voucher = getVoucherById(id || '');
+
+  const { isGuest, setShowSaveProgressModal } = useGuest();
 
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null);
   const [redemptionOpen, setRedemptionOpen] = useState(false);
@@ -33,6 +36,10 @@ export default function VoucherDetail() {
   const selectedVariant = voucher.variants.find(v => v.id === selectedVariantId) || voucher.variants[0];
 
   const handleCheckout = () => {
+    if (isGuest) {
+      setShowSaveProgressModal(true);
+      return;
+    }
     setIsProcessing(true);
     setRedemptionOpen(true);
     // Simulate processing
