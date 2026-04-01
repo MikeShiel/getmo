@@ -5,8 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { GuestProvider } from "@/contexts/GuestContext";
 import { PlayAndEarnProvider } from "@/components/earn/PlayAndEarnContext";
 import { SocialProvider } from "@/components/social/SocialContext";
+import { SaveProgressModal } from "@/components/modals/SaveProgressModal";
 import Index from "./pages/Index";
 import GameDetail from "./pages/GameDetail";
 import Auth from "./pages/Auth";
@@ -30,34 +32,37 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <AuthProvider>
-        <PlayAndEarnProvider>
-          <SocialProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/game/:id" element={<GameDetail />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/terms" element={<Terms />} />
-                  <Route path="/privacy" element={<Privacy />} />
-                  <Route path="/play-and-earn" element={<PlayAndEarn />} />
-                  <Route path="/play-and-win" element={<PlayAndWin />} />
-                  <Route path="/vouchers" element={<VoucherStore />} />
-                  <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
-                  <Route path="/vouchers/:id" element={<VoucherDetail />} />
-                  <Route path="/subscriptions" element={<Subscriptions />} />
-                  <Route path="/rewards" element={<Rewards />} />
-                  <Route path="/my-vouchers" element={<MyVouchers />} /> {/* Legacy redirect handled by standalone page */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </BrowserRouter>
-            </TooltipProvider>
-          </SocialProvider>
-        </PlayAndEarnProvider>
+        <GuestProvider>
+          <PlayAndEarnProvider>
+            <SocialProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <SaveProgressModal />
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/game/:id" element={<GameDetail />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/play-and-earn" element={<PlayAndEarn />} />
+                    <Route path="/play-and-win" element={<PlayAndWin />} />
+                    <Route path="/vouchers" element={<VoucherStore />} />
+                    <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
+                    <Route path="/vouchers/:id" element={<VoucherDetail />} />
+                    <Route path="/subscriptions" element={<Subscriptions />} />
+                    <Route path="/rewards" element={<Rewards />} />
+                    <Route path="/my-vouchers" element={<MyVouchers />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </BrowserRouter>
+              </TooltipProvider>
+            </SocialProvider>
+          </PlayAndEarnProvider>
+        </GuestProvider>
       </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>
