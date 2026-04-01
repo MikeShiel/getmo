@@ -7,6 +7,7 @@ import { RedemptionModal } from '@/components/earn/RedemptionModal';
 import { getVoucherById } from '@/data/mockVouchers';
 import { ArrowLeft, ShieldCheck, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useGuest } from '@/contexts/GuestContext';
 
 export default function VoucherDetail() {
   const { id } = useParams<{ id: string }>();
