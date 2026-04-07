@@ -795,6 +795,10 @@ export default function VoucherStore() {
       {/* Tab content */}
       {activeTab === 'store' ? (
         <StoreTabContent />
+      ) : activeTab === 'achievements' ? (
+        <div className="container mx-auto px-4 py-8 max-w-5xl">
+          <AchievementsTab />
+        </div>
       ) : user ? (
         <div className="container mx-auto px-4 py-8">
           <MyVouchersTabContent />
