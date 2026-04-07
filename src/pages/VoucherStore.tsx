@@ -726,7 +726,7 @@ export default function VoucherStore() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const tabParam = searchParams.get('tab');
-  const activeTab: VoucherTab = tabParam === 'my-vouchers' ? 'my-vouchers' : 'store';
+  const activeTab: VoucherTab = tabParam === 'my-vouchers' ? 'my-vouchers' : tabParam === 'achievements' ? 'achievements' : 'store';
 
   // Count active vouchers for badge (simple mock count)
   const [activeCount, setActiveCount] = useState(0);
