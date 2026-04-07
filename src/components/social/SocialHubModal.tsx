@@ -52,9 +52,6 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
             <TabsContent value="clans" className="mt-0">
               <ClansTab />
             </TabsContent>
-            <TabsContent value="achievements" className="mt-0">
-              <AchievementsTab />
-            </TabsContent>
           </div>
         </Tabs>
       </DialogContent>
