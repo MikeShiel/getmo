@@ -757,6 +757,7 @@ export default function VoucherStore() {
   const tabs: { id: VoucherTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'store', label: 'Voucher Store', icon: <ShoppingCart className="h-4 w-4" /> },
     { id: 'my-vouchers', label: 'My Vouchers', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
+    { id: 'achievements', label: 'Achievements', icon: <Trophy className="h-4 w-4" /> },
   ];
 
   return (
