@@ -29,7 +29,7 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50">
             <TabsTrigger value="friends" className="gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="h-4 w-4" />
               Friends
@@ -42,10 +42,6 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
             <TabsTrigger value="clans" className="gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Shield className="h-4 w-4" />
               Clans
-            </TabsTrigger>
-            <TabsTrigger value="achievements" className="gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Trophy className="h-4 w-4" />
-              Achievements
             </TabsTrigger>
           </TabsList>
 
