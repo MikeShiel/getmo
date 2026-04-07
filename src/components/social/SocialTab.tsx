@@ -44,7 +44,6 @@ export function SocialTab() {
       <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm p-6">
         {activeSubTab === 'friends' && <FriendsTab />}
         {activeSubTab === 'clans' && <ClansTab />}
-        {activeSubTab === 'achievements' && <AchievementsTab />}
       </div>
     </div>
   );
