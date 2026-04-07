@@ -60,6 +60,13 @@ export function Navbar() {
               </Button>
             </Link>
 
+            <Link to="/social">
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Users className="h-4 w-4" />
+                Social
+              </Button>
+            </Link>
+
             <Button variant="ghost" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
               {t('nav.install')}
