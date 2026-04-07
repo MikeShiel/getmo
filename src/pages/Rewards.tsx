@@ -61,7 +61,7 @@ export default function Rewards() {
           {activeTab === 'global' && <GlobalTab />}
           {activeTab === 'game' && <GameTab />}
           {activeTab === 'progress' && <MyProgress />}
-          {activeTab === 'social' && <SocialTab />}
+          
         </div>
       </div>
     </Layout>
