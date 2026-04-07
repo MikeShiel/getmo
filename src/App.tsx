@@ -57,6 +57,7 @@ const App = () => (
                     <Route path="/subscriptions" element={<Subscriptions />} />
                     <Route path="/rewards" element={<Rewards />} />
                     <Route path="/my-vouchers" element={<MyVouchers />} />
+                    <Route path="/social" element={<Social />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
