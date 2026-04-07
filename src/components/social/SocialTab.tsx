@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { Users, Shield, Trophy } from 'lucide-react';
+import { Users, Shield } from 'lucide-react';
 import { useSocial } from './SocialContext';
 import { FriendsTab } from './FriendsTab';
 import { ClansTab } from './ClansTab';
-import { AchievementsTab } from './AchievementsTab';
 
-type SubTab = 'friends' | 'clans' | 'achievements';
+type SubTab = 'friends' | 'clans';
 
 const SUB_TABS: { id: SubTab; label: string; icon: React.ReactNode }[] = [
   { id: 'friends', label: 'Friends', icon: <Users className="h-4 w-4" /> },
   { id: 'clans', label: 'Clans', icon: <Shield className="h-4 w-4" /> },
-  { id: 'achievements', label: 'Achievements', icon: <Trophy className="h-4 w-4" /> },
 ];
 
 export function SocialTab() {
