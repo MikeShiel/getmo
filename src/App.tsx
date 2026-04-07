@@ -25,6 +25,7 @@ import NotFound from "./pages/NotFound";
 import Subscriptions from "./pages/Subscriptions";
 import Rewards from "./pages/Rewards";
 import MyVouchers from "./pages/MyVouchers";
+import Social from "./pages/Social";
 
 const queryClient = new QueryClient();
 
