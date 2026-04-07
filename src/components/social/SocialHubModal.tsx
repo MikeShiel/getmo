@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Shield, Trophy } from 'lucide-react';
+import { Users, Shield } from 'lucide-react';
 import { useSocial } from './SocialContext';
 import { FriendsTab } from './FriendsTab';
 import { ClansTab } from './ClansTab';
-import { AchievementsTab } from './AchievementsTab';
 
 interface SocialHubModalProps {
   open: boolean;
@@ -30,7 +29,7 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-muted/50">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50">
             <TabsTrigger value="friends" className="gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <Users className="h-4 w-4" />
               Friends
@@ -44,10 +43,6 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
               <Shield className="h-4 w-4" />
               Clans
             </TabsTrigger>
-            <TabsTrigger value="achievements" className="gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Trophy className="h-4 w-4" />
-              Achievements
-            </TabsTrigger>
           </TabsList>
 
           <div className="mt-4 max-h-[60vh] overflow-y-auto">
@@ -56,9 +51,6 @@ export function SocialHubModal({ open, onOpenChange }: SocialHubModalProps) {
             </TabsContent>
             <TabsContent value="clans" className="mt-0">
               <ClansTab />
-            </TabsContent>
-            <TabsContent value="achievements" className="mt-0">
-              <AchievementsTab />
             </TabsContent>
           </div>
         </Tabs>

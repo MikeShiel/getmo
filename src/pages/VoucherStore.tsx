@@ -11,8 +11,9 @@ import {
   TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2,
   Gift, CreditCard, Monitor, ChevronRight, X, ShoppingCart, Ticket,
   ShoppingBag, Filter, Eye, EyeOff, Copy, Check, AlertTriangle,
-  ChevronDown, ChevronUp, Flag, KeyRound, UserPlus
+  ChevronDown, ChevronUp, Flag, KeyRound, UserPlus, Trophy
 } from 'lucide-react';
+import { AchievementsTab } from '@/components/social/AchievementsTab';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
   DialogDescription, DialogFooter
@@ -720,13 +721,13 @@ function StoreTabContent() {
 // MAIN PAGE WITH SECONDARY TAB NAV
 // ══════════════════════════════════════════════════════════
 
-type VoucherTab = 'store' | 'my-vouchers';
+type VoucherTab = 'store' | 'my-vouchers' | 'achievements';
 
 export default function VoucherStore() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const tabParam = searchParams.get('tab');
-  const activeTab: VoucherTab = tabParam === 'my-vouchers' ? 'my-vouchers' : 'store';
+  const activeTab: VoucherTab = tabParam === 'my-vouchers' ? 'my-vouchers' : tabParam === 'achievements' ? 'achievements' : 'store';
 
   // Count active vouchers for badge (simple mock count)
   const [activeCount, setActiveCount] = useState(0);
@@ -757,6 +758,7 @@ export default function VoucherStore() {
   const tabs: { id: VoucherTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'store', label: 'Voucher Store', icon: <ShoppingCart className="h-4 w-4" /> },
     { id: 'my-vouchers', label: 'My Vouchers', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
+    { id: 'achievements', label: 'Achievements', icon: <Trophy className="h-4 w-4" /> },
   ];
 
   return (
@@ -794,6 +796,10 @@ export default function VoucherStore() {
       {/* Tab content */}
       {activeTab === 'store' ? (
         <StoreTabContent />
+      ) : activeTab === 'achievements' ? (
+        <div className="container mx-auto px-4 py-8 max-w-5xl">
+          <AchievementsTab />
+        </div>
       ) : user ? (
         <div className="container mx-auto px-4 py-8">
           <MyVouchersTabContent />
