@@ -7,17 +7,15 @@ import { DailyObjectives } from '@/components/rewards/DailyObjectives';
 import { GlobalLeaderboard } from '@/components/rewards/GlobalLeaderboard';
 import { GameLeaderboard } from '@/components/rewards/GameLeaderboard';
 import { MyProgress } from '@/components/rewards/MyProgress';
-import { SocialTab } from '@/components/social/SocialTab';
-import { Trophy, LayoutGrid, Gamepad2, User, Users } from 'lucide-react';
+import { Trophy, LayoutGrid, Gamepad2, User } from 'lucide-react';
 
-type Tab = 'overview' | 'global' | 'game' | 'progress' | 'social';
+type Tab = 'overview' | 'global' | 'game' | 'progress';
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'overview', label: 'Overview', icon: <LayoutGrid className="h-4 w-4" /> },
   { id: 'global', label: 'Global Leaderboard', icon: <Trophy className="h-4 w-4" /> },
   { id: 'game', label: 'Game Leaderboard', icon: <Gamepad2 className="h-4 w-4" /> },
   { id: 'progress', label: 'My Progress', icon: <User className="h-4 w-4" /> },
-  { id: 'social', label: 'Social', icon: <Users className="h-4 w-4" /> },
 ];
 
 export default function Rewards() {
