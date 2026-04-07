@@ -720,7 +720,7 @@ function StoreTabContent() {
 // MAIN PAGE WITH SECONDARY TAB NAV
 // ══════════════════════════════════════════════════════════
 
-type VoucherTab = 'store' | 'my-vouchers';
+type VoucherTab = 'store' | 'my-vouchers' | 'achievements';
 
 export default function VoucherStore() {
   const [searchParams, setSearchParams] = useSearchParams();
