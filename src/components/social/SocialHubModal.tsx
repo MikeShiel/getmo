@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Users, Shield, Trophy } from 'lucide-react';
+import { Users, Shield } from 'lucide-react';
 import { useSocial } from './SocialContext';
 import { FriendsTab } from './FriendsTab';
 import { ClansTab } from './ClansTab';
-import { AchievementsTab } from './AchievementsTab';
 
 interface SocialHubModalProps {
   open: boolean;
