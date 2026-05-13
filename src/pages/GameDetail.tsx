@@ -112,6 +112,9 @@ export default function GameDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
           {/* LEFT */}
           <div className="lg:col-span-7 space-y-6 min-w-0">
+            {/* Top leaderboard ad above iframe */}
+            <AdSlot width={728} height={90} slotId="1111111111" />
+
             {/* 1. Hero + attached action bar */}
             <section className="rounded-2xl overflow-hidden glass-card">
             <div className="relative">
@@ -180,14 +183,6 @@ export default function GameDetail() {
               </div>
             </div>
             </section>
-
-            {/* 2. Leaderboard ad 728x90 */}
-            <AdSlot width={728} height={90} slotId="1111111111" />
-
-            {/* 6. Mobile-only inline rectangle */}
-            <div className="lg:hidden">
-              <AdSlot width={300} height={250} slotId="2222222222" />
-            </div>
 
             {/* 8. Related Games */}
             <section>
