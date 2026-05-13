@@ -56,7 +56,7 @@ export function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-4 ml-auto">
+          <div className="hidden md:flex items-center gap-4 ml-4">
             <Link to="/vouchers">
               <Button variant="ghost" size="sm" className="gap-2">
                 <Ticket className="h-4 w-4" />
