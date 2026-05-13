@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Layout } from '@/components/layout/Layout';
-import { HeroBanner } from '@/components/games/HeroBanner';
+import { InstantPlayRibbon } from '@/components/games/InstantPlayRibbon';
+import { FeaturedGamesCarousel } from '@/components/games/FeaturedGamesCarousel';
 import { Link } from 'react-router-dom';
 import {
   getFeaturedGames,
@@ -144,13 +145,14 @@ const BRAIN_GENRES = ['Puzzle', 'Strategy'];
 const PUZZLE_GENRES = ['Puzzle', 'Roguelike'];
 
 const Index = () => {
-  const { heroFeaturedGame, freeGames, trendingGames, brainGames, puzzleGames, kidsGames } = useMemo(() => {
+  const { heroFeaturedGame, featuredGames, freeGames, trendingGames, brainGames, puzzleGames, kidsGames } = useMemo(() => {
     const featured = getFeaturedGames();
     const free = getFreeGames();
     const trending = getTrendingGames();
     const loved = getMostLovedGames();
     return {
       heroFeaturedGame: featured[0] || trending[0],
+      featuredGames: featured.length > 0 ? featured : trending,
       freeGames: free,
       trendingGames: trending,
       brainGames: mockGames.filter((g) => BRAIN_GENRES.includes(g.genre)),
@@ -161,7 +163,8 @@ const Index = () => {
 
   return (
     <Layout>
-      <HeroBanner featuredGame={heroFeaturedGame} freeGames={freeGames} />
+      <InstantPlayRibbon featuredGame={heroFeaturedGame} freeGames={freeGames} />
+      <FeaturedGamesCarousel games={featuredGames} />
 
       <div className="bg-black">
         <CategoryPills />
