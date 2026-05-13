@@ -35,8 +35,7 @@ export function InstantPlayRibbon({ featuredGame, freeGames = [] }: Props) {
             style={{ background: '#7C3AED' }}
           >
             <Play className="w-4 h-4" fill="currentColor" />
-            <span className="hidden sm:inline">Play {featuredGame?.title ?? 'Now'}</span>
-            <span className="sm:hidden">Play</span>
+            <span>Quick Picks</span>
           </button>
           <button
             onClick={playRandom}
