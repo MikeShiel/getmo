@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Ticket, Crown, UserPlus, Users, Coins } from 'lucide-react';
+import { Menu, X, User, Download, Ticket, Crown, UserPlus, Users, Coins, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,11 +8,15 @@ import { useGuest } from '@/contexts/GuestContext';
 import { useSocial } from '@/components/social/SocialContext';
 import { XPBar } from './XPBar';
 import { UserStatsModal } from '@/components/stats/UserStatsModal';
+import { ProgressPanel } from './ProgressPanel';
+import { LeaderboardPanel } from './LeaderboardPanel';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [statsModalOpen, setStatsModalOpen] = useState(false);
+  const [progressOpen, setProgressOpen] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const { user, profile, signOut } = useAuth();
   const { t } = useTheme();
   const { currentClan } = useSocial();
@@ -43,16 +47,16 @@ export function Navbar() {
           </Link>
 
           {/* XP Bar - Desktop (clickable) */}
-          <div className="hidden md:block flex-1 max-w-md mx-8">
+          <div className="hidden md:flex items-center mx-6">
             <XPBar 
               level={displayLevel} 
               xp={displayXp} 
-              onClick={() => isGuest ? setShowSaveProgressModal(true) : navigate('/rewards')}
+              onClick={() => isGuest ? setShowSaveProgressModal(true) : setProgressOpen(true)}
             />
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 ml-auto">
             <Link to="/vouchers">
               <Button variant="ghost" size="sm" className="gap-2">
                 <Ticket className="h-4 w-4" />
@@ -73,6 +77,16 @@ export function Navbar() {
                 Social
               </Button>
             </Link>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-2"
+              onClick={() => setLeaderboardOpen(true)}
+            >
+              <Trophy className="h-4 w-4" />
+              Leaderboard
+            </Button>
 
             <Button variant="ghost" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
@@ -169,6 +183,15 @@ export function Navbar() {
                 </Button>
               </Link>
 
+              <Button
+                variant="ghost"
+                className="w-full justify-start gap-2"
+                onClick={() => { setLeaderboardOpen(true); setIsMenuOpen(false); }}
+              >
+                <Trophy className="h-4 w-4" />
+                Leaderboard
+              </Button>
+
               <Button variant="ghost" className="justify-start gap-2">
                 <Download className="h-4 w-4" />
                 {t('nav.install')}
@@ -212,6 +235,10 @@ export function Navbar() {
 
       {/* User Stats Modal */}
       <UserStatsModal open={statsModalOpen} onOpenChange={setStatsModalOpen} />
+
+      {/* Progress + Leaderboard panels */}
+      <ProgressPanel open={progressOpen} onOpenChange={setProgressOpen} />
+      <LeaderboardPanel open={leaderboardOpen} onOpenChange={setLeaderboardOpen} />
     </nav>
   );
 }
