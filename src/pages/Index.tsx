@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import { HeroBanner } from '@/components/games/HeroBanner';
 import { Link } from 'react-router-dom';
@@ -58,7 +59,15 @@ function SquareGameCard({ game, size = 90 }: { game: Game; size?: number }) {
         className="rounded-xl overflow-hidden bg-zinc-900"
         style={{ width: size, height: size }}
       >
-        <img src={game.thumbnail} alt={game.title} className="w-full h-full object-cover" />
+        <img
+          src={game.thumbnail}
+          alt={game.title}
+          loading="lazy"
+          decoding="async"
+          width={size}
+          height={size}
+          className="w-full h-full object-cover"
+        />
       </div>
       <p className="text-white text-[12px] font-medium mt-2 truncate">{game.title}</p>
       <p className="text-zinc-500 text-[11px] truncate">{game.genre}</p>
@@ -90,7 +99,15 @@ function CategoriesSection() {
             className="relative flex-shrink-0 rounded-xl overflow-hidden"
             style={{ width: 140, height: 90 }}
           >
-            <img src={c.image} alt={c.label} className="w-full h-full object-cover" />
+            <img
+              src={c.image}
+              alt={c.label}
+              loading="lazy"
+              decoding="async"
+              width={140}
+              height={90}
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
             <span className="absolute bottom-2 left-3 text-white font-bold text-sm">
               {c.label}
@@ -123,18 +140,24 @@ function CategoryPills() {
   );
 }
 
+const BRAIN_GENRES = ['Puzzle', 'Strategy'];
+const PUZZLE_GENRES = ['Puzzle', 'Roguelike'];
+
 const Index = () => {
-  const featuredGames = getFeaturedGames();
-  const freeGames = getFreeGames();
-  const trendingGames = getTrendingGames();
-  const mostLovedGames = getMostLovedGames();
-
-  const heroFeaturedGame = featuredGames[0] || trendingGames[0];
-
-  const playAnywhere = freeGames;
-  const brainGames = mockGames.filter((g) => ['Puzzle', 'Strategy'].includes(g.genre));
-  const puzzleGames = mockGames.filter((g) => g.genre === 'Puzzle' || g.genre === 'Roguelike');
-  const kidsGames = mostLovedGames;
+  const { heroFeaturedGame, freeGames, trendingGames, brainGames, puzzleGames, kidsGames } = useMemo(() => {
+    const featured = getFeaturedGames();
+    const free = getFreeGames();
+    const trending = getTrendingGames();
+    const loved = getMostLovedGames();
+    return {
+      heroFeaturedGame: featured[0] || trending[0],
+      freeGames: free,
+      trendingGames: trending,
+      brainGames: mockGames.filter((g) => BRAIN_GENRES.includes(g.genre)),
+      puzzleGames: mockGames.filter((g) => PUZZLE_GENRES.includes(g.genre)),
+      kidsGames: loved,
+    };
+  }, []);
 
   return (
     <Layout>
@@ -142,7 +165,7 @@ const Index = () => {
 
       <div className="bg-black">
         <CategoryPills />
-        <GameSection title="Play Anywhere" games={playAnywhere} size={90} />
+        <GameSection title="Play Anywhere" games={freeGames} size={90} />
         <GameSection title="Brain Games" games={brainGames} size={90} />
         <GameSection title="Trending Now" games={trendingGames} size={110} />
         <CategoriesSection />
