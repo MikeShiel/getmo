@@ -2,11 +2,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Play, ThumbsUp, ThumbsDown, Heart, Share2, Star,
-  Maximize2, Trophy,
+  Maximize2,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useTheme } from '@/contexts/ThemeContext';
 import { getGameById, getGamesByGenre, mockGames, Game } from '@/data/mockGames';
 import { toast } from 'sonner';
@@ -68,11 +67,9 @@ export default function GameDetail() {
 
   const [game, setGame] = useState<Game | null>(null);
   const [related, setRelated] = useState<Game[]>([]);
-  const [descOpen, setDescOpen] = useState(false);
   const [likes, setLikes] = useState(1240);
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
-  const [lightbox, setLightbox] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -115,8 +112,9 @@ export default function GameDetail() {
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-6">
           {/* LEFT */}
           <div className="lg:col-span-7 space-y-6 min-w-0">
-            {/* 1. Hero */}
-            <section className="relative rounded-2xl overflow-hidden glass-card">
+            {/* 1. Hero + attached action bar */}
+            <section className="rounded-2xl overflow-hidden glass-card">
+            <div className="relative">
               <div className="absolute inset-0">
                 <img src={game.thumbnail} alt="" className="w-full h-full object-cover scale-110 blur-xl opacity-50" />
                 <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background/90" />
@@ -150,13 +148,9 @@ export default function GameDetail() {
                   ))}
                 </div>
               </div>
-            </section>
-
-            {/* 2. Leaderboard ad 728x90 */}
-            <AdSlot width={728} height={90} slotId="1111111111" />
-
-            {/* 3. Action Bar */}
-            <div className="border-y border-white/10 py-3">
+            </div>
+            {/* Attached action bar */}
+            <div className="py-2.5 px-4" style={{ background: '#0D0B1E' }}>
               <div className="flex items-center justify-around text-muted-foreground">
                 <button
                   onClick={() => { setLiked(!liked); setLikes(l => liked ? l - 1 : l + 1); }}
@@ -185,87 +179,15 @@ export default function GameDetail() {
                 </button>
               </div>
             </div>
+            </section>
 
-            {/* 4. Screenshots */}
-            {game.screenshots.length > 0 && (
-              <div className="-mx-4 px-4 overflow-x-auto">
-                <div className="flex gap-3">
-                  {game.screenshots.concat(game.screenshots).slice(0, 6).map((s, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setLightbox(s)}
-                      className="flex-shrink-0 rounded-xl overflow-hidden hover:ring-2 hover:ring-primary transition"
-                    >
-                      <img src={s} alt={`Screenshot ${i + 1}`} className="h-40 w-auto object-cover" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* 5. Description */}
-            <div>
-              <p className={`text-white text-sm leading-relaxed ${descOpen ? '' : 'line-clamp-4'}`}>
-                {game.description}
-              </p>
-              <button
-                onClick={() => setDescOpen(o => !o)}
-                className="text-sm font-medium mt-2"
-                style={{ color: '#7C3AED' }}
-              >
-                {descOpen ? 'Read Less' : 'Read More'}
-              </button>
-            </div>
+            {/* 2. Leaderboard ad 728x90 */}
+            <AdSlot width={728} height={90} slotId="1111111111" />
 
             {/* 6. Mobile-only inline rectangle */}
             <div className="lg:hidden">
               <AdSlot width={300} height={250} slotId="2222222222" />
             </div>
-
-            {/* 7. Leaderboard */}
-            <section>
-              <h2 className="text-xl font-bold text-white mb-3">🏆 Leaderboard</h2>
-              <div className="rounded-xl overflow-hidden border border-white/5">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-left" style={{ background: '#1A1730', color: '#A0A0C0' }}>
-                      <th className="py-2 px-3 w-12">Rank</th>
-                      <th className="py-2 px-3">Player</th>
-                      <th className="py-2 px-3 text-right">Score</th>
-                      <th className="py-2 px-3 text-right hidden sm:table-cell">Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {mockLeaderboard.map((row, idx) => (
-                      <tr key={row.rank} style={{ background: idx % 2 === 0 ? '#0D0B1E' : '#1A1730' }}>
-                        <td className="py-2 px-3 font-bold" style={{ color: rankColor(row.rank) }}>
-                          #{row.rank}
-                        </td>
-                        <td className="py-2 px-3">
-                          <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                              style={{ background: `hsl(${(row.rank * 47) % 360}, 60%, 45%)` }}>
-                              {row.name[0]}
-                            </div>
-                            <span className="text-white">{row.name}</span>
-                          </div>
-                        </td>
-                        <td className="py-2 px-3 text-right text-white tabular-nums">{row.score.toLocaleString()}</td>
-                        <td className="py-2 px-3 text-right hidden sm:table-cell" style={{ color: '#A0A0C0' }}>
-                          {row.daysAgo === 1 ? '1 day ago' : `${row.daysAgo} days ago`}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-3">
-                <Button variant="outline" size="sm" asChild
-                  className="border-[#7C3AED] text-[#7C3AED] hover:bg-[#7C3AED]/10 hover:text-[#7C3AED]">
-                  <Link to="/rewards">View Full Leaderboard →</Link>
-                </Button>
-              </div>
-            </section>
 
             {/* 8. Related Games */}
             <section>
@@ -304,53 +226,52 @@ export default function GameDetail() {
           {/* RIGHT SIDEBAR */}
           <aside className="lg:col-span-3 hidden lg:block">
             <div className="sticky top-20 space-y-6">
-              <AdSlot width={300} height={250} slotId="3333333333" />
-
-              <div className="rounded-2xl p-4 space-y-4" style={{ background: '#1A1730' }}>
-                <img src={game.thumbnail} alt={game.title} className="w-full aspect-video object-cover rounded-xl" />
-                <h3 className="text-white font-bold text-lg">{game.title}</h3>
-                <Button onClick={handlePlay} className="w-full gap-2 text-white font-bold"
-                  style={{ background: '#7C3AED' }}>
-                  <Play className="h-4 w-4 fill-current" /> Play
-                </Button>
-                <div className="space-y-2 text-sm">
-                  {[
-                    { label: 'Developer', value: game.publisher },
-                    { label: 'Genre', value: game.genre },
-                    { label: 'Age', value: ageRating },
-                  ].map(r => (
-                    <div key={r.label} className="flex justify-between">
-                      <span style={{ color: '#A0A0C0' }}>{r.label}</span>
-                      <span className="text-white font-medium">{r.value}</span>
-                    </div>
-                  ))}
-                  <div className="flex justify-between items-center">
-                    <span style={{ color: '#A0A0C0' }}>Rating</span>
-                    <span className="flex items-center gap-1 text-white font-medium">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3.5 w-3.5 ${i < Math.round(game.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'}`}
-                        />
+              {/* Leaderboard - level with game iframe */}
+              <section>
+                <h2 className="text-lg font-bold text-white mb-3">🏆 Leaderboard</h2>
+                <div className="rounded-xl overflow-hidden border border-white/5">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="text-left" style={{ background: '#1A1730', color: '#A0A0C0' }}>
+                        <th className="py-2 px-2 w-10 text-xs">Rank</th>
+                        <th className="py-2 px-2 text-xs">Player</th>
+                        <th className="py-2 px-2 text-right text-xs">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {mockLeaderboard.map((row, idx) => (
+                        <tr key={row.rank} style={{ background: idx % 2 === 0 ? '#0D0B1E' : '#1A1730' }}>
+                          <td className="py-2 px-2 font-bold text-xs" style={{ color: rankColor(row.rank) }}>
+                            #{row.rank}
+                          </td>
+                          <td className="py-2 px-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                                style={{ background: `hsl(${(row.rank * 47) % 360}, 60%, 45%)` }}>
+                                {row.name[0]}
+                              </div>
+                              <span className="text-white text-xs truncate">{row.name}</span>
+                            </div>
+                          </td>
+                          <td className="py-2 px-2 text-right text-white tabular-nums text-xs">{row.score.toLocaleString()}</td>
+                        </tr>
                       ))}
-                      <span className="ml-1">{game.rating.toFixed(1)}</span>
-                    </span>
-                  </div>
+                    </tbody>
+                  </table>
                 </div>
-              </div>
+                <div className="mt-3">
+                  <Button variant="outline" size="sm" asChild
+                    className="w-full border-[#7C3AED] text-[#7C3AED] hover:bg-[#7C3AED]/10 hover:text-[#7C3AED]">
+                    <Link to="/rewards">View Full Leaderboard →</Link>
+                  </Button>
+                </div>
+              </section>
 
-              <AdSlot width={300} height={250} slotId="4444444444" lazy />
+              <AdSlot width={300} height={250} slotId="3333333333" lazy />
             </div>
           </aside>
         </div>
       </div>
-
-      {/* Lightbox */}
-      <Dialog open={!!lightbox} onOpenChange={(o) => !o && setLightbox(null)}>
-        <DialogContent className="max-w-4xl p-0 bg-transparent border-0">
-          {lightbox && <img src={lightbox} alt="Screenshot" className="w-full rounded-xl" />}
-        </DialogContent>
-      </Dialog>
     </Layout>
   );
 }
