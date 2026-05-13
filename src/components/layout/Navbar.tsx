@@ -154,7 +154,7 @@ export function Navbar() {
                   if (isGuest) {
                     setShowSaveProgressModal(true);
                   } else {
-                    setStatsModalOpen(true);
+                    setProgressOpen(true);
                   }
                   setIsMenuOpen(false); 
                 }}
