@@ -47,7 +47,7 @@ export function Navbar() {
           </Link>
 
           {/* XP Bar - Desktop (clickable) */}
-          <div className="hidden md:flex items-center mx-6">
+          <div className="hidden md:flex items-center ml-4">
             <XPBar 
               level={displayLevel} 
               xp={displayXp} 
