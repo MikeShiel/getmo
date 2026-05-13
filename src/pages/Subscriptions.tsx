@@ -133,36 +133,27 @@ export default function Subscriptions() {
 
   const handleCheckoutAuthorize = useCallback(async () => {
     setCheckoutLoading(true);
-    
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Actually update premium status in the database
-    const { error } = await updateProfile({ is_premium: true } as any);
-    
+
+    // Simulate payment processing UX. Premium status can no longer be
+    // self-granted from the client — activation must be performed by a
+    // server-side payment webhook (Stripe/Paddle) using the service role.
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setCheckoutLoading(false);
     setCheckoutComplete(true);
-    
+
     setTimeout(() => {
       setCheckoutOpen(false);
       setCheckoutComplete(false);
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3500);
-      
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          description: "Please try again.",
-        });
-      } else {
-        toast({
-          title: "Welcome to the inner circle! 🎮",
-          description: "Your access is now live. Enjoy 150+ premium titles and cloud gaming!",
-        });
-      }
+      toast({
+        title: 'Checkout demo complete',
+        description:
+          'Connect a payment provider to fully activate Premium. Your account status is unchanged.',
+      });
     }, 1500);
-  }, [updateProfile]);
+  }, []);
 
   // Upgrade flow (logged in, switching from casual to plus)
   const handleUpgrade = () => {
@@ -177,7 +168,6 @@ export default function Subscriptions() {
 
   const confirmDowngrade = async () => {
     setDowngradeOpen(false);
-    await updateProfile({ is_premium: false } as any);
     toast({
       title: 'Subscription updated',
       description: `Your plan has been switched to Games Now.`,
@@ -186,7 +176,6 @@ export default function Subscriptions() {
 
   const confirmCancel = async () => {
     setCancelOpen(false);
-    await updateProfile({ is_premium: false } as any);
     toast({
       title: 'Subscription cancelled',
       description: `Your access continues until ${billingEndDate}. We'll miss you!`,
