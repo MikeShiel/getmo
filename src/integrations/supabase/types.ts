@@ -219,6 +219,13 @@ export type Database = {
           xp_points: number
         }[]
       }
+      merge_guest_xp: {
+        Args: { _xp: number }
+        Returns: {
+          xp_level: number
+          xp_points: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

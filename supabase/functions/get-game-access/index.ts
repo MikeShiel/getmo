@@ -20,9 +20,12 @@ Deno.serve(async (req) => {
       )
     }
 
+    // Use service role: column-level SELECT on games.game_url is revoked
+    // from anon/authenticated. This function is the sole authorized reader.
+    // All games are free-to-play (guest-first design), so no caller auth required.
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
     const { data: game, error: gameError } = await supabase

@@ -142,17 +142,15 @@ export function GuestProvider({ children }: { children: React.ReactNode }) {
       
       const guest: GuestProfile = JSON.parse(stored);
       if (guest.xp > 0) {
-        // Merge guest XP into the account profile
-        const currentXp = profile?.xp_points || 0;
-        const mergedXp = currentXp + guest.xp;
-        const mergedLevel = calcLevel(mergedXp);
-
-        await supabase
-          .from('profiles')
-          .update({ xp_points: mergedXp, xp_level: mergedLevel })
-          .eq('user_id', user.id);
-
-        await refreshProfile();
+        // Server-side merge with cap to prevent leaderboard inflation.
+        // Client xp_points/xp_level updates are revoked at the DB level.
+        const safeXp = Math.max(0, Math.min(Math.floor(guest.xp), 5000));
+        const { error } = await supabase.rpc('merge_guest_xp', { _xp: safeXp });
+        if (error) {
+          console.error('merge_guest_xp failed:', error);
+        } else {
+          await refreshProfile();
+        }
       }
 
       // Clear guest data after successful sync

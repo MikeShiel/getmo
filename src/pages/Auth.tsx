@@ -274,7 +274,10 @@ export default function Auth() {
   const { user } = useAuth();
   const { t } = useTheme();
   const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get('redirect') || '/';
+  const rawRedirect = searchParams.get('redirect') || '/';
+  // Only allow same-origin relative paths to prevent open-redirect phishing.
+  const redirectTo =
+    rawRedirect.startsWith('/') && !rawRedirect.startsWith('//') ? rawRedirect : '/';
 
   if (user) {
     return <Navigate to={redirectTo} replace />;
