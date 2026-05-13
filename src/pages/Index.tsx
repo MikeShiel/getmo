@@ -176,7 +176,6 @@ const Index = () => {
         <GameSection title="Trending Now" games={trendingGames} size={110} />
         <CategoriesSection />
         <GameSection title="Puzzle Games" games={puzzleGames} size={90} />
-        <ListSection title="Sports & Physical" games={sportsGames} />
         <GameSection title="Kids' Games" games={kidsGames} size={90} />
         <div className="h-8" />
       </div>
