@@ -13,17 +13,17 @@ export function XPBar({ level, xp, maxXp = 1000, onClick }: XPBarProps) {
   return (
     <button 
       onClick={onClick}
-      className="flex items-center gap-3 w-full group cursor-pointer hover:opacity-90 transition-opacity"
+      className="flex items-center gap-2 group cursor-pointer hover:opacity-90 transition-opacity"
       aria-label="View player stats"
     >
       {/* Level Badge */}
-      <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-primary/20 border border-primary/30 neon-glow-primary group-hover:scale-105 transition-transform">
+      <div className="flex items-center gap-1 h-7 px-2 rounded-full bg-primary/20 border border-primary/30 neon-glow-primary group-hover:scale-105 transition-transform">
         <Zap className="h-3 w-3 text-primary" />
-        <span className="text-xs font-bold text-primary">LV.{level}</span>
+        <span className="text-[11px] font-bold text-primary leading-none">LV.{level}</span>
       </div>
 
       {/* Slim XP Bar with neon glow */}
-      <div className="flex-1">
+      <div className="w-28">
         <div className="relative h-2 rounded-full overflow-hidden bg-muted/50">
           <div 
             className="h-full rounded-full transition-all duration-500" 
@@ -37,7 +37,7 @@ export function XPBar({ level, xp, maxXp = 1000, onClick }: XPBarProps) {
       </div>
 
       {/* XP Count */}
-      <span className="text-xs text-muted-foreground whitespace-nowrap">
+      <span className="text-[11px] text-muted-foreground whitespace-nowrap">
         {xp % maxXp}/{maxXp}
       </span>
     </button>
