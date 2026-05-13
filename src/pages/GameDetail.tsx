@@ -184,6 +184,53 @@ export default function GameDetail() {
             </div>
             </section>
 
+            {/* Mobile-only: Leaderboard + 300x250 ad */}
+            <div className="lg:hidden space-y-6">
+              <section>
+                <h2 className="text-lg font-bold text-white mb-3">🏆 Leaderboard</h2>
+                <div className="rounded-xl overflow-hidden border border-white/5">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="text-left" style={{ background: '#1A1730', color: '#A0A0C0' }}>
+                        <th className="py-2 px-2 w-10 text-xs">Rank</th>
+                        <th className="py-2 px-2 text-xs">Player</th>
+                        <th className="py-2 px-2 text-right text-xs">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {mockLeaderboard.map((row, idx) => (
+                        <tr key={row.rank} style={{ background: idx % 2 === 0 ? '#0D0B1E' : '#1A1730' }}>
+                          <td className="py-2 px-2 font-bold text-xs" style={{ color: rankColor(row.rank) }}>
+                            #{row.rank}
+                          </td>
+                          <td className="py-2 px-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                                style={{ background: `hsl(${(row.rank * 47) % 360}, 60%, 45%)` }}>
+                                {row.name[0]}
+                              </div>
+                              <span className="text-white text-xs truncate">{row.name}</span>
+                            </div>
+                          </td>
+                          <td className="py-2 px-2 text-right text-white tabular-nums text-xs">{row.score.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-3">
+                  <Button variant="outline" size="sm" asChild
+                    className="w-full border-[#7C3AED] text-[#7C3AED] hover:bg-[#7C3AED]/10 hover:text-[#7C3AED]">
+                    <Link to="/rewards">View Full Leaderboard →</Link>
+                  </Button>
+                </div>
+              </section>
+
+              <div className="flex justify-center">
+                <AdSlot width={300} height={250} slotId="2222222222" />
+              </div>
+            </div>
+
             {/* 8. Related Games */}
             <section>
               <div className="flex items-center justify-between mb-3">
