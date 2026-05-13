@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Play, Shuffle, Zap } from 'lucide-react';
+import { Play, Shuffle } from 'lucide-react';
 import { Game } from '@/data/mockGames';
 
 interface Props {
