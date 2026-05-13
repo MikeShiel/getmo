@@ -60,7 +60,7 @@ export function Navbar() {
             <Link to="/vouchers">
               <Button variant="ghost" size="sm" className="gap-2">
                 <Ticket className="h-4 w-4" />
-                Vouchers
+                Store
               </Button>
             </Link>
 
@@ -161,7 +161,7 @@ export function Navbar() {
               <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <Ticket className="h-4 w-4" />
-                  Vouchers
+                  Store
                 </Button>
               </Link>
 
