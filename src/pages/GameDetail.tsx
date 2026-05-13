@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useTheme } from '@/contexts/ThemeContext';
 import { getGameById, getGamesByGenre, mockGames, Game } from '@/data/mockGames';
 import { toast } from 'sonner';
