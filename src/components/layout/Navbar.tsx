@@ -51,7 +51,7 @@ export function Navbar() {
             <XPBar 
               level={displayLevel} 
               xp={displayXp} 
-              onClick={() => isGuest ? setShowSaveProgressModal(true) : setProgressOpen(true)}
+              onClick={() => setProgressOpen(true)}
             />
           </div>
 
@@ -151,11 +151,7 @@ export function Navbar() {
                 level={displayLevel} 
                 xp={displayXp}
                 onClick={() => { 
-                  if (isGuest) {
-                    setShowSaveProgressModal(true);
-                  } else {
-                    setProgressOpen(true);
-                  }
+                  setProgressOpen(true);
                   setIsMenuOpen(false); 
                 }}
               />
