@@ -9,17 +9,16 @@ import { GameLeaderboard } from '@/components/rewards/GameLeaderboard';
 import { MyProgress } from '@/components/rewards/MyProgress';
 import { Trophy, LayoutGrid, Gamepad2, User } from 'lucide-react';
 
-type Tab = 'overview' | 'global' | 'game' | 'progress';
+type Tab = 'global' | 'game' | 'progress';
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  { id: 'overview', label: 'Overview', icon: <LayoutGrid className="h-4 w-4" /> },
+  { id: 'progress', label: 'My Progress', icon: <User className="h-4 w-4" /> },
   { id: 'global', label: 'Global Leaderboard', icon: <Trophy className="h-4 w-4" /> },
   { id: 'game', label: 'Game Leaderboard', icon: <Gamepad2 className="h-4 w-4" /> },
-  { id: 'progress', label: 'My Progress', icon: <User className="h-4 w-4" /> },
 ];
 
 export default function Rewards() {
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const [activeTab, setActiveTab] = useState<Tab>('progress');
 
   return (
     <Layout hideFooter>
@@ -57,7 +56,6 @@ export default function Rewards() {
 
         {/* Tab Content */}
         <div className="container mx-auto px-4 py-6">
-          {activeTab === 'overview' && <OverviewTab />}
           {activeTab === 'global' && <GlobalTab />}
           {activeTab === 'game' && <GameTab />}
           {activeTab === 'progress' && <MyProgress />}
@@ -65,22 +63,6 @@ export default function Rewards() {
         </div>
       </div>
     </Layout>
-  );
-}
-
-function OverviewTab() {
-  return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-5">
-          <DailyObjectives />
-        </div>
-        <div className="lg:col-span-7">
-          <XPEventFeed />
-        </div>
-      </div>
-      <XPRulesReference />
-    </div>
   );
 }
 
