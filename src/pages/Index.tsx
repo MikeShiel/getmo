@@ -79,34 +79,6 @@ function GameSection({ title, games, size = 90 }: { title: string; games: Game[]
   );
 }
 
-function ListSection({ title, games }: { title: string; games: Game[] }) {
-  return (
-    <section className="py-4">
-      <SectionHeader title={title} />
-      <div className="px-4 divide-y divide-zinc-900">
-        {games.slice(0, 6).map((g) => (
-          <Link
-            key={g.id}
-            to={`/game/${g.id}`}
-            className="flex items-center gap-3 py-3"
-          >
-            <div className="w-[60px] h-[60px] rounded-xl overflow-hidden bg-zinc-900 flex-shrink-0">
-              <img src={g.thumbnail} alt={g.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-sm font-medium truncate">{g.title}</p>
-              <p className="text-zinc-500 text-xs truncate">{g.genre}</p>
-            </div>
-            <span className="text-[11px] font-semibold text-[#7C3AED] border border-[#7C3AED] rounded-full px-3 py-1">
-              Online Game
-            </span>
-          </Link>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function CategoriesSection() {
   return (
     <section className="py-4">
@@ -162,7 +134,6 @@ const Index = () => {
   const playAnywhere = freeGames;
   const brainGames = mockGames.filter((g) => ['Puzzle', 'Strategy'].includes(g.genre));
   const puzzleGames = mockGames.filter((g) => g.genre === 'Puzzle' || g.genre === 'Roguelike');
-  const sportsGames = mockGames.filter((g) => ['Racing', 'Action', 'Arcade'].includes(g.genre));
   const kidsGames = mostLovedGames;
 
   return (
