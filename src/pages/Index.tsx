@@ -33,7 +33,7 @@ const CATEGORIES = [
 
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="flex items-center justify-between mb-3 px-4">
+    <div className="flex items-center justify-between mb-4 px-6">
       <h2 className="text-[20px] font-bold text-white">{title}</h2>
       <Link to="/" className="text-[#7C3AED] text-sm font-semibold">
         VIEW ALL
@@ -45,7 +45,7 @@ function SectionHeader({ title }: { title: string }) {
 function ScrollRow({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex gap-3 overflow-x-auto scrollbar-hide px-4 pb-2"
+      className="flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-2"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {children}
@@ -53,11 +53,11 @@ function ScrollRow({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SquareGameCard({ game, size = 90 }: { game: Game; size?: number }) {
+function SquareGameCard({ game, size = 120 }: { game: Game; size?: number }) {
   return (
     <Link to={`/game/${game.id}`} className="flex-shrink-0" style={{ width: size }}>
       <div
-        className="rounded-xl overflow-hidden bg-zinc-900"
+        className="rounded-[12px] overflow-hidden bg-zinc-900"
         style={{ width: size, height: size }}
       >
         <img
@@ -70,15 +70,15 @@ function SquareGameCard({ game, size = 90 }: { game: Game; size?: number }) {
           className="w-full h-full object-cover"
         />
       </div>
-      <p className="text-white text-[12px] font-medium mt-2 truncate">{game.title}</p>
-      <p className="text-zinc-500 text-[11px] truncate">{game.genre}</p>
+      <p className="text-white text-[13px] font-medium mt-2 line-clamp-2">{game.title}</p>
+      <p className="text-zinc-500 text-[12px]">{game.genre}</p>
     </Link>
   );
 }
 
-function GameSection({ title, games, size = 90 }: { title: string; games: Game[]; size?: number }) {
+function GameSection({ title, games, size = 120 }: { title: string; games: Game[]; size?: number }) {
   return (
-    <section className="py-4">
+    <section className="py-10">
       <SectionHeader title={title} />
       <ScrollRow>
         {games.slice(0, 7).map((g) => (
@@ -91,8 +91,8 @@ function GameSection({ title, games, size = 90 }: { title: string; games: Game[]
 
 function CategoriesSection() {
   return (
-    <section className="py-4">
-      <h2 className="text-[20px] font-bold text-white mb-3 px-4">Categories</h2>
+    <section className="py-10">
+      <h2 className="text-[20px] font-bold text-white mb-4 px-6">Categories</h2>
       <ScrollRow>
         {CATEGORIES.map((c) => (
           <div
@@ -122,7 +122,7 @@ function CategoriesSection() {
 
 function CategoryPills() {
   return (
-    <section className="py-4">
+    <section className="py-4 mb-8">
       <ScrollRow>
         {CATEGORY_PILLS.map((p) => (
           <button
@@ -168,12 +168,12 @@ const Index = () => {
 
       <div className="bg-black">
         <CategoryPills />
-        <GameSection title="Play Anywhere" games={freeGames} size={90} />
-        <GameSection title="Brain Games" games={brainGames} size={90} />
-        <GameSection title="Trending Now" games={trendingGames} size={110} />
+        <GameSection title="Play Anywhere" games={freeGames} />
+        <GameSection title="Brain Games" games={brainGames} />
+        <GameSection title="Trending Now" games={trendingGames} />
         <CategoriesSection />
-        <GameSection title="Puzzle Games" games={puzzleGames} size={90} />
-        <GameSection title="Kids' Games" games={kidsGames} size={90} />
+        <GameSection title="Puzzle Games" games={puzzleGames} />
+        <GameSection title="Kids' Games" games={kidsGames} />
         <div className="h-8" />
       </div>
     </Layout>
