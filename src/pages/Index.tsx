@@ -45,7 +45,7 @@ function SectionHeader({ title }: { title: string }) {
 function ScrollRow({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-2"
+      className="flex gap-4 overflow-x-auto scrollbar-hide px-6 pb-2"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {children}
@@ -76,12 +76,25 @@ function SquareGameCard({ game, size = 120 }: { game: Game; size?: number }) {
   );
 }
 
-function GameSection({ title, games, size = 120 }: { title: string; games: Game[]; size?: number }) {
+function padGames(games: Game[], min: number): Game[] {
+  if (games.length === 0) return games;
+  const out = [...games];
+  let i = 0;
+  while (out.length < min) {
+    const src = games[i % games.length];
+    out.push({ ...src, id: `${src.id}-dup-${out.length}` });
+    i++;
+  }
+  return out;
+}
+
+function GameSection({ title, games, size = 140 }: { title: string; games: Game[]; size?: number }) {
+  const filled = padGames(games, 16);
   return (
     <section className="py-10">
       <SectionHeader title={title} />
       <ScrollRow>
-        {games.slice(0, 7).map((g) => (
+        {filled.slice(0, 16).map((g) => (
           <SquareGameCard key={g.id} game={g} size={size} />
         ))}
       </ScrollRow>
