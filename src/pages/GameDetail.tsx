@@ -268,6 +268,11 @@ export default function GameDetail() {
           {/* RIGHT SIDEBAR */}
           <aside className="lg:col-span-3 hidden lg:block">
             <div className="sticky top-20 space-y-6">
+              {/* Spacer to align with game iframe top (matches 728x90 ad block in left column) */}
+              <div aria-hidden className="invisible">
+                <p className="text-[11px] mb-1">Advertisement</p>
+                <div style={{ height: 90 }} />
+              </div>
               {/* Leaderboard - level with game iframe */}
               <section>
                 <h2 className="text-lg font-bold text-white mb-3">🏆 Leaderboard</h2>
