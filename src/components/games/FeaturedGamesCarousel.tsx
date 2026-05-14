@@ -17,8 +17,8 @@ export function FeaturedGamesCarousel({ games }: Props) {
   };
 
   return (
-    <section className="bg-black py-6">
-      <div className="flex items-center justify-between mb-3 px-4">
+    <section className="bg-black py-10">
+      <div className="flex items-center justify-between mb-4 px-6">
         <h2 className="text-[20px] font-bold text-white">Featured Games</h2>
         <div className="flex items-center gap-2">
           <button
