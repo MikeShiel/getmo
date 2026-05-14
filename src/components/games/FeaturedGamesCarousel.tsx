@@ -46,21 +46,26 @@ export function FeaturedGamesCarousel({ games }: Props) {
 
       <div
         ref={scrollerRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide px-6 pb-4 pt-2 snap-x snap-mandatory items-end"
+        className="flex gap-16 overflow-x-auto scrollbar-hide px-10 pb-4 pt-2 snap-x snap-mandatory items-end"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {games.map((g, i) => (
+        {games.slice(0, 5).map((g, i) => (
           <div key={g.id} className="relative flex-shrink-0 snap-start" style={{ width: 240 }}>
-            {/* Big rank number behind card */}
+            {/* Big rank number in the gap, peeking from behind */}
             <span
               aria-hidden
-              className="absolute -left-5 bottom-2 text-[120px] leading-none font-black text-white/10 select-none pointer-events-none"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
+              className="absolute -left-12 bottom-0 text-[140px] leading-[0.8] font-black select-none pointer-events-none z-0"
+              style={{
+                fontFamily: 'Orbitron, sans-serif',
+                color: 'rgba(255,255,255,0.55)',
+                textShadow: '0 4px 24px rgba(0,0,0,0.6)',
+                WebkitTextStroke: '1px rgba(255,255,255,0.85)',
+              }}
             >
               {i + 1}
             </span>
 
-            <Link to={`/game/${g.id}`} className="group block relative">
+            <Link to={`/game/${g.id}`} className="group block relative z-10">
               <div
                 className="relative rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl"
                 style={{ width: 240, height: 320 }}
