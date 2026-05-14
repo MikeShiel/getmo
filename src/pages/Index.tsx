@@ -152,7 +152,20 @@ const Index = () => {
     const loved = getMostLovedGames();
     return {
       heroFeaturedGame: featured[0] || trending[0],
-      featuredGames: featured.length > 0 ? featured : trending,
+      featuredGames: ((): Game[] => {
+        const base = featured.length > 0 ? featured : trending;
+        const pool = [...base, ...trending, ...loved, ...mockGames];
+        const seen = new Set<string>();
+        const out: Game[] = [];
+        for (const g of pool) {
+          if (out.length >= 5) break;
+          if (!seen.has(g.id)) {
+            seen.add(g.id);
+            out.push(g);
+          }
+        }
+        return out;
+      })(),
       freeGames: free,
       trendingGames: trending,
       brainGames: mockGames.filter((g) => BRAIN_GENRES.includes(g.genre)),
