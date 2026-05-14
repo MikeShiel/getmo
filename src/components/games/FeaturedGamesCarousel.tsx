@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Flame } from 'lucide-react';
 import { Game } from '@/data/mockGames';
 
 interface Props {
@@ -18,8 +18,11 @@ export function FeaturedGamesCarousel({ games }: Props) {
 
   return (
     <section className="bg-black py-10">
-      <div className="flex items-center justify-between mb-4 px-6">
-        <h2 className="text-[20px] font-bold text-white">Featured Games</h2>
+      <div className="flex items-center justify-between mb-5 px-6">
+        <h2 className="text-[18px] font-bold text-white flex items-center gap-2">
+          <Flame className="w-5 h-5 text-orange-500 fill-orange-500" />
+          Spotlight Games
+        </h2>
         <div className="flex items-center gap-2">
           <button
             onClick={() => scrollBy(-1)}
@@ -43,52 +46,49 @@ export function FeaturedGamesCarousel({ games }: Props) {
 
       <div
         ref={scrollerRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide px-4 pb-2 snap-x snap-mandatory"
+        className="flex gap-6 overflow-x-auto scrollbar-hide px-6 pb-4 pt-2 snap-x snap-mandatory items-end"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {games.map((g) => (
-          <Link
-            key={g.id}
-            to={`/game/${g.id}`}
-            className="group flex-shrink-0 snap-start"
-            style={{ width: 280 }}
-          >
-            <div
-              className="relative rounded-xl overflow-hidden bg-zinc-900"
-              style={{ width: 280, height: 180 }}
+        {games.map((g, i) => (
+          <div key={g.id} className="relative flex-shrink-0 snap-start" style={{ width: 240 }}>
+            {/* Big rank number behind card */}
+            <span
+              aria-hidden
+              className="absolute -left-5 bottom-2 text-[120px] leading-none font-black text-white/10 select-none pointer-events-none"
+              style={{ fontFamily: 'Orbitron, sans-serif' }}
             >
-              <img
-                src={g.thumbnail}
-                alt={g.title}
-                loading="lazy"
-                decoding="async"
-                width={280}
-                height={180}
-                className="w-full h-full object-cover"
-              />
-              <span
-                className={`absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded-md tracking-wide ${
-                  g.is_free
-                    ? 'bg-emerald-500 text-black'
-                    : 'bg-[#7C3AED] text-white'
-                }`}
+              {i + 1}
+            </span>
+
+            <Link to={`/game/${g.id}`} className="group block relative">
+              <div
+                className="relative rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl"
+                style={{ width: 240, height: 320 }}
               >
-                {g.is_free ? 'FREE' : 'PREMIUM'}
-              </span>
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold text-white"
-                  style={{ background: '#7C3AED' }}
-                >
-                  <Play className="w-4 h-4" fill="currentColor" />
-                  Play Now
-                </span>
+                <img
+                  src={g.thumbnail}
+                  alt={g.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
-            </div>
-            <p className="text-white text-[14px] font-bold mt-2 truncate">{g.title}</p>
-            <p className="text-zinc-500 text-[12px] truncate">{g.genre}</p>
-            <p className="text-[#7C3AED] text-[12px] font-semibold mt-1">Instant Play →</p>
-          </Link>
+
+              {/* Floating info chip */}
+              <div className="absolute left-3 right-3 bottom-3 flex items-center gap-2.5 rounded-2xl bg-black/70 backdrop-blur-md px-2.5 py-2 border border-white/10">
+                <img
+                  src={g.thumbnail}
+                  alt=""
+                  className="w-9 h-9 rounded-lg object-cover flex-shrink-0"
+                />
+                <div className="min-w-0">
+                  <p className="text-white text-[13px] font-bold truncate leading-tight">{g.title}</p>
+                  <p className="text-zinc-400 text-[11px] truncate leading-tight">{g.genre}</p>
+                </div>
+              </div>
+            </Link>
+          </div>
         ))}
       </div>
     </section>
