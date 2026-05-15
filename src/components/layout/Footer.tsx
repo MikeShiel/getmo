@@ -9,7 +9,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border/50 bg-card/50 backdrop-blur-sm">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
@@ -47,6 +47,28 @@ export function Footer() {
               <li>
                 <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors text-sm">
                   {t('footer.privacy')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Features */}
+          <div>
+            <h4 className="font-semibold mb-4 text-foreground">Features</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/vouchers" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Store
+                </Link>
+              </li>
+              <li>
+                <Link to="/play-and-earn" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Play & Earn
+                </Link>
+              </li>
+              <li>
+                <Link to="/vouchers" className="text-muted-foreground hover:text-primary transition-colors text-sm">
+                  Vouchers
                 </Link>
               </li>
             </ul>
