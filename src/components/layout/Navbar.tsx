@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy, Target } from 'lucide-react';
+import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -10,6 +10,7 @@ import { XPBar } from './XPBar';
 import { UserStatsModal } from '@/components/stats/UserStatsModal';
 import { ProgressPanel } from './ProgressPanel';
 import { LeaderboardPanel } from './LeaderboardPanel';
+import { DailyMissionsNavItem } from './DailyMissionsNavItem';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
@@ -57,12 +58,7 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 ml-4">
-            <Link to="/rewards">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Target className="h-4 w-4" />
-                Daily Missions
-              </Button>
-            </Link>
+            <DailyMissionsNavItem />
 
             <Link to="/social">
               <Button variant="ghost" size="sm" className="gap-2">
@@ -153,7 +149,7 @@ export function Navbar() {
             <div className="flex flex-col gap-2">
               <Link to="/rewards" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Target className="h-4 w-4" />
+                  <span aria-hidden="true">🔥</span>
                   Daily Missions
                 </Button>
               </Link>
