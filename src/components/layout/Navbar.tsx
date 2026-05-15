@@ -64,11 +64,13 @@ export function Navbar() {
 
           {/* Mobile right side: profile menu + hamburger */}
           <div className="md:hidden flex items-center gap-1">
+            <NotificationsBell />
             <ProfileMenu />
             <button
-              className="p-2"
+              className="min-h-[40px] min-w-[40px] p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
+              type="button"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
