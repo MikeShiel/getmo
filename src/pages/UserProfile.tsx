@@ -302,6 +302,25 @@ export default function UserProfile() {
           )}
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={!!confirm} onOpenChange={(o) => !o && setConfirm(null)}>
+        <DialogContent style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+          <DialogHeader>
+            <DialogTitle className="text-white">{confirm?.title}</DialogTitle>
+            <DialogDescription className="text-muted-foreground">{confirm?.desc}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" onClick={() => setConfirm(null)}>Cancel</Button>
+            <Button
+              onClick={() => { confirm?.onConfirm(); setConfirm(null); }}
+              style={{ background: confirm?.confirmColor || RED, color: '#fff' }}
+            >
+              {confirm?.confirmLabel}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }
