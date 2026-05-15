@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Users, Trophy, Bell } from 'lucide-react';
+import { Menu, X, Download, Users, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -8,6 +8,7 @@ import { ProgressPanel } from './ProgressPanel';
 import { LeaderboardPanel } from './LeaderboardPanel';
 import { DailyMissionsNavItem } from './DailyMissionsNavItem';
 import { ProfileMenu } from './ProfileMenu';
+import { NotificationsBell } from '@/components/notifications/NotificationsBell';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
@@ -34,10 +35,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-4 ml-4">
             <DailyMissionsNavItem />
 
-            <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
-              <Bell className="h-4 w-4" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary" />
-            </Button>
+            <NotificationsBell />
 
             <Link to="/social">
               <Button variant="ghost" size="sm" className="gap-2">
