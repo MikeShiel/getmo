@@ -17,6 +17,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useAvatar, AvatarVisual } from '@/contexts/AvatarContext';
+import { AvatarPickerModal } from '@/components/avatars/AvatarPickerModal';
 
 const profileSchema = z.object({
   gamerName: z.string().min(3, 'Gamer name must be at least 3 characters').max(20),
@@ -194,6 +196,7 @@ export default function Profile() {
 
           {/* Account Tab */}
           <TabsContent value="account" className="space-y-6">
+            <AvatarCard />
             {/* Gamer Name */}
             <div className="glass-card p-6">
               <h3 className="text-lg font-semibold mb-4">{t('profile.gamerName')}</h3>
@@ -445,5 +448,27 @@ export default function Profile() {
       </div>
 
     </Layout>
+  );
+}
+
+function AvatarCard() {
+  const { profile } = useAuth();
+  const { displayName } = useGuest();
+  const { equipped } = useAvatar();
+  const [open, setOpen] = useState(false);
+  const name = profile?.gamer_name || displayName || 'Guest';
+  const initial = (name || 'G').charAt(0).toUpperCase();
+  return (
+    <div className="glass-card p-6 flex items-center gap-5">
+      <button onClick={() => setOpen(true)} aria-label="Change avatar" className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+        <AvatarVisual id={equipped} size={80} initial={initial} />
+      </button>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-lg font-semibold">Avatar</h3>
+        <p className="text-sm text-muted-foreground">Customise how you appear across Getmo.</p>
+      </div>
+      <Button onClick={() => setOpen(true)} variant="outline">Change Avatar</Button>
+      <AvatarPickerModal open={open} onOpenChange={setOpen} />
+    </div>
   );
 }

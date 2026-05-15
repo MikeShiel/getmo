@@ -156,7 +156,7 @@ export default function NotificationsPage() {
                             </button>
                           )}
                           {n.actionable === 'equip_now' && (
-                            <button onClick={() => { markRead(n.id); navigate('/my-progress'); }} className="mt-2 px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: PURPLE }}>
+                            <button onClick={() => { markRead(n.id); navigate('/my-progress?openAvatar=1'); }} className="mt-2 px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: PURPLE }}>
                               Equip Now
                             </button>
                           )}
