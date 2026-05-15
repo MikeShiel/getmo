@@ -3,19 +3,17 @@ import { Layout } from '@/components/layout/Layout';
 import { UserXPHeader } from '@/components/rewards/UserXPHeader';
 import { GlobalLeaderboard } from '@/components/rewards/GlobalLeaderboard';
 import { GameLeaderboard } from '@/components/rewards/GameLeaderboard';
-import { MyProgress } from '@/components/rewards/MyProgress';
-import { Trophy, Gamepad2, User } from 'lucide-react';
+import { Trophy, Gamepad2 } from 'lucide-react';
 
-type Tab = 'global' | 'game' | 'progress';
+type Tab = 'global' | 'game';
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  { id: 'progress', label: 'My Progress', icon: <User className="h-4 w-4" /> },
   { id: 'global', label: 'Global Leaderboard', icon: <Trophy className="h-4 w-4" /> },
   { id: 'game', label: 'Game Leaderboard', icon: <Gamepad2 className="h-4 w-4" /> },
 ];
 
 export default function Rewards() {
-  const [activeTab, setActiveTab] = useState<Tab>('progress');
+  const [activeTab, setActiveTab] = useState<Tab>('global');
 
   return (
     <Layout hideFooter>
@@ -55,8 +53,6 @@ export default function Rewards() {
         <div className="container mx-auto px-4 py-6">
           {activeTab === 'global' && <GlobalTab />}
           {activeTab === 'game' && <GameTab />}
-          {activeTab === 'progress' && <MyProgress />}
-          
         </div>
       </div>
     </Layout>
