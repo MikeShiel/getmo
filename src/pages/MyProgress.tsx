@@ -61,12 +61,30 @@ export default function MyProgressPage() {
   const [tab, setTab] = useState<Tab>('xp');
   const [params, setParams] = useSearchParams();
   const [pickerOpen, setPickerOpen] = useState(false);
+  const badgesRef = useRef<HTMLHeadingElement | null>(null);
+  const avatarsRef = useRef<HTMLHeadingElement | null>(null);
 
   useEffect(() => {
+    const scrollTo = params.get('scrollTo');
+    const wantsTab = params.get('tab') as Tab | null;
     if (params.get('openAvatar') === '1') {
       setTab('rewards');
       setPickerOpen(true);
       params.delete('openAvatar');
+      setParams(params, { replace: true });
+      return;
+    }
+    if (wantsTab === 'rewards' || scrollTo === 'badges' || scrollTo === 'avatars') {
+      setTab('rewards');
+      // Scroll after the tab content has rendered.
+      setTimeout(() => {
+        const target =
+          scrollTo === 'badges' ? badgesRef.current :
+          scrollTo === 'avatars' ? avatarsRef.current : null;
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+      params.delete('tab');
+      params.delete('scrollTo');
       setParams(params, { replace: true });
     }
   }, [params, setParams]);
@@ -95,7 +113,13 @@ export default function MyProgressPage() {
           </div>
 
           {tab === 'xp' && <MyProgressContent />}
-          {tab === 'rewards' && <RewardsTab onOpenPicker={() => setPickerOpen(true)} />}
+          {tab === 'rewards' && (
+            <RewardsTab
+              onOpenPicker={() => setPickerOpen(true)}
+              badgesRef={badgesRef}
+              avatarsRef={avatarsRef}
+            />
+          )}
           {tab === 'activity' && <ActivityTab />}
 
           <AvatarPickerModal open={pickerOpen} onOpenChange={setPickerOpen} initialTab="earned" />
@@ -106,7 +130,15 @@ export default function MyProgressPage() {
 }
 
 // ---- Rewards Tab ----
-function RewardsTab({ onOpenPicker }: { onOpenPicker: () => void }) {
+function RewardsTab({
+  onOpenPicker,
+  badgesRef,
+  avatarsRef,
+}: {
+  onOpenPicker: () => void;
+  badgesRef?: React.RefObject<HTMLHeadingElement>;
+  avatarsRef?: React.RefObject<HTMLHeadingElement>;
+}) {
   const { profile } = useAuth();
   const { displayName, displayLevel } = useGuest();
   const { equipped, kingUnlocked, setEquipped } = useAvatar();
@@ -140,13 +172,13 @@ function RewardsTab({ onOpenPicker }: { onOpenPicker: () => void }) {
       </div>
 
       {/* Badges */}
-      <h2 className="mt-8 mb-3 text-lg font-bold text-white">Badges</h2>
+      <h2 ref={badgesRef} className="mt-8 mb-3 text-lg font-bold text-white scroll-mt-24">Badges</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {BADGES.map(b => <BadgeCard key={b.id} badge={b} />)}
       </div>
 
       {/* Avatar Rewards */}
-      <h2 className="mt-8 mb-3 text-lg font-bold text-white">Avatar Rewards</h2>
+      <h2 ref={avatarsRef} className="mt-8 mb-3 text-lg font-bold text-white scroll-mt-24">Avatar Rewards</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <AvatarRewardCard
           id="standard"
