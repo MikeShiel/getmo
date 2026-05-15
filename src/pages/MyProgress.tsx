@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Award, Crown, Lock, Gamepad2, Flame, Brain, Car, Trophy, Users as UsersIcon,
@@ -11,7 +11,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGuest } from '@/contexts/GuestContext';
 import { useAvatar, AvatarVisual, AvatarId } from '@/contexts/AvatarContext';
-import { MyProgress as MyProgressContent } from '@/components/rewards/MyProgress';
 import { AvatarPickerModal } from '@/components/avatars/AvatarPickerModal';
 
 const PURPLE = '#7C3AED';
@@ -112,7 +111,7 @@ export default function MyProgressPage() {
             ))}
           </div>
 
-          {tab === 'xp' && <MyProgressContent />}
+          {tab === 'xp' && <XPLevelTab />}
           {tab === 'rewards' && (
             <RewardsTab
               onOpenPicker={() => setPickerOpen(true)}
