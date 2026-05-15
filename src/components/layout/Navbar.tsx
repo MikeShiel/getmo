@@ -151,17 +151,10 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/rewards" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Ticket className="h-4 w-4" />
-                  Store
-                </Button>
-              </Link>
-
-              <Link to="/play-and-earn" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Coins className="h-4 w-4" />
-                  Play & Earn
+                  <Target className="h-4 w-4" />
+                  Daily Missions
                 </Button>
               </Link>
 
