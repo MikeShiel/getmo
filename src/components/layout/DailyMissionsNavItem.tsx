@@ -29,6 +29,7 @@ const TOTAL = MISSIONS.length;
 export function DailyMissionsNavItem() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
+  const showTimer = useRef<number | null>(null);
   const closeTimer = useRef<number | null>(null);
 
   const completed = MISSIONS.filter(m => m.completed).length;
@@ -36,22 +37,31 @@ export function DailyMissionsNavItem() {
 
   const handleEnter = () => {
     if (isMobile) return;
-    if (closeTimer.current) window.clearTimeout(closeTimer.current);
-    setOpen(true);
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    if (!open) {
+      showTimer.current = window.setTimeout(() => setOpen(true), 150);
+    }
   };
   const handleLeave = () => {
     if (isMobile) return;
+    if (showTimer.current) {
+      window.clearTimeout(showTimer.current);
+      showTimer.current = null;
+    }
     closeTimer.current = window.setTimeout(() => setOpen(false), 150);
   };
 
   return (
     <div
-      className="relative"
+      className="relative pb-3"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       <Link to="/daily-missions">
-        <Button variant="ghost" size="sm" className="gap-2">
+        <Button variant="ghost" size="sm" className="gap-2 h-10">
           <span aria-hidden="true">🔥</span>
           Daily Missions
           <span
@@ -66,7 +76,7 @@ export function DailyMissionsNavItem() {
       {/* Desktop hover popup */}
       {open && !isMobile && (
         <div
-          className="absolute left-0 top-full mt-2 z-50 animate-fade-in"
+          className="absolute left-0 top-full z-50 animate-fade-in"
           style={{
             minWidth: 320,
             backgroundColor: '#1A1730',
