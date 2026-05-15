@@ -56,7 +56,7 @@ export function DailyMissionsNavItem() {
 
   return (
     <div
-      className="relative pb-3"
+      className="relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
