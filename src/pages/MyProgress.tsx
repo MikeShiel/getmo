@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Award, Crown, Lock, Gamepad2, Flame, Brain, Car, Trophy, Users as UsersIcon,
@@ -11,7 +11,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGuest } from '@/contexts/GuestContext';
 import { useAvatar, AvatarVisual, AvatarId } from '@/contexts/AvatarContext';
-import { MyProgress as MyProgressContent } from '@/components/rewards/MyProgress';
 import { AvatarPickerModal } from '@/components/avatars/AvatarPickerModal';
 
 const PURPLE = '#7C3AED';
@@ -112,7 +111,7 @@ export default function MyProgressPage() {
             ))}
           </div>
 
-          {tab === 'xp' && <MyProgressContent />}
+          {tab === 'xp' && <XPLevelTab />}
           {tab === 'rewards' && (
             <RewardsTab
               onOpenPicker={() => setPickerOpen(true)}
@@ -371,6 +370,158 @@ function ActivityFullWidth() {
           ))}
         </div>
       </ScrollArea>
+    </div>
+  );
+}
+
+// ---------------- XP & Level Tab ----------------
+const MUTED = 'hsl(var(--muted-foreground))';
+
+function XPLevelTab() {
+  const navigate = useNavigate();
+  const { displayLevel, displayXp } = useGuest();
+
+  // Level math (mock): each level needs level*1000 XP from prior threshold.
+  const level = displayLevel || 7;
+  const totalXp = displayXp || 6000;
+  const nextLevelTarget = 3000;
+  const currentInLevel = 2400;
+  const remaining = Math.max(0, nextLevelTarget - currentInLevel);
+  const pct = Math.min(100, (currentInLevel / nextLevelTarget) * 100);
+
+  // Week stats (mock, lines up with existing data shape)
+  const xpThisWeek = 1240;
+  const loginStreak = 5;
+  const dailyCapUsed = 320;
+  const dailyCapMax = 500;
+  const capPct = Math.min(100, (dailyCapUsed / dailyCapMax) * 100);
+  const capReached = dailyCapUsed >= dailyCapMax;
+  const onFire = loginStreak >= 7;
+
+  // Top 2 closest rewards (highest % progress) — pulled from BADGES list above.
+  const closest = useMemo(() => {
+    return BADGES
+      .filter(b => !b.unlocked && b.progress)
+      .map(b => ({ b, pct: (b.progress!.current / b.progress!.target) * 100 }))
+      .sort((a, z) => z.pct - a.pct)
+      .slice(0, 2);
+  }, []);
+
+  const earnActions = [
+    { xp: '+75 XP',     name: 'Beat a High Score', desc: 'Set a new personal best in any game',  cta: 'Play Now →',     href: '/' },
+    { xp: '+60 XP',     name: 'Win 3 Rounds',      desc: 'Complete 3 rounds or levels in any game', cta: 'Play Now →',  href: '/' },
+    { xp: 'Up to +280 XP', name: 'Complete Daily Missions', desc: "Finish today's challenges before midnight", cta: 'View Missions →', href: '/daily-missions' },
+  ];
+
+  return (
+    <div className="animate-fade-in space-y-6">
+      {/* Block 1 — Your Level */}
+      <div className="p-8 text-center" style={{ background: CARD_BG, borderRadius: 12 }}>
+        <div className="mx-auto flex items-center justify-center rounded-full mb-5"
+             style={{ width: 140, height: 140, background: PURPLE }}>
+          <span className="text-white font-bold" style={{ fontSize: 48, lineHeight: 1 }}>LV.{level}</span>
+        </div>
+        <div className="w-full h-3 rounded-full overflow-hidden" style={{ background: BORDER }}>
+          <div className="h-full transition-all" style={{ width: `${pct}%`, background: PURPLE }} />
+        </div>
+        <p className="mt-2 text-xs" style={{ color: MUTED }}>{currentInLevel.toLocaleString()} / {nextLevelTarget.toLocaleString()} XP</p>
+        <p className="mt-4 text-base text-white">You need <span className="font-bold">{remaining.toLocaleString()}</span> more XP to reach LV.{level + 1}</p>
+        <p className="mt-1 text-sm" style={{ color: MUTED }}>Total XP earned: {totalXp.toLocaleString()}</p>
+      </div>
+
+      {/* Block 2 — This Week at a Glance */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatBlock>
+          <p className="text-sm mb-1">⚡ XP Earned This Week</p>
+          <p className="text-3xl font-bold text-white">{xpThisWeek.toLocaleString()}</p>
+          <p className="text-xs mt-1" style={{ color: MUTED }}>this week</p>
+        </StatBlock>
+        <StatBlock>
+          <p className="text-sm mb-1">🔥 Login Streak</p>
+          <p className="text-3xl font-bold" style={{ color: onFire ? GOLD : '#fff' }}>
+            {loginStreak} days
+          </p>
+          {onFire ? (
+            <p className="text-xs mt-1 font-semibold" style={{ color: GOLD }}>🔥 On fire!</p>
+          ) : loginStreak < 7 ? (
+            <p className="text-xs mt-1" style={{ color: MUTED }}>{7 - loginStreak} days from Dedicated badge</p>
+          ) : null}
+        </StatBlock>
+        <button
+          onClick={() => navigate('/daily-missions')}
+          className="text-left p-5 transition-transform hover:-translate-y-0.5"
+          style={{ background: CARD_BG, borderRadius: 12 }}
+        >
+          <p className="text-sm mb-1">📅 Daily Cap Today</p>
+          <p className="text-3xl font-bold text-white">{dailyCapUsed} <span className="text-base font-normal" style={{ color: MUTED }}>/ {dailyCapMax} XP</span></p>
+          <div className="w-full h-1.5 rounded-full overflow-hidden mt-2" style={{ background: BORDER }}>
+            <div className="h-full" style={{ width: `${capPct}%`, background: capReached ? GOLD : PURPLE }} />
+          </div>
+          {capReached && <p className="text-xs mt-2 font-semibold" style={{ color: GOLD }}>Cap reached ✓</p>}
+        </button>
+      </div>
+
+      {/* Block 3 — Best Ways to Earn XP */}
+      <div>
+        <h2 className="text-lg font-bold text-white">Best Ways to Earn XP</h2>
+        <p className="text-sm" style={{ color: MUTED }}>Fastest paths to your next level</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+          {earnActions.map(a => (
+            <div key={a.name} className="p-4 flex flex-col" style={{ background: CARD_BG, borderRadius: 12, borderLeft: `2px solid ${PURPLE}` }}>
+              <p className="font-bold" style={{ color: GOLD }}>{a.xp}</p>
+              <p className="font-bold text-white mt-1">{a.name}</p>
+              <p className="text-xs mt-1 flex-1" style={{ color: MUTED }}>{a.desc}</p>
+              <Link to={a.href} className="mt-3 text-sm font-semibold self-end" style={{ color: PURPLE }}>{a.cta}</Link>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Block 4 — Coming Up Next */}
+      <div>
+        <h2 className="text-lg font-bold text-white">Keep Going to Unlock These</h2>
+        <p className="text-sm" style={{ color: MUTED }}>Your closest rewards — complete these to unlock</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+          {closest.map(({ b }) => {
+            const r = RARITY[b.rarity];
+            const cur = b.progress!.current, tgt = b.progress!.target;
+            const p = (cur / tgt) * 100;
+            const barColor = p >= 80 ? GOLD : PURPLE;
+            return (
+              <div key={b.id} className="p-5" style={{ background: CARD_BG, borderRadius: 12, border: `2px solid ${r.color}` }}>
+                <div className="flex items-start gap-4">
+                  <div style={{ color: r.color, opacity: 0.5 }}>{b.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-white">{b.name}</p>
+                    <span className="text-[10px] font-bold uppercase" style={{ color: r.color }}>{r.label}</span>
+                    <div className="mt-2 h-2 rounded-full overflow-hidden" style={{ background: BORDER }}>
+                      <div className="h-full" style={{ width: `${p}%`, background: barColor }} />
+                    </div>
+                    <p className="text-[11px] mt-1" style={{ color: MUTED }}>{cur} / {tgt}</p>
+                    <p className="text-xs mt-2" style={{ color: MUTED }}>{b.condition}</p>
+                    <Link to="/" className="text-xs font-semibold mt-2 inline-block" style={{ color: PURPLE }}>→ Go Play</Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <button
+          onClick={() => navigate('/my-progress?tab=rewards')}
+          className="mt-4 w-full py-3 rounded-lg text-sm font-semibold border-2 transition-colors hover:bg-white/5"
+          style={{ color: PURPLE, borderColor: PURPLE, background: 'transparent' }}
+        >
+          View All Rewards →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StatBlock({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="p-5 text-center" style={{ background: CARD_BG, borderRadius: 12 }}>
+      {children}
     </div>
   );
 }
