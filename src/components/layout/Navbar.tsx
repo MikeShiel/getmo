@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Ticket, Crown, UserPlus, Users, Coins, Trophy } from 'lucide-react';
+import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy, Target } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
