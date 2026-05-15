@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { useNotifications, timeAgo, dayBucket, Notification } from '@/components/notifications/NotificationsContext';
 import { NotifIcon } from '@/components/notifications/notifIcon';
+import { useFriends } from '@/components/friends/FriendsContext';
 
 const PURPLE = '#7C3AED';
 const UNREAD_BG = '#1E1A40';
@@ -12,6 +13,7 @@ type Filter = 'all' | 'unread' | 'social' | 'progress';
 
 export default function NotificationsPage() {
   const { notifications, unreadCount, markAllRead, clearRead, dismiss, accept, decline, markRead } = useNotifications();
+  const friends = useFriends();
   const [filter, setFilter] = useState<Filter>('all');
 
   const filtered = useMemo(() => {
@@ -117,8 +119,28 @@ export default function NotificationsPage() {
                           <p className="text-xs text-muted-foreground mt-0.5">{timeAgo(n.agoMs)}</p>
                           {n.actionable === 'accept_decline' && (
                             <div className="mt-2 flex gap-2">
-                              <button onClick={() => accept(n.id)} className="px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: '#22C55E' }}>Accept</button>
-                              <button onClick={() => decline(n.id)} className="px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: '#EF4444' }}>Decline</button>
+                              <button
+                                onClick={() =>
+                                  n.type === 'friend_request' && n.requestId
+                                    ? friends.acceptIncoming(n.requestId)
+                                    : accept(n.id)
+                                }
+                                className="px-3 py-1 rounded text-xs font-semibold text-white"
+                                style={{ backgroundColor: '#22C55E' }}
+                              >
+                                Accept
+                              </button>
+                              <button
+                                onClick={() =>
+                                  n.type === 'friend_request' && n.requestId
+                                    ? friends.declineIncoming(n.requestId)
+                                    : decline(n.id)
+                                }
+                                className="px-3 py-1 rounded text-xs font-semibold text-white"
+                                style={{ backgroundColor: '#EF4444' }}
+                              >
+                                Decline
+                              </button>
                             </div>
                           )}
                           {n.actionable === 'play_now' && (

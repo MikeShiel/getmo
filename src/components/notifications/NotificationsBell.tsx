@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useNotifications, timeAgo } from './NotificationsContext';
 import { NotifIcon } from './notifIcon';
+import { useFriends } from '@/components/friends/FriendsContext';
 
 const PURPLE = '#7C3AED';
 const UNREAD_BG = '#1E1A40';
@@ -15,6 +16,7 @@ export function NotificationsBell() {
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<number | null>(null);
   const { notifications, unreadCount, markAllRead, dismiss, accept, decline, markRead } = useNotifications();
+  const friends = useFriends();
 
   const enter = () => {
     if (isMobile) return;
@@ -109,14 +111,26 @@ export function NotificationsBell() {
                   {n.actionable === 'accept_decline' && (
                     <div className="mt-2 flex gap-2">
                       <button
-                        onClick={() => accept(n.id)}
+                        onClick={() => {
+                          if (n.type === 'friend_request' && n.requestId) {
+                            friends.acceptIncoming(n.requestId);
+                          } else {
+                            accept(n.id);
+                          }
+                        }}
                         className="px-2.5 py-1 rounded text-[11px] font-semibold text-white"
                         style={{ backgroundColor: '#22C55E' }}
                       >
                         Accept
                       </button>
                       <button
-                        onClick={() => decline(n.id)}
+                        onClick={() => {
+                          if (n.type === 'friend_request' && n.requestId) {
+                            friends.declineIncoming(n.requestId);
+                          } else {
+                            decline(n.id);
+                          }
+                        }}
                         className="px-2.5 py-1 rounded text-[11px] font-semibold text-white"
                         style={{ backgroundColor: '#EF4444' }}
                       >
