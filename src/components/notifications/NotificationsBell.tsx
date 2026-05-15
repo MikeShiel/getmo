@@ -62,7 +62,7 @@ export function NotificationsBell() {
   const top5 = notifications.slice(0, 5);
 
   return (
-    <div className="relative pb-3" onMouseEnter={enter} onMouseLeave={leave}>
+    <div className="relative" onMouseEnter={enter} onMouseLeave={leave}>
       <Button
         variant="ghost"
         size="icon"
