@@ -611,6 +611,13 @@ function XPLevelTab() {
             </div>
           ))}
         </div>
+        <button
+          onClick={() => navigate('/challenges')}
+          className="mt-4 w-full py-3 rounded-lg text-sm font-semibold border-2 transition-colors hover:bg-white/5"
+          style={{ color: PURPLE, borderColor: PURPLE, background: 'transparent' }}
+        >
+          View All Challenges →
+        </button>
       </div>
 
       {/* Block 4 — Coming Up Next */}
