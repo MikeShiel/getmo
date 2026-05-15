@@ -48,19 +48,10 @@ export function NotificationsBell() {
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (isMobile) {
-      navigate('/notifications');
-    } else {
-      if (showTimer.current) {
-        window.clearTimeout(showTimer.current);
-        showTimer.current = null;
-      }
-      if (closeTimer.current) {
-        window.clearTimeout(closeTimer.current);
-        closeTimer.current = null;
-      }
-      setOpen((o) => !o);
-    }
+    if (showTimer.current) { window.clearTimeout(showTimer.current); showTimer.current = null; }
+    if (closeTimer.current) { window.clearTimeout(closeTimer.current); closeTimer.current = null; }
+    setOpen(false);
+    navigate('/notifications');
   };
 
   const viewAllNotifications = () => {
