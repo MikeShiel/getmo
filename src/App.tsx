@@ -32,6 +32,7 @@ import Social from "./pages/Social";
 import DailyMissions from "./pages/DailyMissions";
 import MyProgressPage from "./pages/MyProgress";
 import NotificationsPage from "./pages/Notifications";
+import UserProfile from "./pages/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const App = () => (
                     <Route path="/daily-missions" element={<DailyMissions />} />
                     <Route path="/my-progress" element={<MyProgressPage />} />
                     <Route path="/notifications" element={<NotificationsPage />} />
+                    <Route path="/user/:username" element={<UserProfile />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
