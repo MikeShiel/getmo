@@ -158,7 +158,7 @@ export function NotificationsBell() {
                   )}
                   {n.actionable === 'equip_now' && (
                     <button
-                      onClick={() => { markRead(n.id); navigate('/my-progress'); setOpen(false); }}
+                      onClick={() => { markRead(n.id); navigate('/my-progress?openAvatar=1'); setOpen(false); }}
                       className="mt-2 px-2.5 py-1 rounded text-[11px] font-semibold text-white"
                       style={{ backgroundColor: PURPLE }}
                     >
