@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy } from 'lucide-react';
+import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy, BarChart3, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -11,6 +11,10 @@ import { UserStatsModal } from '@/components/stats/UserStatsModal';
 import { ProgressPanel } from './ProgressPanel';
 import { LeaderboardPanel } from './LeaderboardPanel';
 import { DailyMissionsNavItem } from './DailyMissionsNavItem';
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
@@ -84,28 +88,34 @@ export function Navbar() {
 
             {user ? (
               <>
-                <Link to="/profile">
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    <User className="h-4 w-4" />
-                    <span className={currentClan ? 'text-primary font-medium' : ''}>
-                      {fullDisplayName}
-                    </span>
-                    {profile?.is_premium && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary text-secondary-foreground">
-                        <Crown className="h-3 w-3" />
-                        GN+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <User className="h-4 w-4" />
+                      <span className={currentClan ? 'text-primary font-medium' : ''}>
+                        {fullDisplayName}
                       </span>
-                    )}
-                  </Button>
-                </Link>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={handleSignOut}
-                  className="border-primary/50 hover:bg-primary/10"
-                >
-                  {t('nav.logout')}
-                </Button>
+                      {profile?.is_premium && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-secondary text-secondary-foreground">
+                          <Crown className="h-3 w-3" />
+                          GN+
+                        </span>
+                      )}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-[200px]">
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <User className="h-4 w-4 mr-2" /> View Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/my-progress')}>
+                      <BarChart3 className="h-4 w-4 mr-2" /> My Progress
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="h-4 w-4 mr-2" /> {t('nav.logout')}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
             ) : (
               /* Guest Profile Pill */
