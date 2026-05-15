@@ -8,7 +8,10 @@ export type NotifType =
   | 'clan_invite'
   | 'level_up'
   | 'mission_complete'
-  | 'daily_cap';
+  | 'daily_cap'
+  | 'badge_unlocked'
+  | 'avatar_unlocked'
+  | 'badge_close';
 
 export type NotifGroup = 'social' | 'progress';
 
@@ -20,7 +23,7 @@ export interface Notification {
   // ms ago for ordering / day-bucketing
   agoMs: number;
   read: boolean;
-  actionable?: 'accept_decline' | 'play_now';
+  actionable?: 'accept_decline' | 'play_now' | 'view_rewards' | 'equip_now';
   username?: string;
   // links a friend_request notification to the underlying incoming request id
   requestId?: string;
@@ -30,9 +33,12 @@ const HOUR = 1000 * 60 * 60;
 const DAY = 24 * HOUR;
 
 const SEED: Notification[] = [
-  { id: 'n2', type: 'score_beaten',   group: 'social',   agoMs: 25 * 60 * 1000,   read: false, message: 'PixelQueen just beat your score in Subway Surfers — 184,520 points' },
+  { id: 'n2', type: 'score_beaten',   group: 'social',   agoMs: 25 * 60 * 1000,   read: false, actionable: 'play_now',       message: 'PixelQueen just beat your score in Subway Surfers — 184,520 pts' },
   { id: 'n3', type: 'challenge',      group: 'social',   agoMs: 2 * HOUR,         read: false, actionable: 'play_now',       message: 'BoltZap challenged you to beat 50,000 in Bouncemasters' },
   { id: 'n4', type: 'level_up',       group: 'progress', agoMs: 4 * HOUR,         read: false, message: 'You levelled up to LV.7 🎉' },
+  { id: 'n4b',type: 'avatar_unlocked',group: 'progress', agoMs: 5 * HOUR,         read: false, actionable: 'equip_now',      message: 'King Getmo avatar unlocked 👑' },
+  { id: 'n4c',type: 'badge_unlocked', group: 'progress', agoMs: 7 * HOUR,         read: false, actionable: 'view_rewards',   message: 'Puzzle Master unlocked 🏆' },
+  { id: 'n4d',type: 'badge_close',    group: 'progress', agoMs: 9 * HOUR,         read: true,  message: "You're 2 puzzle games away from unlocking Puzzle Master" },
   { id: 'n5', type: 'mission_complete',group: 'progress',agoMs: 6 * HOUR,         read: true,  message: 'Daily mission complete — you earned +50 XP' },
   { id: 'n6', type: 'clan_invite',    group: 'social',   agoMs: DAY + 2 * HOUR,   read: false, actionable: 'accept_decline', message: "You've been invited to join Neon Knights" },
   { id: 'n7', type: 'friend_accepted',group: 'social',   agoMs: DAY + 5 * HOUR,   read: true,  message: 'GhostDash accepted your friend request' },

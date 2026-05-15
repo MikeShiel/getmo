@@ -147,6 +147,24 @@ export function NotificationsBell() {
                       Play Now
                     </button>
                   )}
+                  {n.actionable === 'view_rewards' && (
+                    <button
+                      onClick={() => { markRead(n.id); navigate('/my-progress'); setOpen(false); }}
+                      className="mt-2 px-2.5 py-1 rounded text-[11px] font-semibold text-white"
+                      style={{ backgroundColor: PURPLE }}
+                    >
+                      View Rewards
+                    </button>
+                  )}
+                  {n.actionable === 'equip_now' && (
+                    <button
+                      onClick={() => { markRead(n.id); navigate('/my-progress'); setOpen(false); }}
+                      className="mt-2 px-2.5 py-1 rounded text-[11px] font-semibold text-white"
+                      style={{ backgroundColor: PURPLE }}
+                    >
+                      Equip Now
+                    </button>
+                  )}
                 </div>
                 <button
                   aria-label="Dismiss notification"
