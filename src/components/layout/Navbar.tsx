@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Users, Trophy, Bell } from 'lucide-react';
+import { Menu, X, Download, Users, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
