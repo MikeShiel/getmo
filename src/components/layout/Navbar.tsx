@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, User, Download, Ticket, Crown, UserPlus, Users, Coins, Trophy } from 'lucide-react';
+import { Menu, X, User, Download, Crown, UserPlus, Users, Trophy, Target } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -57,17 +57,10 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 ml-4">
-            <Link to="/vouchers">
+            <Link to="/rewards">
               <Button variant="ghost" size="sm" className="gap-2">
-                <Ticket className="h-4 w-4" />
-                Store
-              </Button>
-            </Link>
-
-            <Link to="/play-and-earn">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Coins className="h-4 w-4" />
-                Play & Earn
+                <Target className="h-4 w-4" />
+                Daily Missions
               </Button>
             </Link>
 
@@ -158,17 +151,10 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Link to="/vouchers" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/rewards" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Ticket className="h-4 w-4" />
-                  Store
-                </Button>
-              </Link>
-
-              <Link to="/play-and-earn" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Coins className="h-4 w-4" />
-                  Play & Earn
+                  <Target className="h-4 w-4" />
+                  Daily Missions
                 </Button>
               </Link>
 
