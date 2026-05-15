@@ -50,7 +50,7 @@ export function DailyMissionsNavItem() {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      <Link to="/rewards">
+      <Link to="/daily-missions">
         <Button variant="ghost" size="sm" className="gap-2">
           <span aria-hidden="true">🔥</span>
           Daily Missions
@@ -118,7 +118,7 @@ export function DailyMissionsNavItem() {
 
           {/* CTA */}
           <div className="p-3" style={{ borderTop: '1px solid #2E2A50' }}>
-            <Link to="/rewards" onClick={() => setOpen(false)}>
+            <Link to="/daily-missions" onClick={() => setOpen(false)}>
               <button
                 className="w-full text-sm font-semibold py-2 rounded-lg text-white transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#7C3AED' }}
