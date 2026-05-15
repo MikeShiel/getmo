@@ -54,9 +54,9 @@ export function MyProgress() {
   const currentLevel = profile?.xp_level || 1;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
+    <div className="flex flex-col lg:flex-row gap-6 animate-fade-in">
       {/* Left column: XP Breakdown + Daily Cap */}
-      <div className="lg:col-span-5 space-y-6">
+      <div className="lg:basis-[45%] lg:flex-shrink-0 space-y-6">
         {/* XP Breakdown Card */}
         <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm">
           <div className="p-5 border-b border-border/50">
@@ -103,12 +103,15 @@ export function MyProgress() {
                     style={{
                       width: `${(day.used / day.cap) * 100}%`,
                       background: day.used >= day.cap
-                        ? 'hsl(var(--secondary))'
+                        ? '#F5C41A'
                         : 'hsl(var(--primary))',
                     }}
                   />
                 </div>
-                <span className={`text-xs font-medium w-16 text-right ${day.used >= day.cap ? 'text-secondary' : 'text-muted-foreground'}`}>
+                <span
+                  className={`text-xs font-medium w-16 text-right ${day.used >= day.cap ? '' : 'text-muted-foreground'}`}
+                  style={day.used >= day.cap ? { color: '#F5C41A' } : undefined}
+                >
                   {day.used}/{day.cap}
                 </span>
               </div>
@@ -150,7 +153,7 @@ export function MyProgress() {
       </div>
 
       {/* Right column: Event History */}
-      <div className="lg:col-span-7">
+      <div className="lg:basis-[55%] lg:flex-1">
         <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm h-full">
           <div className="p-5 border-b border-border/50">
             <h2 className="font-orbitron font-bold text-foreground flex items-center gap-2">
