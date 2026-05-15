@@ -347,7 +347,13 @@ function FriendRow({ f, onRemove, onBlock }: { f: Friend; onRemove: () => void; 
       <Avatar name={f.username} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-bold text-white truncate">{f.username}</p>
+          <Link
+            to={`/user/${f.username}`}
+            className="text-sm font-bold text-white truncate hover:underline"
+            style={{ textUnderlineOffset: 3, textDecorationColor: 'rgba(124,58,237,0.6)' }}
+          >
+            {f.username}
+          </Link>
           <LevelBadge level={f.level} />
         </div>
         <div className="mt-0.5">{statusEl}</div>
