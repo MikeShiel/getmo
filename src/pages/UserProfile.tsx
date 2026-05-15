@@ -1,12 +1,18 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Gamepad2, Zap, Trophy, Medal, Lock, Swords, Shield, UserPlus, UserMinus, Check, X,
-  Flame, Brain, Car, Users as UsersIcon,
+  Flame, Brain, Car, Users as UsersIcon, MoreHorizontal,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useFriends, Friend } from '@/components/friends/FriendsContext';
 import { useGuest } from '@/contexts/GuestContext';
