@@ -12,6 +12,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  useFriends, Friend, Incoming, Outgoing, Blocked, SearchUser,
+} from '@/components/friends/FriendsContext';
 
 const PURPLE = '#7C3AED';
 const BG_DARK = '#0D0B1E';
@@ -19,33 +22,6 @@ const BG_CARD = '#1A1730';
 const BORDER = '#2E2A50';
 const GREEN = '#22C55E';
 const RED = '#EF4444';
-
-// ---------------- Types ----------------
-type FriendStatus = 'online' | 'in-game' | 'offline';
-interface Friend { id: string; username: string; level: number; status: FriendStatus; game?: string; lastSeenMin?: number; }
-interface Incoming { id: string; username: string; level: number; agoMin: number; }
-interface Outgoing { id: string; username: string; level: number; agoMin: number; }
-interface SearchUser { id: string; username: string; level: number; mutualFriends: number; }
-interface Blocked { id: string; username: string; level: number; }
-
-// ---------------- Seed ----------------
-const SEED_FRIENDS: Friend[] = [
-  { id: 'f1', username: 'NeonRider99', level: 24, status: 'online' },
-  { id: 'f2', username: 'PixelQueen',  level: 18, status: 'in-game', game: 'Subway Surfers' },
-  { id: 'f3', username: 'BoltZap',     level: 31, status: 'in-game', game: 'Bouncemasters' },
-  { id: 'f4', username: 'GhostDash',   level: 12, status: 'offline', lastSeenMin: 45 },
-  { id: 'f5', username: 'CometKid',    level: 9,  status: 'offline', lastSeenMin: 60 * 6 },
-  { id: 'f6', username: 'StarChaser',  level: 22, status: 'offline', lastSeenMin: 60 * 24 * 2 },
-];
-
-const SEED_INCOMING: Incoming[] = [
-  { id: 'i1', username: 'MysticGamer', level: 14, agoMin: 5 },
-  { id: 'i2', username: 'VoltViper',   level: 19, agoMin: 60 * 3 },
-];
-
-const SEED_OUTGOING: Outgoing[] = [
-  { id: 'o1', username: 'ZenithRogue', level: 27, agoMin: 60 * 8 },
-];
 
 const SEARCH_POOL: SearchUser[] = [
   { id: 's1', username: 'CyberNinja',   level: 17, mutualFriends: 3 },
@@ -99,10 +75,11 @@ function StatusDot({ color }: { color: string }) {
 // ---------------- Page ----------------
 export default function Social() {
   const [view, setView] = useState<View>('friends');
-  const [friends, setFriends] = useState<Friend[]>(SEED_FRIENDS);
-  const [incoming, setIncoming] = useState<Incoming[]>(SEED_INCOMING);
-  const [outgoing, setOutgoing] = useState<Outgoing[]>(SEED_OUTGOING);
-  const [blocked, setBlocked] = useState<Blocked[]>([]);
+  const {
+    friends, incoming, outgoing, blocked,
+    sendRequest, acceptIncoming, declineIncoming, blockIncoming,
+    cancelOutgoing, removeFriend, blockFriend, unblock,
+  } = useFriends();
 
   // Confirm modal
   const [confirm, setConfirm] = useState<{ title: string; desc: string; confirmLabel: string; onConfirm: () => void } | null>(null);
@@ -134,7 +111,7 @@ export default function Social() {
       title: `Remove ${f.username} as a friend?`,
       desc: 'They will not be notified.',
       confirmLabel: 'Remove',
-      onConfirm: () => setFriends(fs => fs.filter(x => x.id !== f.id)),
+      onConfirm: () => removeFriend(f.id),
     });
 
   const blockFriend = (f: Friend) =>
@@ -142,10 +119,7 @@ export default function Social() {
       title: `Block ${f.username}?`,
       desc: "They will be removed from your friends and won't be able to contact you.",
       confirmLabel: 'Block',
-      onConfirm: () => {
-        setFriends(fs => fs.filter(x => x.id !== f.id));
-        setBlocked(bs => [...bs, { id: f.id, username: f.username, level: f.level }]);
-      },
+      onConfirm: () => blockFriend(f.id),
     });
 
   const unblock = (b: Blocked) =>
@@ -153,7 +127,7 @@ export default function Social() {
       title: `Unblock ${b.username}?`,
       desc: 'They will be able to find you and send friend requests again.',
       confirmLabel: 'Unblock',
-      onConfirm: () => setBlocked(bs => bs.filter(x => x.id !== b.id)),
+      onConfirm: () => unblock(b.id),
     });
 
   return (
