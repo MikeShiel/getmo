@@ -147,7 +147,7 @@ export function Navbar() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Link to="/rewards" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/daily-missions" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <span aria-hidden="true">🔥</span>
                   Daily Missions

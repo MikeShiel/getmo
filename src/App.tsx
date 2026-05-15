@@ -26,6 +26,7 @@ import Subscriptions from "./pages/Subscriptions";
 import Rewards from "./pages/Rewards";
 import MyVouchers from "./pages/MyVouchers";
 import Social from "./pages/Social";
+import DailyMissions from "./pages/DailyMissions";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => (
                     <Route path="/rewards" element={<Rewards />} />
                     <Route path="/my-vouchers" element={<MyVouchers />} />
                     <Route path="/social" element={<Social />} />
+                    <Route path="/daily-missions" element={<DailyMissions />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
