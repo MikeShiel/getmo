@@ -28,8 +28,13 @@ export function NotificationsBell() {
     closeTimer.current = window.setTimeout(() => setOpen(false), 150);
   };
 
-  const handleClick = () => {
-    if (isMobile) navigate('/notifications');
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isMobile) {
+      navigate('/notifications');
+    } else {
+      setOpen((o) => !o);
+    }
   };
 
   const top5 = notifications.slice(0, 5);
@@ -39,7 +44,7 @@ export function NotificationsBell() {
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative h-10 w-10 min-h-[40px] min-w-[40px]"
         aria-label="Notifications"
         onClick={handleClick}
       >
