@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import {
   Award, Crown, Lock, Gamepad2, Flame, Brain, Car, Trophy, Users as UsersIcon,
-  Shield, Medal, Check, X,
+  Shield, Medal, Check,
+  CalendarCheck, Clock, UserCheck, Play, TrendingUp, CheckCircle, Target, Rocket, RotateCcw, Zap,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGuest } from '@/contexts/GuestContext';
 import { useAvatar, AvatarVisual, AvatarId } from '@/contexts/AvatarContext';
@@ -304,12 +306,7 @@ function ActivityTab() {
   );
 }
 
-// Re-implement the event feed full width (mirrors MyProgressContent right column).
-import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  CalendarCheck, Clock, UserCheck, Play, TrendingUp, CheckCircle, Target, Rocket, RotateCcw, Zap,
-} from 'lucide-react';
-
+// Activity events feed (full width).
 const ACTIVITY_EVENTS = [
   { label: 'Daily Login', xp: 25, time: '2m ago', icon: <CalendarCheck className="h-4 w-4" /> },
   { label: 'First Game of the Day', xp: 50, time: '5m ago', icon: <Gamepad2 className="h-4 w-4" /> },
