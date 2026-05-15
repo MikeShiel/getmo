@@ -44,7 +44,7 @@ export function NotificationsBell() {
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative h-10 w-10 min-h-[40px] min-w-[40px]"
         aria-label="Notifications"
         onClick={handleClick}
       >
