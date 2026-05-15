@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Layout } from '@/components/layout/Layout';
 import {
   Users, UserPlus, Inbox, Ban, Shield, Compass, Plus, Mail,
-  Search, MoreHorizontal, Swords, X as XIcon, Check, Circle,
+  Search, MoreHorizontal, Swords, X as XIcon, Check, Circle, ShieldX,
 } from 'lucide-react';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   useFriends, Friend, Incoming, Outgoing, Blocked, SearchUser,
 } from '@/components/friends/FriendsContext';
@@ -502,9 +503,23 @@ function PendingInvites({
                   <Check className="h-4 w-4 mr-1" /> Accept
                 </Button>
                 <Button size="sm" variant="ghost" onClick={() => onDecline(i.id)}>Decline</Button>
-                <Button size="icon" variant="ghost" aria-label="Block" onClick={() => onBlockIncoming(i.id)} style={{ color: RED }}>
-                  <XIcon className="h-4 w-4" />
-                </Button>
+                <TooltipProvider delayDuration={150}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button
+                        aria-label="Block this user"
+                        onClick={() => onBlockIncoming(i.id)}
+                        className="h-9 w-9 rounded-md flex items-center justify-center text-muted-foreground transition-colors hover:text-white"
+                        style={{ backgroundColor: 'transparent' }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = RED)}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                      >
+                        <ShieldX className="h-4 w-4" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>Block this user</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           ))}
