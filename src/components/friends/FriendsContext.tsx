@@ -77,8 +77,24 @@ export function FriendsProvider({ children }: { children: ReactNode }) {
     const id = 'o' + Date.now();
     setOutgoing(o => [{ id, username: u.username, level: u.level, agoMin: 0 }, ...o]);
     // Spec: a "friend request received" notification is created for the recipient.
-    // In this single-user mock we have no separate recipient inbox to display it in,
-    // but the request system is wired so the call site exists.
+    // Single-user mock: simulate the recipient accepting after a short delay so the
+    // sender (this user) observes the "accepted" notification + bell badge increment.
+    window.setTimeout(() => {
+      setOutgoing(o => o.filter(x => x.id !== id));
+      setFriends(f => [
+        ...f,
+        { id: 'f' + Date.now(), username: u.username, level: u.level, status: 'online' },
+      ]);
+      notifs.addNotification({
+        id: 'nfa-' + Date.now(),
+        type: 'friend_accepted',
+        group: 'social',
+        agoMs: 0,
+        read: false,
+        message: `${u.username} accepted your friend request.`,
+        username: u.username,
+      });
+    }, 6000);
   };
 
   const acceptIncoming = (incomingId: string) => {
