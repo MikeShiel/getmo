@@ -140,14 +140,44 @@ export default function UserProfile() {
       </div>
     );
     if (friend) return (
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex items-center gap-2">
         <Button onClick={() => toast('Coming Soon')} className="text-white" style={{ background: PURPLE }}>
           <Swords className="h-4 w-4 mr-1" /> Challenge
         </Button>
-        <Button variant="outline" onClick={() => f.removeFriend(friend.id)}>
-          <UserMinus className="h-4 w-4 mr-1" /> Remove Friend
-        </Button>
-        <Button variant="outline" onClick={() => f.blockFriend(friend.id)}>Block</Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="More options" className="h-10 w-10">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8 }}>
+            <DropdownMenuItem
+              onClick={() => setConfirm({
+                title: `Remove ${friend.username} as a friend?`,
+                desc: 'They will not be notified.',
+                confirmLabel: 'Remove',
+                confirmColor: RED,
+                onConfirm: () => f.removeFriend(friend.id),
+              })}
+              className="text-white cursor-pointer"
+            >
+              Remove Friend
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setConfirm({
+                title: `Block ${friend.username}?`,
+                desc: "They will be removed from your friends and won't be able to contact you.",
+                confirmLabel: 'Block',
+                confirmColor: RED,
+                onConfirm: () => f.blockFriend(friend.id),
+              })}
+              style={{ color: RED }}
+              className="cursor-pointer"
+            >
+              Block
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     );
     if (blocked) return (
