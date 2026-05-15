@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { useNotifications, timeAgo, dayBucket, Notification } from '@/components/notifications/NotificationsContext';
 import { NotifIcon } from '@/components/notifications/notifIcon';
@@ -14,6 +15,7 @@ type Filter = 'all' | 'unread' | 'social' | 'progress';
 export default function NotificationsPage() {
   const { notifications, unreadCount, markAllRead, clearRead, dismiss, accept, decline, markRead } = useNotifications();
   const friends = useFriends();
+  const navigate = useNavigate();
   const [filter, setFilter] = useState<Filter>('all');
 
   const filtered = useMemo(() => {
@@ -146,6 +148,16 @@ export default function NotificationsPage() {
                           {n.actionable === 'play_now' && (
                             <button onClick={() => markRead(n.id)} className="mt-2 px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: PURPLE }}>
                               Play Now
+                            </button>
+                          )}
+                          {n.actionable === 'view_rewards' && (
+                            <button onClick={() => { markRead(n.id); navigate('/my-progress'); }} className="mt-2 px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: PURPLE }}>
+                              View Rewards
+                            </button>
+                          )}
+                          {n.actionable === 'equip_now' && (
+                            <button onClick={() => { markRead(n.id); navigate('/my-progress'); }} className="mt-2 px-3 py-1 rounded text-xs font-semibold text-white" style={{ backgroundColor: PURPLE }}>
+                              Equip Now
                             </button>
                           )}
                         </div>
