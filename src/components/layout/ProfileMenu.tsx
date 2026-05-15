@@ -32,8 +32,8 @@ function MenuBody({ name, initial, level, xp, maxXp, isPremium, isGuest, onNavig
   const { equipped } = useAvatar();
 
   const items = [
-    { icon: <BarChart3 className="h-4 w-4" />, label: 'My Progress', to: '/my-progress' },
     { icon: <User className="h-4 w-4" />,      label: 'Profile',     to: '/profile' },
+    { icon: <BarChart3 className="h-4 w-4" />, label: 'My Progress', to: '/my-progress' },
     { icon: <Users className="h-4 w-4" />,     label: 'Friends',     to: '/social' },
     { icon: <Shield className="h-4 w-4" />,    label: 'Clans',       to: '/social?tab=clans' },
   ];
