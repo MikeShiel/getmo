@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGuest } from '@/contexts/GuestContext';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAvatar, AvatarVisual } from '@/contexts/AvatarContext';
 
 const BG = '#0D0B1E';
 const CARD = '#1A1730';
@@ -28,6 +29,7 @@ interface MenuBodyProps {
 
 function MenuBody({ name, initial, level, xp, maxXp, isPremium, isGuest, onNavigate, onSignOut, onSignUp }: MenuBodyProps) {
   const pct = Math.min((xp % maxXp) / maxXp * 100, 100);
+  const { equipped } = useAvatar();
 
   const items = [
     { icon: <BarChart3 className="h-4 w-4" />, label: 'My Progress', to: '/my-progress' },
@@ -41,12 +43,7 @@ function MenuBody({ name, initial, level, xp, maxXp, isPremium, isGuest, onNavig
       {/* Summary */}
       <div className="p-4" style={{ backgroundColor: CARD }}>
         <div className="flex items-center gap-3">
-          <div
-            className="flex items-center justify-center rounded-full text-white font-bold flex-shrink-0"
-            style={{ width: 48, height: 48, backgroundColor: PURPLE }}
-          >
-            {initial}
-          </div>
+          <AvatarVisual id={equipped} size={48} initial={initial} />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <p className="text-white font-bold truncate">{name}</p>
@@ -129,6 +126,7 @@ export function ProfileMenu() {
   const [open, setOpen] = useState(false);
   const { user, profile, signOut } = useAuth();
   const { isGuest, displayName, displayXp, displayLevel, setShowSaveProgressModal } = useGuest();
+  const { equipped } = useAvatar();
 
   const name = profile?.gamer_name || displayName || 'Guest';
   const initial = (name || 'G').charAt(0).toUpperCase();
@@ -153,12 +151,7 @@ export function ProfileMenu() {
       className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-muted/40 transition-colors"
       aria-label="Open profile menu"
     >
-      <div
-        className="flex items-center justify-center rounded-full text-white text-xs font-bold flex-shrink-0"
-        style={{ width: 32, height: 32, backgroundColor: PURPLE }}
-      >
-        {initial}
-      </div>
+      <AvatarVisual id={equipped} size={32} initial={initial} />
       <span className="text-sm text-foreground font-medium max-w-[120px] truncate">{name}</span>
       <ChevronDown className="h-4 w-4 text-muted-foreground" />
     </button>
