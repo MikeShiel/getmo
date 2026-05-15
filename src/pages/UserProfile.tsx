@@ -1,12 +1,18 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Gamepad2, Zap, Trophy, Medal, Lock, Swords, Shield, UserPlus, UserMinus, Check, X,
-  Flame, Brain, Car, Users as UsersIcon,
+  Flame, Brain, Car, Users as UsersIcon, MoreHorizontal,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
+} from '@/components/ui/dialog';
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useFriends, Friend } from '@/components/friends/FriendsContext';
 import { useGuest } from '@/contexts/GuestContext';
@@ -105,6 +111,9 @@ export default function UserProfile() {
 
   const mock = useMockProfile(username, friend);
 
+  // Confirmation modal state
+  const [confirm, setConfirm] = useState<{ title: string; desc: string; confirmLabel: string; confirmColor?: string; onConfirm: () => void } | null>(null);
+
   // For self, override with real values
   const level    = isOwnProfile ? guest.displayLevel : mock.level;
   const totalXp  = isOwnProfile ? guest.displayXp    : mock.totalXp;
@@ -131,14 +140,44 @@ export default function UserProfile() {
       </div>
     );
     if (friend) return (
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex items-center gap-2">
         <Button onClick={() => toast('Coming Soon')} className="text-white" style={{ background: PURPLE }}>
           <Swords className="h-4 w-4 mr-1" /> Challenge
         </Button>
-        <Button variant="outline" onClick={() => f.removeFriend(friend.id)}>
-          <UserMinus className="h-4 w-4 mr-1" /> Remove Friend
-        </Button>
-        <Button variant="outline" onClick={() => f.blockFriend(friend.id)}>Block</Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="More options" className="h-10 w-10">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8 }}>
+            <DropdownMenuItem
+              onClick={() => setConfirm({
+                title: `Remove ${friend.username} as a friend?`,
+                desc: 'They will not be notified.',
+                confirmLabel: 'Remove',
+                confirmColor: RED,
+                onConfirm: () => f.removeFriend(friend.id),
+              })}
+              className="text-white cursor-pointer"
+            >
+              Remove Friend
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setConfirm({
+                title: `Block ${friend.username}?`,
+                desc: "They will be removed from your friends and won't be able to contact you.",
+                confirmLabel: 'Block',
+                confirmColor: RED,
+                onConfirm: () => f.blockFriend(friend.id),
+              })}
+              style={{ color: RED }}
+              className="cursor-pointer"
+            >
+              Block
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     );
     if (blocked) return (
@@ -263,6 +302,25 @@ export default function UserProfile() {
           )}
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={!!confirm} onOpenChange={(o) => !o && setConfirm(null)}>
+        <DialogContent style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+          <DialogHeader>
+            <DialogTitle className="text-white">{confirm?.title}</DialogTitle>
+            <DialogDescription className="text-muted-foreground">{confirm?.desc}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" onClick={() => setConfirm(null)}>Cancel</Button>
+            <Button
+              onClick={() => { confirm?.onConfirm(); setConfirm(null); }}
+              style={{ background: confirm?.confirmColor || RED, color: '#fff' }}
+            >
+              {confirm?.confirmLabel}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 }
