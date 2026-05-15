@@ -150,7 +150,7 @@ export function MyProgress() {
       </div>
 
       {/* Right column: Event History */}
-      <div className="lg:col-span-7">
+      <div className="lg:basis-[55%] lg:flex-1">
         <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm h-full">
           <div className="p-5 border-b border-border/50">
             <h2 className="font-orbitron font-bold text-foreground flex items-center gap-2">
