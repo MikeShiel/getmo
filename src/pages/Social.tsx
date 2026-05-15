@@ -106,7 +106,7 @@ export default function Social() {
     },
   ];
 
-  const removeFriend = (f: Friend) =>
+  const promptRemoveFriend = (f: Friend) =>
     setConfirm({
       title: `Remove ${f.username} as a friend?`,
       desc: 'They will not be notified.',
@@ -114,7 +114,7 @@ export default function Social() {
       onConfirm: () => removeFriend(f.id),
     });
 
-  const blockFriend = (f: Friend) =>
+  const promptBlockFriend = (f: Friend) =>
     setConfirm({
       title: `Block ${f.username}?`,
       desc: "They will be removed from your friends and won't be able to contact you.",
@@ -122,7 +122,7 @@ export default function Social() {
       onConfirm: () => blockFriend(f.id),
     });
 
-  const unblock = (b: Blocked) =>
+  const promptUnblock = (b: Blocked) =>
     setConfirm({
       title: `Unblock ${b.username}?`,
       desc: 'They will be able to find you and send friend requests again.',
@@ -201,8 +201,8 @@ export default function Social() {
               <YourFriends
                 friends={friends}
                 onAdd={() => setView('add')}
-                onRemove={removeFriend}
-                onBlock={blockFriend}
+                onRemove={promptRemoveFriend}
+                onBlock={promptBlockFriend}
               />
             )}
             {view === 'add' && (
@@ -211,38 +211,23 @@ export default function Social() {
                 outgoing={outgoing}
                 incoming={incoming}
                 blocked={blocked}
-                onSendRequest={(u) => setOutgoing(o => [{ id: 'o' + Date.now(), username: u.username, level: u.level, agoMin: 0 }, ...o])}
-                onCancelOutgoing={(id) => setOutgoing(o => o.filter(x => x.id !== id))}
-                onAcceptIncoming={(id) => {
-                  const inc = incoming.find(i => i.id === id);
-                  if (!inc) return;
-                  setIncoming(i => i.filter(x => x.id !== id));
-                  setFriends(f => [...f, { id: 'f' + Date.now(), username: inc.username, level: inc.level, status: 'online' }]);
-                }}
+                onSendRequest={(u) => sendRequest(u)}
+                onCancelOutgoing={(id) => cancelOutgoing(id)}
+                onAcceptIncoming={(id) => acceptIncoming(id)}
               />
             )}
             {view === 'pending' && (
               <PendingInvites
                 incoming={incoming}
                 outgoing={outgoing}
-                onAccept={(id) => {
-                  const inc = incoming.find(i => i.id === id);
-                  if (!inc) return;
-                  setIncoming(i => i.filter(x => x.id !== id));
-                  setFriends(f => [...f, { id: 'f' + Date.now(), username: inc.username, level: inc.level, status: 'online' }]);
-                }}
-                onDecline={(id) => setIncoming(i => i.filter(x => x.id !== id))}
-                onBlockIncoming={(id) => {
-                  const inc = incoming.find(i => i.id === id);
-                  if (!inc) return;
-                  setIncoming(i => i.filter(x => x.id !== id));
-                  setBlocked(b => [...b, { id: inc.id, username: inc.username, level: inc.level }]);
-                }}
-                onCancelOutgoing={(id) => setOutgoing(o => o.filter(x => x.id !== id))}
+                onAccept={(id) => acceptIncoming(id)}
+                onDecline={(id) => declineIncoming(id)}
+                onBlockIncoming={(id) => blockIncoming(id)}
+                onCancelOutgoing={(id) => cancelOutgoing(id)}
               />
             )}
             {view === 'blocked' && (
-              <BlockedView blocked={blocked} onUnblock={unblock} />
+              <BlockedView blocked={blocked} onUnblock={promptUnblock} />
             )}
             {view.startsWith('clans-') && (
               <div className="text-muted-foreground text-sm py-12 text-center">Clans section — coming next.</div>
