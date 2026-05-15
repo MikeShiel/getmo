@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bell, X, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -14,38 +14,70 @@ export function NotificationsBell() {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const showTimer = useRef<number | null>(null);
   const closeTimer = useRef<number | null>(null);
   const { notifications, unreadCount, markAllRead, dismiss, accept, decline, markRead } = useNotifications();
   const friends = useFriends();
 
   const enter = () => {
     if (isMobile) return;
-    if (closeTimer.current) window.clearTimeout(closeTimer.current);
-    setOpen(true);
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    if (!open && !showTimer.current) {
+      showTimer.current = window.setTimeout(() => {
+        setOpen(true);
+        showTimer.current = null;
+      }, 150);
+    }
   };
   const leave = () => {
     if (isMobile) return;
+    if (showTimer.current) {
+      window.clearTimeout(showTimer.current);
+      showTimer.current = null;
+    }
     closeTimer.current = window.setTimeout(() => setOpen(false), 150);
   };
+
+  useEffect(() => () => {
+    if (showTimer.current) window.clearTimeout(showTimer.current);
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+  }, []);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isMobile) {
       navigate('/notifications');
     } else {
+      if (showTimer.current) {
+        window.clearTimeout(showTimer.current);
+        showTimer.current = null;
+      }
+      if (closeTimer.current) {
+        window.clearTimeout(closeTimer.current);
+        closeTimer.current = null;
+      }
       setOpen((o) => !o);
     }
+  };
+
+  const viewAllNotifications = () => {
+    setOpen(false);
+    navigate('/notifications');
   };
 
   const top5 = notifications.slice(0, 5);
 
   return (
-    <div className="relative" onMouseEnter={enter} onMouseLeave={leave}>
+    <div className="relative pb-3" onMouseEnter={enter} onMouseLeave={leave}>
       <Button
         variant="ghost"
         size="icon"
         className="relative h-10 w-10 min-h-[40px] min-w-[40px]"
         aria-label="Notifications"
+        type="button"
         onClick={handleClick}
       >
         <Bell className="h-4 w-4" />
@@ -61,7 +93,7 @@ export function NotificationsBell() {
 
       {open && !isMobile && (
         <div
-          className="absolute right-0 top-full mt-2 z-50 animate-fade-in"
+          className="absolute right-0 top-full z-50 animate-fade-in"
           style={{
             minWidth: 340,
             backgroundColor: '#1A1730',
@@ -184,14 +216,14 @@ export function NotificationsBell() {
 
           {/* CTA */}
           <div className="p-3" style={{ borderTop: '1px solid #2E2A50' }}>
-            <Link to="/notifications" onClick={() => setOpen(false)}>
-              <button
-                className="w-full text-sm font-semibold py-2 rounded-lg text-white hover:opacity-90"
-                style={{ backgroundColor: PURPLE }}
-              >
-                View All Notifications →
-              </button>
-            </Link>
+            <button
+              type="button"
+              onClick={viewAllNotifications}
+              className="w-full text-sm font-semibold py-2 rounded-lg text-white hover:opacity-90"
+              style={{ backgroundColor: PURPLE }}
+            >
+              View All Notifications →
+            </button>
           </div>
         </div>
       )}
