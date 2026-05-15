@@ -17,6 +17,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useAvatar, AvatarVisual } from '@/contexts/AvatarContext';
+import { AvatarPickerModal } from '@/components/avatars/AvatarPickerModal';
 
 const profileSchema = z.object({
   gamerName: z.string().min(3, 'Gamer name must be at least 3 characters').max(20),
@@ -194,6 +196,7 @@ export default function Profile() {
 
           {/* Account Tab */}
           <TabsContent value="account" className="space-y-6">
+            <AvatarCard />
             {/* Gamer Name */}
             <div className="glass-card p-6">
               <h3 className="text-lg font-semibold mb-4">{t('profile.gamerName')}</h3>
