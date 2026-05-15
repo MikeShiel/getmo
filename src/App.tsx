@@ -10,6 +10,7 @@ import { PlayAndEarnProvider } from "@/components/earn/PlayAndEarnContext";
 import { SocialProvider } from "@/components/social/SocialContext";
 import { NotificationsProvider } from "@/components/notifications/NotificationsContext";
 import { FriendsProvider } from "@/components/friends/FriendsContext";
+import { AvatarProvider } from "@/contexts/AvatarContext";
 import { SaveProgressModal } from "@/components/modals/SaveProgressModal";
 import Index from "./pages/Index";
 import GameDetail from "./pages/GameDetail";
@@ -43,6 +44,7 @@ const App = () => (
             <SocialProvider>
               <NotificationsProvider>
               <FriendsProvider>
+              <AvatarProvider>
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
@@ -72,6 +74,7 @@ const App = () => (
                   </Routes>
                 </BrowserRouter>
               </TooltipProvider>
+              </AvatarProvider>
               </FriendsProvider>
               </NotificationsProvider>
             </SocialProvider>
