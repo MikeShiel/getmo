@@ -82,7 +82,7 @@ export default function DailyMissions() {
             </div>
             <div className="mt-3 text-right">
               <Link
-                to="/my-progress"
+                to="/my-progress?tab=rewards"
                 className="text-xs font-semibold hover:underline"
                 style={{ color: PURPLE }}
               >
