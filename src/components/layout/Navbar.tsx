@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Users, Trophy } from 'lucide-react';
+import { Menu, X, Download, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -36,13 +36,6 @@ export function Navbar() {
             <DailyMissionsNavItem />
 
             <NotificationsBell />
-
-            <Link to="/social">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Users className="h-4 w-4" />
-                Social
-              </Button>
-            </Link>
 
             <Button
               variant="ghost"
@@ -85,13 +78,6 @@ export function Navbar() {
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <span aria-hidden="true">🔥</span>
                   Daily Missions
-                </Button>
-              </Link>
-
-              <Link to="/social" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Users className="h-4 w-4" />
-                  Social
                 </Button>
               </Link>
 
