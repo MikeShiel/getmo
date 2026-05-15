@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Users, Trophy } from 'lucide-react';
+import { Menu, X, Download, Users, Trophy, Bell } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -33,6 +33,11 @@ export function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 ml-4">
             <DailyMissionsNavItem />
+
+            <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
+              <Bell className="h-4 w-4" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary" />
+            </Button>
 
             <Link to="/social">
               <Button variant="ghost" size="sm" className="gap-2">
