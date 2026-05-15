@@ -57,17 +57,10 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 ml-4">
-            <Link to="/vouchers">
+            <Link to="/rewards">
               <Button variant="ghost" size="sm" className="gap-2">
-                <Ticket className="h-4 w-4" />
-                Store
-              </Button>
-            </Link>
-
-            <Link to="/play-and-earn">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Coins className="h-4 w-4" />
-                Play & Earn
+                <Target className="h-4 w-4" />
+                Daily Missions
               </Button>
             </Link>
 
