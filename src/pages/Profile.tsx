@@ -450,3 +450,25 @@ export default function Profile() {
     </Layout>
   );
 }
+
+function AvatarCard() {
+  const { profile } = useAuth();
+  const { displayName } = useGuest();
+  const { equipped } = useAvatar();
+  const [open, setOpen] = useState(false);
+  const name = profile?.gamer_name || displayName || 'Guest';
+  const initial = (name || 'G').charAt(0).toUpperCase();
+  return (
+    <div className="glass-card p-6 flex items-center gap-5">
+      <button onClick={() => setOpen(true)} aria-label="Change avatar" className="rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
+        <AvatarVisual id={equipped} size={80} initial={initial} />
+      </button>
+      <div className="flex-1 min-w-0">
+        <h3 className="text-lg font-semibold">Avatar</h3>
+        <p className="text-sm text-muted-foreground">Customise how you appear across Getmo.</p>
+      </div>
+      <Button onClick={() => setOpen(true)} variant="outline">Change Avatar</Button>
+      <AvatarPickerModal open={open} onOpenChange={setOpen} />
+    </div>
+  );
+}
