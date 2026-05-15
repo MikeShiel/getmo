@@ -54,9 +54,9 @@ export function MyProgress() {
   const currentLevel = profile?.xp_level || 1;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in">
+    <div className="flex flex-col lg:flex-row gap-6 animate-fade-in">
       {/* Left column: XP Breakdown + Daily Cap */}
-      <div className="lg:col-span-5 space-y-6">
+      <div className="lg:basis-[45%] lg:flex-shrink-0 space-y-6">
         {/* XP Breakdown Card */}
         <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm">
           <div className="p-5 border-b border-border/50">
