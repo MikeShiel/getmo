@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import {
   Users, UserPlus, Inbox, Ban, Shield, Compass, Plus, Mail,
@@ -358,7 +359,9 @@ function FriendRow({ f, onRemove, onBlock }: { f: Friend; onRemove: () => void; 
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>View Profile</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link to={`/user/${f.username}`}>View Profile</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem><Swords className="h-4 w-4 mr-2" /> Challenge</DropdownMenuItem>
           <DropdownMenuItem onClick={onRemove} className="text-destructive">Remove Friend</DropdownMenuItem>
           <DropdownMenuItem onClick={onBlock} className="text-destructive">Block</DropdownMenuItem>
