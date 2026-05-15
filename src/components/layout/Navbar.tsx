@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Menu, X, Download, Users, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +16,6 @@ export function Navbar() {
   const [progressOpen, setProgressOpen] = useState(false);
   const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const { t } = useTheme();
-  const navigate = useNavigate();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
