@@ -103,12 +103,15 @@ export function MyProgress() {
                     style={{
                       width: `${(day.used / day.cap) * 100}%`,
                       background: day.used >= day.cap
-                        ? 'hsl(var(--secondary))'
+                        ? '#F5C41A'
                         : 'hsl(var(--primary))',
                     }}
                   />
                 </div>
-                <span className={`text-xs font-medium w-16 text-right ${day.used >= day.cap ? 'text-secondary' : 'text-muted-foreground'}`}>
+                <span
+                  className={`text-xs font-medium w-16 text-right ${day.used >= day.cap ? '' : 'text-muted-foreground'}`}
+                  style={day.used >= day.cap ? { color: '#F5C41A' } : undefined}
+                >
                   {day.used}/{day.cap}
                 </span>
               </div>
