@@ -190,6 +190,142 @@ function RewardsTab({
           onEquip={() => equip('king')}
         />
       </div>
+
+      {/* Available to Unlock */}
+      <AvailableToUnlockSection kingUnlocked={kingUnlocked} />
+    </div>
+  );
+}
+
+// ---- Available to Unlock ----
+interface LockedReward {
+  id: string;
+  name: string;
+  rarity: Rarity;
+  instruction: string;
+  progress?: { current: number; target: number };
+  ctaLabel?: string;
+  ctaHref?: string;
+  icon: React.ReactNode;
+  unlocked: boolean;
+}
+
+function AvailableToUnlockSection({ kingUnlocked }: { kingUnlocked: boolean }) {
+  const rewards: LockedReward[] = [
+    {
+      id: 'top-dog', name: 'Top Dog', rarity: 'epic',
+      instruction: 'Reach #1 on any game leaderboard. Play more to climb the ranks.',
+      icon: <Trophy className="h-7 w-7" />, unlocked: false,
+    },
+    {
+      id: 'rival', name: 'Rival', rarity: 'rare',
+      instruction: "Beat a friend's score in any game. Add friends and challenge them.",
+      icon: <UsersIcon className="h-7 w-7" />, unlocked: false,
+    },
+    {
+      id: 'puzzle-master', name: 'Puzzle Master', rarity: 'rare',
+      instruction: 'Play 10 puzzle games. Try Cyber Puzzle, Sudoku Pro or Word Quest.',
+      progress: { current: 6, target: 10 },
+      ctaLabel: 'Go Play Puzzle', ctaHref: '/?category=puzzle',
+      icon: <Brain className="h-7 w-7" />, unlocked: false,
+    },
+    {
+      id: 'speed-racer', name: 'Speed Racer', rarity: 'rare',
+      instruction: 'Play 10 racing games. Try Neon Rider, F1 Circuit or Traffic Car Rush.',
+      progress: { current: 3, target: 10 },
+      ctaLabel: 'Go Play Racing', ctaHref: '/?category=racing',
+      icon: <Car className="h-7 w-7" />, unlocked: false,
+    },
+    {
+      id: 'veteran', name: 'Veteran', rarity: 'epic',
+      instruction: 'Complete 50 rounds in any game. Keep playing.',
+      progress: { current: 32, target: 50 },
+      icon: <Medal className="h-7 w-7" />, unlocked: false,
+    },
+    {
+      id: 'king-getmo', name: 'King Getmo', rarity: 'legendary',
+      instruction: 'Reach #1 on any game leaderboard to unlock the rarest avatar on Getmo.',
+      icon: <Crown className="h-7 w-7" />, unlocked: kingUnlocked,
+    },
+  ];
+
+  const locked = rewards
+    .filter(r => !r.unlocked)
+    .sort((a, b) => {
+      const aPct = a.progress ? a.progress.current / a.progress.target : -1;
+      const bPct = b.progress ? b.progress.current / b.progress.target : -1;
+      return bPct - aPct;
+    });
+
+  if (locked.length === 0) {
+    return (
+      <div className="mt-8 p-6 text-center font-bold" style={{ color: GOLD }}>
+        🎉 You've unlocked everything. Legendary status achieved.
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <h2 className="mt-8 mb-1 text-lg font-bold text-white">
+        🔒 Available to Unlock ({locked.length} remaining)
+      </h2>
+      <p className="mb-3 text-sm text-muted-foreground">
+        Complete these challenges to earn exclusive badges and avatars
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {locked.map(r => <LockedRewardCard key={r.id} reward={r} />)}
+      </div>
+    </>
+  );
+}
+
+function LockedRewardCard({ reward }: { reward: LockedReward }) {
+  const r = RARITY[reward.rarity];
+  const pct = reward.progress ? (reward.progress.current / reward.progress.target) * 100 : 0;
+  const barColor = pct >= 80 ? GOLD : PURPLE;
+  return (
+    <div
+      className="p-4"
+      style={{
+        backgroundColor: CARD_BG,
+        borderRadius: 12,
+        borderLeft: `2px solid ${r.color}`,
+      }}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div style={{ color: '#555170' }}>{reward.icon}</div>
+        <span
+          className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase"
+          style={{ backgroundColor: `${r.color}22`, color: r.color }}
+        >
+          {r.label}
+        </span>
+      </div>
+      <p className="mt-2 text-sm font-bold text-white">{reward.name}</p>
+      <p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+        How to unlock
+      </p>
+      <p className="mt-1 text-sm text-white leading-snug">{reward.instruction}</p>
+      {reward.progress && (
+        <div className="mt-3">
+          <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: BORDER }}>
+            <div className="h-full" style={{ width: `${pct}%`, backgroundColor: barColor }} />
+          </div>
+          <p className="text-[11px] text-muted-foreground mt-1">
+            {reward.progress.current}/{reward.progress.target}
+          </p>
+        </div>
+      )}
+      {reward.ctaLabel && reward.ctaHref && (
+        <Link
+          to={reward.ctaHref}
+          className="inline-block mt-3 text-sm font-semibold"
+          style={{ color: PURPLE }}
+        >
+          → {reward.ctaLabel}
+        </Link>
+      )}
     </div>
   );
 }
