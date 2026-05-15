@@ -111,6 +111,9 @@ export default function UserProfile() {
 
   const mock = useMockProfile(username, friend);
 
+  // Confirmation modal state
+  const [confirm, setConfirm] = useState<{ title: string; desc: string; confirmLabel: string; confirmColor?: string; onConfirm: () => void } | null>(null);
+
   // For self, override with real values
   const level    = isOwnProfile ? guest.displayLevel : mock.level;
   const totalXp  = isOwnProfile ? guest.displayXp    : mock.totalXp;
