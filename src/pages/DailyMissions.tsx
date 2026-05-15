@@ -2,6 +2,7 @@ import {
   CalendarCheck, Gamepad2, Clock, Trophy, Star, Target,
   CheckCircle2, Circle,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Progress } from '@/components/ui/progress';
 
@@ -52,6 +53,42 @@ export default function DailyMissions() {
               className="h-full transition-all"
               style={{ width: `${pct}%`, backgroundColor: PURPLE }}
             />
+          </div>
+
+          {/* Working Towards */}
+          <div
+            className="mt-6 p-4"
+            style={{
+              backgroundColor: CARD_BG,
+              borderRadius: 12,
+              borderLeft: `2px solid ${GOLD}`,
+            }}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm md:text-base font-bold text-white">
+                  <span aria-hidden="true">🏆</span> Working Towards: Puzzle Master
+                </p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-0.5">
+                  Play 10 different puzzle games to earn this badge
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <Progress value={60} className="h-1.5 flex-1" />
+                  <span className="text-xs text-muted-foreground whitespace-nowrap">
+                    6/10 puzzle games
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 text-right">
+              <Link
+                to="/my-progress"
+                className="text-xs font-semibold hover:underline"
+                style={{ color: PURPLE }}
+              >
+                View All Rewards →
+              </Link>
+            </div>
           </div>
 
           {/* Missions list */}
