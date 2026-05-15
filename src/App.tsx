@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { GuestProvider } from "@/contexts/GuestContext";
 import { PlayAndEarnProvider } from "@/components/earn/PlayAndEarnContext";
 import { SocialProvider } from "@/components/social/SocialContext";
+import { NotificationsProvider } from "@/components/notifications/NotificationsContext";
 import { SaveProgressModal } from "@/components/modals/SaveProgressModal";
 import Index from "./pages/Index";
 import GameDetail from "./pages/GameDetail";
@@ -28,6 +29,7 @@ import MyVouchers from "./pages/MyVouchers";
 import Social from "./pages/Social";
 import DailyMissions from "./pages/DailyMissions";
 import MyProgressPage from "./pages/MyProgress";
+import NotificationsPage from "./pages/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ const App = () => (
         <GuestProvider>
           <PlayAndEarnProvider>
             <SocialProvider>
+              <NotificationsProvider>
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
@@ -62,10 +65,12 @@ const App = () => (
                     <Route path="/social" element={<Social />} />
                     <Route path="/daily-missions" element={<DailyMissions />} />
                     <Route path="/my-progress" element={<MyProgressPage />} />
+                    <Route path="/notifications" element={<NotificationsPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </BrowserRouter>
               </TooltipProvider>
+              </NotificationsProvider>
             </SocialProvider>
           </PlayAndEarnProvider>
         </GuestProvider>
