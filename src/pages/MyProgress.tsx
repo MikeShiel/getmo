@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import {
   Award, Crown, Lock, Gamepad2, Flame, Brain, Car, Trophy, Users as UsersIcon,
@@ -6,12 +7,12 @@ import {
   CalendarCheck, Clock, UserCheck, Play, TrendingUp, CheckCircle, Target, Rocket, RotateCcw, Zap,
 } from 'lucide-react';
 import { Layout } from '@/components/layout/Layout';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGuest } from '@/contexts/GuestContext';
 import { useAvatar, AvatarVisual, AvatarId } from '@/contexts/AvatarContext';
 import { MyProgress as MyProgressContent } from '@/components/rewards/MyProgress';
+import { AvatarPickerModal } from '@/components/avatars/AvatarPickerModal';
 
 const PURPLE = '#7C3AED';
 const GOLD = '#F5C41A';
@@ -58,6 +59,17 @@ const BADGES: Badge[] = [
 
 export default function MyProgressPage() {
   const [tab, setTab] = useState<Tab>('xp');
+  const [params, setParams] = useSearchParams();
+  const [pickerOpen, setPickerOpen] = useState(false);
+
+  useEffect(() => {
+    if (params.get('openAvatar') === '1') {
+      setTab('rewards');
+      setPickerOpen(true);
+      params.delete('openAvatar');
+      setParams(params, { replace: true });
+    }
+  }, [params, setParams]);
 
   return (
     <Layout>
@@ -83,8 +95,10 @@ export default function MyProgressPage() {
           </div>
 
           {tab === 'xp' && <MyProgressContent />}
-          {tab === 'rewards' && <RewardsTab />}
+          {tab === 'rewards' && <RewardsTab onOpenPicker={() => setPickerOpen(true)} />}
           {tab === 'activity' && <ActivityTab />}
+
+          <AvatarPickerModal open={pickerOpen} onOpenChange={setPickerOpen} initialTab="earned" />
         </div>
       </div>
     </Layout>
@@ -92,11 +106,10 @@ export default function MyProgressPage() {
 }
 
 // ---- Rewards Tab ----
-function RewardsTab() {
+function RewardsTab({ onOpenPicker }: { onOpenPicker: () => void }) {
   const { profile } = useAuth();
   const { displayName, displayLevel } = useGuest();
   const { equipped, kingUnlocked, setEquipped } = useAvatar();
-  const [pickerOpen, setPickerOpen] = useState(false);
 
   const name = profile?.gamer_name || displayName || 'Guest';
   const initial = (name || 'G').charAt(0).toUpperCase();
@@ -118,7 +131,7 @@ function RewardsTab() {
           </span>
         </div>
         <button
-          onClick={() => setPickerOpen(true)}
+          onClick={onOpenPicker}
           className="px-4 py-2 rounded-lg text-sm font-semibold border-2 transition-colors hover:bg-white/5"
           style={{ color: PURPLE, borderColor: PURPLE }}
         >
@@ -146,35 +159,7 @@ function RewardsTab() {
           onEquip={() => equip('king')}
         />
       </div>
-
-      {/* Avatar picker modal (Prompt 7 will replace) */}
-      <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
-        <DialogContent className="max-w-md p-0" style={{ backgroundColor: CARD_BG, border: `1px solid ${BORDER}` }}>
-          <DialogTitle className="px-5 pt-5 text-white">Change Avatar</DialogTitle>
-          <div className="grid grid-cols-2 gap-3 p-5">
-            <PickerOption label="Standard Getmo" id="standard" current={equipped} onPick={(id) => { equip(id); setPickerOpen(false); }} disabled={false} />
-            <PickerOption label="King Getmo" id="king" current={equipped} onPick={(id) => { equip(id); setPickerOpen(false); }} disabled={!kingUnlocked} />
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
-  );
-}
-
-function PickerOption({ label, id, current, onPick, disabled }: { label: string; id: AvatarId; current: AvatarId; onPick: (id: AvatarId) => void; disabled: boolean; }) {
-  const isCurrent = current === id;
-  return (
-    <button
-      disabled={disabled}
-      onClick={() => onPick(id)}
-      className="flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-      style={{ borderColor: isCurrent ? PURPLE : BORDER, backgroundColor: '#0F0D1F' }}
-    >
-      <AvatarVisual id={id} size={64} initial="G" />
-      <span className="text-xs font-semibold text-white">{label}</span>
-      {isCurrent && <span className="text-[10px] font-bold" style={{ color: '#22C55E' }}>EQUIPPED</span>}
-      {disabled && <span className="text-[10px] text-muted-foreground">Locked</span>}
-    </button>
   );
 }
 
