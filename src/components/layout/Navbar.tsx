@@ -35,6 +35,13 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-4 ml-4">
             <DailyMissionsNavItem />
 
+            <Link to="/challenges">
+              <Button variant="ghost" size="sm" className="gap-2 h-10">
+                <Target className="h-4 w-4" />
+                Challenges
+              </Button>
+            </Link>
+
             <NotificationsBell />
 
             <Button
