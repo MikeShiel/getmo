@@ -42,8 +42,6 @@ export function Navbar() {
               </Button>
             </Link>
 
-            <NotificationsBell />
-
             <Button
               variant="ghost"
               size="sm"
@@ -58,6 +56,8 @@ export function Navbar() {
               <Download className="h-4 w-4" />
               {t('nav.install')}
             </Button>
+
+            <NotificationsBell />
 
             <ProfileMenu />
           </div>
