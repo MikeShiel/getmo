@@ -88,6 +88,13 @@ export function Navbar() {
                 </Button>
               </Link>
 
+              <Link to="/challenges" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Target className="h-4 w-4" />
+                  Challenges
+                </Button>
+              </Link>
+
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-2"
