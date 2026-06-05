@@ -3,6 +3,18 @@ export interface VoucherVariant {
   label: string;
   pointsCost: number;
   dollarValue: number;
+  offers: VendorOffer[];
+}
+
+export interface VendorOffer {
+  vendor: 'Razer Gold' | 'Xsolla' | 'Ubisoft Store';
+  vendorLogo: string;
+  price: number;
+  rating: 'Excellent' | 'Good';
+  positiveFeedback: number;
+  salesCount: number;
+  deliveryType: 'Instant';
+  sponsored: boolean;
 }
 
 export type VoucherCategory = 'best-sellers' | 'recently-added' | 'trending';
