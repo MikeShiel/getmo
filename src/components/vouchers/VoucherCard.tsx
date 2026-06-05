@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
-import type { Voucher } from '@/data/mockVouchers';
+import { getProductFromPrice, type Voucher } from '@/data/mockVouchers';
 
 interface VoucherCardProps {
   voucher: Voucher;
@@ -8,7 +8,8 @@ interface VoucherCardProps {
 }
 
 export function VoucherCard({ voucher, compact = false }: VoucherCardProps) {
-  const lowestVariant = voucher.variants[0];
+  const cheapest = getProductFromPrice(voucher);
+  const priceLabel = cheapest ? `$${cheapest.price.toFixed(2)}` : '—';
 
   if (compact) {
     return (
@@ -41,7 +42,7 @@ export function VoucherCard({ voucher, compact = false }: VoucherCardProps) {
               </h3>
               <div className="flex items-center justify-between mt-0.5">
                 <span className="text-xs font-semibold text-secondary">
-                  {lowestVariant.pointsCost.toLocaleString()} pts
+                  {priceLabel}
                 </span>
                 <span className="text-[10px] text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                   Claim →
@@ -90,7 +91,7 @@ export function VoucherCard({ voucher, compact = false }: VoucherCardProps) {
           </p>
           <div className="mt-3 flex items-center justify-between">
             <span className="text-sm font-semibold text-secondary">
-              From {lowestVariant.pointsCost.toLocaleString()} pts
+              From {priceLabel}
             </span>
             <span className="text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Claim Now →

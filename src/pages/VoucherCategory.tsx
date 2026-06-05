@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockVouchers, type Voucher } from '@/data/mockVouchers';
+import { mockVouchers, getProductFromPrice, type Voucher } from '@/data/mockVouchers';
 import { ArrowLeft, Search, X, LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -48,7 +48,7 @@ export default function VoucherCategory() {
   const [query, setQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState('All');
   const [selectedType, setSelectedType] = useState('all');
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const [maxPrice, setMaxPrice] = useState(200);
   const [sortBy, setSortBy] = useState('popular');
   const [gridView, setGridView] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -66,15 +66,18 @@ export default function VoucherCategory() {
     if (selectedType !== 'all') {
       filtered = filtered.filter(v => v.type === selectedType);
     }
-    filtered = filtered.filter(v => v.variants.some(vr => vr.pointsCost <= maxPrice));
+    filtered = filtered.filter(v => {
+      const cheapest = getProductFromPrice(v);
+      return cheapest ? cheapest.price <= maxPrice : true;
+    });
 
     // Sort
     switch (sortBy) {
       case 'price-low':
-        filtered.sort((a, b) => a.variants[0].pointsCost - b.variants[0].pointsCost);
+        filtered.sort((a, b) => (getProductFromPrice(a)?.price ?? 0) - (getProductFromPrice(b)?.price ?? 0));
         break;
       case 'price-high':
-        filtered.sort((a, b) => b.variants[0].pointsCost - a.variants[0].pointsCost);
+        filtered.sort((a, b) => (getProductFromPrice(b)?.price ?? 0) - (getProductFromPrice(a)?.price ?? 0));
         break;
       case 'name':
         filtered.sort((a, b) => a.brand.localeCompare(b.brand));
@@ -152,19 +155,19 @@ export default function VoucherCategory() {
 
       {/* Price */}
       <div>
-        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Max Points</p>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Max Price (USD)</p>
         <Slider
           value={[maxPrice]}
           onValueChange={([val]) => setMaxPrice(val)}
-          min={500}
-          max={10000}
-          step={500}
+          min={5}
+          max={200}
+          step={5}
           className="mb-2"
         />
         <div className="flex justify-between text-xs text-muted-foreground">
-          <span>500</span>
-          <span className="font-medium text-foreground">{maxPrice.toLocaleString()} pts</span>
-          <span>10,000</span>
+          <span>$5</span>
+          <span className="font-medium text-foreground">${maxPrice}</span>
+          <span>$200</span>
         </div>
       </div>
 
@@ -173,7 +176,7 @@ export default function VoucherCategory() {
         variant="ghost"
         size="sm"
         className="w-full text-xs"
-        onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(10000); }}
+        onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(200); }}
       >
         Reset Filters
       </Button>
@@ -295,7 +298,9 @@ export default function VoucherCategory() {
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="text-sm font-bold text-secondary">{v.variants[0].pointsCost.toLocaleString()} pts</p>
+                          <p className="text-sm font-bold text-secondary">
+                            From ${getProductFromPrice(v)?.price.toFixed(2) ?? '—'}
+                          </p>
                           <p className="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Claim →</p>
                         </div>
                       </div>
@@ -307,7 +312,7 @@ export default function VoucherCategory() {
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <Search className="h-12 w-12 text-muted-foreground/30 mb-4" />
                 <p className="text-muted-foreground mb-2">No vouchers match your filters.</p>
-                <Button variant="ghost" size="sm" onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(10000); }}>
+                <Button variant="ghost" size="sm" onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(200); }}>
                   Clear Filters
                 </Button>
               </div>
