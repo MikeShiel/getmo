@@ -3,7 +3,7 @@ export interface VoucherVariant {
   label: string;
   pointsCost: number;
   dollarValue: number;
-  offers: VendorOffer[];
+  offers?: VendorOffer[];
 }
 
 export interface VendorOffer {
