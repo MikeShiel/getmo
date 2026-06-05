@@ -10,6 +10,17 @@ import { ArrowLeft, ShieldCheck, Zap, ShoppingCart, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGuest } from '@/contexts/GuestContext';
 
+function voucherTypeLabel(type: string): string {
+  switch (type) {
+    case 'games': return 'Game Key';
+    case 'gift-cards': return 'Gift Card';
+    case 'subscriptions': return 'Subscription';
+    case 'in-game-currency':
+    case 'top-ups': return 'In-Game Currency';
+    default: return 'Voucher';
+  }
+}
+
 export default function VoucherDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
