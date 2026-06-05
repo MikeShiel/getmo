@@ -44,7 +44,7 @@ export function VoucherFilterOverlay({ open, onOpenChange }: VoucherFilterOverla
           <div className="relative mt-3">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search vouchers..."
+              placeholder="Search the store..."
               value={query}
               onChange={e => setQuery(e.target.value)}
               className="pl-10 bg-muted/50 border-border/50"

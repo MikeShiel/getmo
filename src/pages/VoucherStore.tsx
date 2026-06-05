@@ -640,7 +640,7 @@ function StoreTabContent() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search vouchers..."
+              placeholder="Search the store..."
               className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground hover:border-primary/40 focus:border-primary/60 focus:outline-none transition-colors text-sm"
             />
             {isSearching && (
@@ -649,7 +649,7 @@ function StoreTabContent() {
               </button>
             )}
           </div>
-          <Button variant="outline" size="sm" className="gap-2 border-border/50" onClick={() => navigate('/vouchers/category/all')}>
+          <Button variant="outline" size="sm" className="gap-2 border-border/50" onClick={() => navigate('/store/category/all')}>
             <SlidersHorizontal className="h-4 w-4" />
             <span className="hidden sm:inline">Filters</span>
           </Button>
@@ -678,7 +678,7 @@ function StoreTabContent() {
           <section className="container mx-auto px-4 py-6">
             <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
               {categories.map(({ label, icon: Icon, slug }) => (
-                <Link key={label} to={`/vouchers/category/${slug}`} className="flex flex-col items-center gap-2 p-3 rounded-xl glass-card border border-border/30 hover:border-primary/50 hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)] transition-all duration-200 group">
+                <Link key={label} to={`/store/category/${slug}`} className="flex flex-col items-center gap-2 p-3 rounded-xl glass-card border border-border/30 hover:border-primary/50 hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)] transition-all duration-200 group">
                   <div className="w-10 h-10 rounded-full bg-muted/60 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
@@ -698,7 +698,7 @@ function StoreTabContent() {
                       <Icon className="h-5 w-5 text-primary" />
                       <h2 className="text-xl font-bold font-[Orbitron]">{title}</h2>
                     </div>
-                    <Link to={`/vouchers/category/${key}`} className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                    <Link to={`/store/category/${key}`} className="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                       View All <ChevronRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -763,7 +763,7 @@ export default function VoucherStore() {
   };
 
   const tabs: { id: VoucherTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'store', label: 'Voucher Store', icon: <ShoppingCart className="h-4 w-4" /> },
+    { id: 'store', label: 'Store', icon: <ShoppingCart className="h-4 w-4" /> },
     { id: 'my-orders', label: 'My Orders', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
   ];
 

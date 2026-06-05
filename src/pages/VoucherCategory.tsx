@@ -190,7 +190,7 @@ export default function VoucherCategory() {
         <div className="container mx-auto px-4 py-3">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm mb-3">
-            <Link to="/vouchers" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+            <Link to="/store" className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
               <ArrowLeft className="h-3.5 w-3.5" />
               Store
             </Link>
@@ -280,7 +280,7 @@ export default function VoucherCategory() {
                   gridView ? (
                     <VoucherCard key={v.id} voucher={v} compact />
                   ) : (
-                    <Link key={v.id} to={`/vouchers/${v.id}`} className="group">
+                    <Link key={v.id} to={`/store/${v.id}`} className="group">
                       <div className="glass-card flex items-center gap-4 p-3 rounded-xl hover:border-primary/40 transition-all border border-transparent hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)]">
                         <img
                           src={v.thumbnail}

@@ -36,7 +36,7 @@ export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
             return (
             <Link
               key={voucher.id}
-              to={`/vouchers/${voucher.id}`}
+              to={`/store/${voucher.id}`}
               className="group relative"
             >
               <div className="relative rounded-2xl overflow-hidden border-2 border-border/40 hover:border-primary/60 transition-all duration-300 bg-card hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.2)]">
