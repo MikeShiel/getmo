@@ -640,7 +640,7 @@ function StoreTabContent() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search vouchers..."
+              placeholder="Search the store..."
               className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground hover:border-primary/40 focus:border-primary/60 focus:outline-none transition-colors text-sm"
             />
             {isSearching && (
@@ -763,7 +763,7 @@ export default function VoucherStore() {
   };
 
   const tabs: { id: VoucherTab; label: string; icon: React.ReactNode; badge?: number }[] = [
-    { id: 'store', label: 'Voucher Store', icon: <ShoppingCart className="h-4 w-4" /> },
+    { id: 'store', label: 'Store', icon: <ShoppingCart className="h-4 w-4" /> },
     { id: 'my-orders', label: 'My Orders', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
   ];
 
