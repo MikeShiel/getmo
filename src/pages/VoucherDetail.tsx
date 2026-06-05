@@ -321,7 +321,7 @@ export default function VoucherDetail() {
             <p className="text-xs text-muted-foreground mb-4">Other deals you might like</p>
             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
               {similarProducts.map(v => (
-                <div key={v.id} className="min-w-[160px] sm:min-w-[180px] md:min-w-[200px] flex-shrink-0">
+                <div key={v.id} className="min-w-[120px] sm:min-w-[140px] md:min-w-[140px] flex-shrink-0">
                   <VoucherCard voucher={v} compact />
                 </div>
               ))}
