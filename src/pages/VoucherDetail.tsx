@@ -4,7 +4,8 @@ import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { RedemptionModal } from '@/components/earn/RedemptionModal';
-import { getVoucherById, getCheapestOffer, type VendorOffer } from '@/data/mockVouchers';
+import { VoucherCard } from '@/components/vouchers/VoucherCard';
+import { getVoucherById, getCheapestOffer, mockVouchers, type VendorOffer } from '@/data/mockVouchers';
 import { ArrowLeft, ShieldCheck, Zap, ShoppingCart, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGuest } from '@/contexts/GuestContext';
@@ -63,6 +64,17 @@ export default function VoucherDetail() {
   }, [selectedVariant.id, sortMode]);
 
   const selectedOffer = sortedOffers[selectedOfferIndex] || sortedOffers[0];
+
+  // Similar products: same type first, then same category, excluding current
+  const similarProducts = useMemo(() => {
+    const sameType = mockVouchers.filter(v => v.id !== voucher.id && v.type === voucher.type);
+    if (sameType.length >= 6) return sameType.slice(0, 8);
+    const sameCategory = mockVouchers.filter(
+      v => v.id !== voucher.id && v.category === voucher.category && !sameType.find(st => st.id === v.id)
+    );
+    const combined = [...sameType, ...sameCategory];
+    return combined.slice(0, 8);
+  }, [voucher.id, voucher.type, voucher.category]);
 
   const handleCheckout = () => {
     if (isGuest) {
@@ -292,6 +304,23 @@ export default function VoucherDetail() {
             </div>
           </div>
         </div>
+
+        {/* Similar Products */}
+        {similarProducts.length > 0 && (
+          <section className="mt-12">
+            <div className="mb-1">
+              <h2 className="text-xl font-bold font-[Orbitron]">Similar Products</h2>
+            </div>
+            <p className="text-xs text-muted-foreground mb-4">Other deals you might like</p>
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+              {similarProducts.map(v => (
+                <div key={v.id} className="min-w-[160px] sm:min-w-[180px] md:min-w-[200px] flex-shrink-0">
+                  <VoucherCard voucher={v} compact />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
       {/* Redemption Modal (existing Payment Gateway) */}
