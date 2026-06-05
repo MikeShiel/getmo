@@ -10,6 +10,17 @@ import { ArrowLeft, ShieldCheck, Zap, ShoppingCart, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGuest } from '@/contexts/GuestContext';
 
+function voucherTypeLabel(type: string): string {
+  switch (type) {
+    case 'games': return 'Game Key';
+    case 'gift-cards': return 'Gift Card';
+    case 'subscriptions': return 'Subscription';
+    case 'in-game-currency':
+    case 'top-ups': return 'In-Game Currency';
+    default: return 'Voucher';
+  }
+}
+
 export default function VoucherDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -21,7 +32,6 @@ export default function VoucherDetail() {
   const [selectedOfferIndex, setSelectedOfferIndex] = useState<number>(0);
   const [sortMode, setSortMode] = useState<'price' | 'rating'>('price');
   const [redemptionOpen, setRedemptionOpen] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!voucher) {
     return (
@@ -81,10 +91,7 @@ export default function VoucherDetail() {
       setShowSaveProgressModal(true);
       return;
     }
-    setIsProcessing(true);
     setRedemptionOpen(true);
-    // Simulate processing
-    setTimeout(() => setIsProcessing(false), 2000);
   };
 
   return (
@@ -323,16 +330,21 @@ export default function VoucherDetail() {
         )}
       </div>
 
-      {/* Redemption Modal (existing Payment Gateway) */}
+      {/* Checkout Modal */}
       <RedemptionModal
         isOpen={redemptionOpen}
         onClose={() => setRedemptionOpen(false)}
         voucher={{
           id: voucher.id,
           brand: voucher.brand,
-          value: selectedOffer?.price ?? selectedVariant.dollarValue,
+          thumbnail: voucher.thumbnail,
+          variantLabel: selectedVariant.label,
+          platform: voucher.platform,
+          voucherType: voucherTypeLabel(voucher.type),
+          vendor: selectedOffer?.vendor ?? 'Getmo',
+          vendorLogo: selectedOffer?.vendorLogo ?? '🎁',
+          price: selectedOffer?.price ?? selectedVariant.dollarValue,
         }}
-        isProcessing={isProcessing}
       />
     </Layout>
   );

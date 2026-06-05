@@ -186,8 +186,17 @@ export function RedemptionStore() {
       <RedemptionModal 
         isOpen={showRedemptionModal}
         onClose={() => setShowRedemptionModal(false)}
-        voucher={selectedVoucher}
-        isProcessing={isProcessing}
+        voucher={selectedVoucher ? {
+          id: selectedVoucher.id,
+          brand: selectedVoucher.brand,
+          thumbnail: selectedVoucher.image,
+          variantLabel: `$${selectedVoucher.value}`,
+          platform: 'Other',
+          voucherType: 'Gift Card',
+          vendor: selectedVoucher.brand,
+          vendorLogo: '🎁',
+          price: selectedVoucher.value,
+        } : null}
       />
     </div>
   );
