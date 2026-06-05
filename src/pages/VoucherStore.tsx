@@ -26,7 +26,7 @@ import { useGuest } from '@/contexts/GuestContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
-function GuestMyVouchersPrompt() {
+function GuestMyOrdersPrompt() {
   const { setShowSaveProgressModal } = useGuest();
   return (
     <div className="container mx-auto px-4 py-16">
@@ -35,9 +35,9 @@ function GuestMyVouchersPrompt() {
           <Ticket className="h-8 w-8 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold font-orbitron mb-2">Your Vouchers Await</h2>
+          <h2 className="text-2xl font-bold font-orbitron mb-2">Your Orders Await</h2>
           <p className="text-muted-foreground">
-            Create a free account to purchase vouchers and manage your game keys all in one place.
+            Create a free account to place orders and manage your game keys all in one place.
           </p>
         </div>
         <button
@@ -210,10 +210,10 @@ function ReportIssueModal({ open, onOpenChange, voucherId }: { open: boolean; on
 }
 
 // ══════════════════════════════════════════════════════════
-// VOUCHER KEY CARD (for My Vouchers tab)
+// ORDER KEY CARD (for My Orders tab)
 // ══════════════════════════════════════════════════════════
 
-function MyVoucherCard({
+function MyOrderCard({
   pv, onReveal, revealedKeys, isNew
 }: {
   pv: PurchasedVoucher; onReveal: (id: string) => void; revealedKeys: Set<string>; isNew: boolean;
@@ -375,7 +375,7 @@ function MyVoucherCard({
 // MY VOUCHERS TAB CONTENT
 // ══════════════════════════════════════════════════════════
 
-function MyVouchersTabContent() {
+function MyOrdersTabContent() {
   const { user } = useAuth();
   const [vouchers, setVouchers] = useState<PurchasedVoucher[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -475,8 +475,8 @@ function MyVouchersTabContent() {
     return (
       <div className="text-center py-20">
         <Ticket className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-        <h3 className="text-xl font-semibold mb-2">Sign in to view your vouchers</h3>
-        <p className="text-muted-foreground mb-6">You need to be logged in to manage your vouchers.</p>
+        <h3 className="text-xl font-semibold mb-2">Sign in to view your orders</h3>
+        <p className="text-muted-foreground mb-6">You need to be logged in to manage your orders.</p>
         <Link to="/auth"><Button className="bg-primary hover:bg-primary/90">Sign In</Button></Link>
       </div>
     );
@@ -515,7 +515,7 @@ function MyVouchersTabContent() {
         <div className="mb-4 p-3 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center gap-2">
           <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0" />
           <p className="text-sm text-orange-400">
-            {stats.expiringSoon} voucher{stats.expiringSoon !== 1 ? 's' : ''} expiring within 7 days — use them before they're gone
+            {stats.expiringSoon} item{stats.expiringSoon !== 1 ? 's' : ''} expiring within 7 days — use them before they're gone
           </p>
         </div>
       )}
@@ -524,7 +524,7 @@ function MyVouchersTabContent() {
       <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search your vouchers..." className="pl-10 bg-input border-border" />
+          <Input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search your orders..." className="pl-10 bg-input border-border" />
         </div>
         <Select value={sortBy} onValueChange={v => setSortBy(v as SortOption)}>
           <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Sort by" /></SelectTrigger>
@@ -553,26 +553,26 @@ function MyVouchersTabContent() {
         ))}
       </div>
 
-      {/* Voucher cards */}
+      {/* Order cards */}
       {!dataLoaded ? (
-        <div className="text-center py-20 text-muted-foreground">Loading vouchers...</div>
+        <div className="text-center py-20 text-muted-foreground">Loading orders...</div>
       ) : vouchers.length === 0 ? (
         <div className="text-center py-20">
           <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-          <h3 className="text-xl font-semibold mb-2">No vouchers yet</h3>
-          <p className="text-muted-foreground mb-6">You haven't purchased any vouchers yet.</p>
-          <Button className="bg-primary hover:bg-primary/90" onClick={() => {}}>Browse Voucher Store</Button>
+          <h3 className="text-xl font-semibold mb-2">No orders yet</h3>
+          <p className="text-muted-foreground mb-6">You haven't placed any orders yet.</p>
+          <Button className="bg-primary hover:bg-primary/90" onClick={() => {}}>Browse Store</Button>
         </div>
       ) : filteredVouchers.length === 0 ? (
         <div className="text-center py-20">
           <Filter className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-          <h3 className="text-lg font-semibold mb-2">No vouchers match this filter</h3>
+          <h3 className="text-lg font-semibold mb-2">No orders match this filter</h3>
           <Button variant="outline" onClick={() => { setFilterTab('all'); setSearchQuery(''); }}>Clear Filters</Button>
         </div>
       ) : (
         <div className="space-y-4">
           {filteredVouchers.map(pv => (
-            <MyVoucherCard key={pv.id} pv={pv} onReveal={handleRevealToggle} revealedKeys={revealedKeys} isNew={isNewPurchase(pv)} />
+            <MyOrderCard key={pv.id} pv={pv} onReveal={handleRevealToggle} revealedKeys={revealedKeys} isNew={isNewPurchase(pv)} />
           ))}
         </div>
       )}
@@ -720,15 +720,23 @@ function StoreTabContent() {
 // MAIN PAGE WITH SECONDARY TAB NAV
 // ══════════════════════════════════════════════════════════
 
-type VoucherTab = 'store' | 'my-vouchers';
+type VoucherTab = 'store' | 'my-orders';
 
 export default function VoucherStore() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const tabParam = searchParams.get('tab');
-  const activeTab: VoucherTab = tabParam === 'my-vouchers' ? 'my-vouchers' : 'store';
 
-  // Count active vouchers for badge (simple mock count)
+  // Redirect old param
+  useEffect(() => {
+    if (tabParam === 'my-vouchers') {
+      setSearchParams({ tab: 'my-orders' }, { replace: true });
+    }
+  }, [tabParam, setSearchParams]);
+
+  const activeTab: VoucherTab = tabParam === 'my-orders' ? 'my-orders' : 'store';
+
+  // Count active orders for badge (simple mock count)
   const [activeCount, setActiveCount] = useState(0);
 
   useEffect(() => {
@@ -756,7 +764,7 @@ export default function VoucherStore() {
 
   const tabs: { id: VoucherTab; label: string; icon: React.ReactNode; badge?: number }[] = [
     { id: 'store', label: 'Voucher Store', icon: <ShoppingCart className="h-4 w-4" /> },
-    { id: 'my-vouchers', label: 'My Vouchers', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
+    { id: 'my-orders', label: 'My Orders', icon: <Ticket className="h-4 w-4" />, badge: activeCount > 0 ? activeCount : undefined },
   ];
 
   return (
@@ -796,10 +804,10 @@ export default function VoucherStore() {
         <StoreTabContent />
       ) : user ? (
         <div className="container mx-auto px-4 py-8">
-          <MyVouchersTabContent />
+          <MyOrdersTabContent />
         </div>
       ) : (
-        <GuestMyVouchersPrompt />
+        <GuestMyOrdersPrompt />
       )}
     </Layout>
   );

@@ -93,7 +93,7 @@ export function RedemptionModal({ isOpen, onClose, voucher }: RedemptionModalPro
       const code = generateGiftCode();
       setGiftCode(code);
 
-      // Record purchase to local store so it appears in My Vouchers
+      // Record purchase to local store so it appears in My Orders
       if (user) {
         addLocalPurchasedVoucher({
           id: `pv-local-${Date.now()}`,
