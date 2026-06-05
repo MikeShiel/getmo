@@ -601,11 +601,7 @@ function MyOrdersTabContent() {
 // STORE TAB CONTENT
 // ══════════════════════════════════════════════════════════
 
-function StoreTabContent() {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const searchRef = useRef<HTMLInputElement>(null);
-
+function StoreTabContent({ searchQuery }: { searchQuery: string }) {
   const allSpotlight = getSpotlightVouchers();
   const discounted = mockVouchers.filter(v => v.discountPercent && !v.spotlight);
   const spotlightVouchers = [...allSpotlight, ...discounted].slice(0, 12);
@@ -620,42 +616,8 @@ function StoreTabContent() {
 
   const isSearching = searchQuery.trim().length > 0;
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { setSearchQuery(''); searchRef.current?.blur(); }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
-
   return (
     <>
-      {/* Sticky search bar */}
-      <div className="sticky top-[7.5rem] z-30 border-b border-border/50 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto px-4 py-3 flex items-center gap-3">
-          <div className="flex-1 relative flex items-center">
-            <Search className="absolute left-3 h-4 w-4 text-muted-foreground pointer-events-none" />
-            <input
-              ref={searchRef}
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search the store..."
-              className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground hover:border-primary/40 focus:border-primary/60 focus:outline-none transition-colors text-sm"
-            />
-            {isSearching && (
-              <button onClick={() => setSearchQuery('')} className="absolute right-3 text-muted-foreground hover:text-foreground transition-colors">
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
-          <Button variant="outline" size="sm" className="gap-2 border-border/50" onClick={() => navigate('/store/category/all')}>
-            <SlidersHorizontal className="h-4 w-4" />
-            <span className="hidden sm:inline">Filters</span>
-          </Button>
-        </div>
-      </div>
-
       {isSearching ? (
         <div className="container mx-auto px-4 py-8">
           <p className="text-sm text-muted-foreground mb-4">
