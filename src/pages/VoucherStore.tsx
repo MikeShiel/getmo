@@ -687,7 +687,49 @@ type VoucherTab = 'store' | 'my-orders';
 export default function VoucherStore() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const tabParam = searchParams.get('tab');
+
+  // Lifted search state so the search bar can live in the shared sticky cluster
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
+  const isSearching = searchQuery.trim().length > 0;
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setSearchQuery(''); searchRef.current?.blur(); }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  // Scroll-direction auto-hide for the sticky cluster
+  const [clusterHidden, setClusterHidden] = useState(false);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let accumDown = 0;
+    let accumUp = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (y <= 0) {
+        setClusterHidden(false);
+        accumDown = 0;
+        accumUp = 0;
+      } else if (delta > 0) {
+        accumDown += delta;
+        accumUp = 0;
+        if (y > 80 && accumDown > 8) setClusterHidden(true);
+      } else if (delta < 0) {
+        accumUp += -delta;
+        accumDown = 0;
+        if (accumUp > 10) setClusterHidden(false);
+      }
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Redirect old param
   useEffect(() => {
@@ -731,8 +773,11 @@ export default function VoucherStore() {
 
   return (
     <Layout>
-      {/* Secondary tab nav */}
-      <div className="sticky top-16 z-40 bg-background border-b border-border/50">
+      {/* Sticky cluster: tab nav + (store) search bar, hides on scroll-down */}
+      <div
+        className="sticky top-16 z-40 bg-background border-b border-border/50 transition-transform duration-200 ease-out will-change-transform"
+        style={{ transform: clusterHidden ? 'translateY(-100%)' : 'translateY(0)' }}
+      >
         <div className="container mx-auto px-4">
           <div className="flex">
             {tabs.map(tab => (
@@ -759,11 +804,38 @@ export default function VoucherStore() {
             ))}
           </div>
         </div>
+
+        {activeTab === 'store' && (
+          <div className="border-t border-border/50 bg-background/80 backdrop-blur-xl">
+            <div className="container mx-auto px-4 py-3 flex items-center gap-3">
+              <div className="flex-1 relative flex items-center">
+                <Search className="absolute left-3 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <input
+                  ref={searchRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search the store..."
+                  className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-muted/50 border border-border/50 text-foreground placeholder:text-muted-foreground hover:border-primary/40 focus:border-primary/60 focus:outline-none transition-colors text-sm"
+                />
+                {isSearching && (
+                  <button onClick={() => setSearchQuery('')} className="absolute right-3 text-muted-foreground hover:text-foreground transition-colors">
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+              <Button variant="outline" size="sm" className="gap-2 border-border/50" onClick={() => navigate('/store/category/all')}>
+                <SlidersHorizontal className="h-4 w-4" />
+                <span className="hidden sm:inline">Filters</span>
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Tab content */}
       {activeTab === 'store' ? (
-        <StoreTabContent />
+        <StoreTabContent searchQuery={searchQuery} />
       ) : user ? (
         <div className="container mx-auto px-4 py-8">
           <MyOrdersTabContent />
