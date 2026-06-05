@@ -624,7 +624,7 @@ export default function MyVouchers() {
             <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
             <h3 className="text-xl font-semibold mb-2">No orders yet</h3>
             <p className="text-muted-foreground mb-6">You haven't placed any orders yet.</p>
-            <Link to="/vouchers">
+            <Link to="/store">
               <Button className="bg-primary hover:bg-primary/90">Browse Store</Button>
             </Link>
           </div>

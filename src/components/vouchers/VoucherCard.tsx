@@ -13,7 +13,7 @@ export function VoucherCard({ voucher, compact = false }: VoucherCardProps) {
 
   if (compact) {
     return (
-      <Link to={`/vouchers/${voucher.id}`} className="group block">
+      <Link to={`/store/${voucher.id}`} className="group block">
         <div className="glass-card overflow-hidden transition-all duration-300 group-hover:scale-[1.04] group-hover:-translate-y-0.5 group-hover:shadow-[0_0_20px_hsl(var(--neon-primary)/0.25)]">
           <div className="relative aspect-[4/3] overflow-hidden">
             <img
@@ -57,7 +57,7 @@ export function VoucherCard({ voucher, compact = false }: VoucherCardProps) {
 
   // Original larger card
   return (
-    <Link to={`/vouchers/${voucher.id}`} className="group block">
+    <Link to={`/store/${voucher.id}`} className="group block">
       <div className="glass-card overflow-hidden transition-all duration-300 group-hover:scale-[1.03] group-hover:-translate-y-1 group-hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.3)]">
         <div className="relative aspect-[4/3] overflow-hidden">
           <img

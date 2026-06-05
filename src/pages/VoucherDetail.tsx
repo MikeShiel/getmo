@@ -38,7 +38,7 @@ export default function VoucherDetail() {
       <Layout>
         <div className="container mx-auto px-4 py-20 text-center">
           <h1 className="text-2xl font-bold mb-4">Voucher not found</h1>
-          <Button onClick={() => navigate('/vouchers')} variant="outline">
+          <Button onClick={() => navigate('/store')} variant="outline">
             Back to Store
           </Button>
         </div>
@@ -99,7 +99,7 @@ export default function VoucherDetail() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Breadcrumb */}
         <Link
-          to="/vouchers"
+          to="/store"
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
