@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { GuestProvider } from "@/contexts/GuestContext";
@@ -37,6 +37,16 @@ import Challenges from "./pages/Challenges";
 
 const queryClient = new QueryClient();
 
+const RedirectVoucherCategory = () => {
+  const { slug } = useParams();
+  return <Navigate to={`/store/category/${slug}`} replace />;
+};
+
+const RedirectVoucherDetail = () => {
+  const { id } = useParams();
+  return <Navigate to={`/store/${id}`} replace />;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
@@ -66,8 +76,8 @@ const App = () => (
                     <Route path="/store/category/:slug" element={<VoucherCategory />} />
                     <Route path="/store/:id" element={<VoucherDetail />} />
                     <Route path="/vouchers" element={<Navigate to="/store" replace />} />
-                    <Route path="/vouchers/category/:slug" element={<Navigate to="/store/category/:slug" replace />} />
-                    <Route path="/vouchers/:id" element={<Navigate to="/store/:id" replace />} />
+                    <Route path="/vouchers/category/:slug" element={<RedirectVoucherCategory />} />
+                    <Route path="/vouchers/:id" element={<RedirectVoucherDetail />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
                     <Route path="/rewards" element={<Rewards />} />
                     <Route path="/my-orders" element={<MyVouchers />} />
