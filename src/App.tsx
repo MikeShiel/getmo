@@ -62,9 +62,12 @@ const App = () => (
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/play-and-earn" element={<PlayAndEarn />} />
                     <Route path="/play-and-win" element={<PlayAndWin />} />
-                    <Route path="/vouchers" element={<VoucherStore />} />
-                    <Route path="/vouchers/category/:slug" element={<VoucherCategory />} />
-                    <Route path="/vouchers/:id" element={<VoucherDetail />} />
+                    <Route path="/store" element={<VoucherStore />} />
+                    <Route path="/store/category/:slug" element={<VoucherCategory />} />
+                    <Route path="/store/:id" element={<VoucherDetail />} />
+                    <Route path="/vouchers" element={<Navigate to="/store" replace />} />
+                    <Route path="/vouchers/category/:slug" element={<Navigate to="/store/category/:slug" replace />} />
+                    <Route path="/vouchers/:id" element={<Navigate to="/store/:id" replace />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
                     <Route path="/rewards" element={<Rewards />} />
                     <Route path="/my-orders" element={<MyVouchers />} />
