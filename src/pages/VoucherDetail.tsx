@@ -65,6 +65,17 @@ export default function VoucherDetail() {
 
   const selectedOffer = sortedOffers[selectedOfferIndex] || sortedOffers[0];
 
+  // Similar products: same type first, then same category, excluding current
+  const similarProducts = useMemo(() => {
+    const sameType = mockVouchers.filter(v => v.id !== voucher.id && v.type === voucher.type);
+    if (sameType.length >= 6) return sameType.slice(0, 8);
+    const sameCategory = mockVouchers.filter(
+      v => v.id !== voucher.id && v.category === voucher.category && !sameType.find(st => st.id === v.id)
+    );
+    const combined = [...sameType, ...sameCategory];
+    return combined.slice(0, 8);
+  }, [voucher.id, voucher.type, voucher.category]);
+
   const handleCheckout = () => {
     if (isGuest) {
       setShowSaveProgressModal(true);
