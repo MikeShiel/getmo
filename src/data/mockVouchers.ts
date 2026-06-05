@@ -473,3 +473,64 @@ export function searchVouchers(query: string, type?: VoucherType, maxPrice?: num
     return matchesQuery && matchesType && matchesPrice;
   });
 }
+
+// ─── Vendor Offer Generation ───
+const VENDOR_POOL: Array<Pick<VendorOffer, 'vendor' | 'vendorLogo'>> = [
+  { vendor: 'Razer Gold', vendorLogo: '🟢' },
+  { vendor: 'Xsolla', vendorLogo: '🔵' },
+  { vendor: 'Ubisoft Store', vendorLogo: '🟡' },
+];
+
+function hashString(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function generateOffersFor(voucher: Voucher, variant: VoucherVariant): VendorOffer[] {
+  // Commodity (gift-cards or games-currency) → 3-4 offers; subscriptions → 1-2
+  const isCommodity = voucher.type === 'gift-cards' || voucher.type === 'games';
+  const seed = hashString(voucher.id + variant.id);
+  const count = isCommodity ? 3 + (seed % 2) : 1 + (seed % 2);
+  const base = variant.dollarValue;
+
+  const offers: VendorOffer[] = [];
+  for (let i = 0; i < count; i++) {
+    const v = VENDOR_POOL[(seed + i) % VENDOR_POOL.length];
+    // Vary price within ±8% of face value; ensure a distinct cheapest
+    const pct = -0.08 + (((seed >> (i * 3)) % 17) / 100); // -0.08 .. +0.08
+    const price = Math.max(0.5, +(base * (1 + pct) - i * 0.07).toFixed(2));
+    const positive = 92 + ((seed >> i) % 8); // 92..99
+    offers.push({
+      vendor: v.vendor,
+      vendorLogo: v.vendorLogo,
+      price,
+      rating: positive >= 97 ? 'Excellent' : 'Good',
+      positiveFeedback: positive,
+      salesCount: 250 + ((seed >> i) % 9500),
+      deliveryType: 'Instant',
+      sponsored: i === 0 && (seed % 5 === 0),
+    });
+  }
+  return offers;
+}
+
+// Populate offers on every variant (mutates mockVouchers at module load)
+mockVouchers.forEach(voucher => {
+  voucher.variants.forEach(variant => {
+    if (!variant.offers || variant.offers.length === 0) {
+      variant.offers = generateOffersFor(voucher, variant);
+    }
+  });
+});
+
+export function getCheapestOffer(variant: VoucherVariant): VendorOffer | undefined {
+  if (!variant.offers || variant.offers.length === 0) return undefined;
+  return variant.offers.reduce((min, o) => (o.price < min.price ? o : min), variant.offers[0]);
+}
+
+export function getProductFromPrice(voucher: Voucher): VendorOffer | undefined {
+  const lowestVariant = voucher.variants[0];
+  if (!lowestVariant) return undefined;
+  return getCheapestOffer(lowestVariant);
+}
