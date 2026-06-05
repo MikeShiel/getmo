@@ -26,7 +26,7 @@ import { useGuest } from '@/contexts/GuestContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
-function GuestMyVouchersPrompt() {
+function GuestMyOrdersPrompt() {
   const { setShowSaveProgressModal } = useGuest();
   return (
     <div className="container mx-auto px-4 py-16">
@@ -35,9 +35,9 @@ function GuestMyVouchersPrompt() {
           <Ticket className="h-8 w-8 text-primary" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold font-orbitron mb-2">Your Vouchers Await</h2>
+          <h2 className="text-2xl font-bold font-orbitron mb-2">Your Orders Await</h2>
           <p className="text-muted-foreground">
-            Create a free account to purchase vouchers and manage your game keys all in one place.
+            Create a free account to place orders and manage your game keys all in one place.
           </p>
         </div>
         <button
