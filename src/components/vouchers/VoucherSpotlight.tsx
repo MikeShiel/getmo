@@ -24,7 +24,7 @@ export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
             The Gaming <span className="text-primary">Marketplace</span>
           </h1>
           <p className="text-muted-foreground mt-2 text-sm md:text-base">
-            Gift cards, game keys, top-ups & subscriptions from trusted vendors — instantly delivered.
+            Gift cards, game keys, top-ups & subscriptions from trusted vendors
           </p>
         </div>
 
