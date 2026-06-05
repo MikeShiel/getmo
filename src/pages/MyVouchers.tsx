@@ -22,6 +22,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { mockVouchers } from '@/data/mockVouchers';
+import { getLocalPurchasedVouchers } from '@/lib/purchasedVouchersStore';
 
 // ── Types ──
 interface PurchasedVoucher {
@@ -397,12 +398,14 @@ export default function MyVouchers() {
         .eq('user_id', user!.id)
         .order('purchased_at', { ascending: false });
 
+      const local = getLocalPurchasedVouchers(user!.id) as unknown as PurchasedVoucher[];
+      let base: PurchasedVoucher[];
       if (!error && data && data.length > 0) {
-        setVouchers(data as unknown as PurchasedVoucher[]);
+        base = data as unknown as PurchasedVoucher[];
       } else {
-        // Use mock data with the current user's ID
-        setVouchers(MOCK_PURCHASED.map(m => ({ ...m, user_id: user!.id })));
+        base = MOCK_PURCHASED.map(m => ({ ...m, user_id: user!.id }));
       }
+      setVouchers([...local, ...base]);
       setDataLoaded(true);
     }
     load();
