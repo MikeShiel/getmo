@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Heart } from 'lucide-react';
-import type { Voucher } from '@/data/mockVouchers';
+import { getProductFromPrice, type Voucher } from '@/data/mockVouchers';
 
 interface VoucherSpotlightProps {
   vouchers: Voucher[];
@@ -21,16 +21,19 @@ export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
         {/* Banner headline */}
         <div className="mb-8 max-w-xl">
           <h1 className="text-3xl md:text-4xl font-bold font-[Orbitron] uppercase tracking-wide text-foreground leading-tight">
-            Redeem Your <span className="text-primary">Points</span>
+            The Gaming <span className="text-primary">Marketplace</span>
           </h1>
           <p className="text-muted-foreground mt-2 text-sm md:text-base">
-            Grab gift cards, game keys & subscriptions — instantly delivered.
+            Gift cards, game keys, top-ups & subscriptions from trusted vendors — instantly delivered.
           </p>
         </div>
 
         {/* Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {featured.map((voucher) => (
+          {featured.map((voucher) => {
+            const cheapest = getProductFromPrice(voucher);
+            const priceLabel = cheapest ? `From $${cheapest.price.toFixed(2)}` : '';
+            return (
             <Link
               key={voucher.id}
               to={`/vouchers/${voucher.id}`}
@@ -77,18 +80,22 @@ export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
                         </span>
                       )}
                     </h3>
-                    <div className="flex items-center gap-1.5 text-xs text-white/70">
-                      <span>{voucher.platform}</span>
-                      <span>•</span>
-                      <span>{voucher.type === 'subscriptions' ? 'Account' : 'Key'}</span>
-                      <span>•</span>
-                      <span>{voucher.regions?.[0]?.name?.toUpperCase() || 'GLOBAL'}</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 text-xs text-white/70">
+                        <span>{voucher.platform}</span>
+                        <span>•</span>
+                        <span>{voucher.type === 'subscriptions' ? 'Account' : 'Key'}</span>
+                      </div>
+                      {priceLabel && (
+                        <span className="text-sm font-bold text-secondary font-[Orbitron]">{priceLabel}</span>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
