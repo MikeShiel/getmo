@@ -516,12 +516,12 @@ export default function MyVouchers() {
               <Ticket className="h-8 w-8 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold font-orbitron mb-2">Your Vouchers Await</h2>
+              <h2 className="text-2xl font-bold font-orbitron mb-2">Your Orders Await</h2>
               <p className="text-muted-foreground">
-                Create a free account to purchase vouchers and manage your game keys.
+                Create a free account to place orders and manage your game keys.
               </p>
             </div>
-            <Link to="/auth?redirect=/my-vouchers" className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors">
+            <Link to="/auth?redirect=/my-orders" className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors">
               Create Free Account
             </Link>
           </div>
@@ -545,8 +545,8 @@ export default function MyVouchers() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-display font-bold neon-text-cyan">My Vouchers</h1>
-          <p className="text-muted-foreground mt-1">Your purchased game keys and voucher codes</p>
+          <h1 className="text-3xl font-display font-bold neon-text-cyan">My Orders</h1>
+          <p className="text-muted-foreground mt-1">Your purchased game keys and digital items</p>
         </div>
 
         {/* Rate limit warning */}
@@ -617,22 +617,22 @@ export default function MyVouchers() {
 
         {/* Content */}
         {!dataLoaded ? (
-          <div className="text-center py-20 text-muted-foreground">Loading vouchers...</div>
+          <div className="text-center py-20 text-muted-foreground">Loading orders...</div>
         ) : vouchers.length === 0 ? (
-          /* Empty state - no vouchers at all */
+          /* Empty state - no orders at all */
           <div className="text-center py-20">
             <ShoppingBag className="h-16 w-16 mx-auto mb-4 text-muted-foreground/50" />
-            <h3 className="text-xl font-semibold mb-2">No vouchers yet</h3>
-            <p className="text-muted-foreground mb-6">You haven't purchased any vouchers yet.</p>
+            <h3 className="text-xl font-semibold mb-2">No orders yet</h3>
+            <p className="text-muted-foreground mb-6">You haven't placed any orders yet.</p>
             <Link to="/vouchers">
-              <Button className="bg-primary hover:bg-primary/90">Browse Voucher Store</Button>
+              <Button className="bg-primary hover:bg-primary/90">Browse Store</Button>
             </Link>
           </div>
         ) : filteredVouchers.length === 0 ? (
           /* Empty filter results */
           <div className="text-center py-20">
             <Filter className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
-            <h3 className="text-lg font-semibold mb-2">No vouchers match this filter</h3>
+            <h3 className="text-lg font-semibold mb-2">No orders match this filter</h3>
             <Button variant="outline" onClick={() => { setFilterTab('all'); setSearchQuery(''); }}>
               Clear Filters
             </Button>

@@ -67,7 +67,8 @@ const App = () => (
                     <Route path="/vouchers/:id" element={<VoucherDetail />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
                     <Route path="/rewards" element={<Rewards />} />
-                    <Route path="/my-vouchers" element={<MyVouchers />} />
+                    <Route path="/my-orders" element={<MyVouchers />} />
+                    <Route path="/my-vouchers" element={<Navigate to="/my-orders" replace />} />
                     <Route path="/social" element={<Social />} />
                     <Route path="/daily-missions" element={<DailyMissions />} />
                     <Route path="/my-progress" element={<MyProgressPage />} />
