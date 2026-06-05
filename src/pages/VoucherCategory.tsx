@@ -298,7 +298,9 @@ export default function VoucherCategory() {
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="text-sm font-bold text-secondary">{v.variants[0].pointsCost.toLocaleString()} pts</p>
+                          <p className="text-sm font-bold text-secondary">
+                            From ${getProductFromPrice(v)?.price.toFixed(2) ?? '—'}
+                          </p>
                           <p className="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Claim →</p>
                         </div>
                       </div>
@@ -310,7 +312,7 @@ export default function VoucherCategory() {
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <Search className="h-12 w-12 text-muted-foreground/30 mb-4" />
                 <p className="text-muted-foreground mb-2">No vouchers match your filters.</p>
-                <Button variant="ghost" size="sm" onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(10000); }}>
+                <Button variant="ghost" size="sm" onClick={() => { setQuery(''); setSelectedPlatform('All'); setSelectedType('all'); setMaxPrice(200); }}>
                   Clear Filters
                 </Button>
               </div>
