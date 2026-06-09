@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Trophy, Target } from 'lucide-react';
+import { Menu, X, Download, Trophy, Target, Store } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -33,6 +33,13 @@ export function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 ml-4">
+            <Link to="/store">
+              <Button variant="ghost" size="sm" className="gap-2 h-10">
+                <Store className="h-4 w-4" />
+                Store
+              </Button>
+            </Link>
+
             <DailyMissionsNavItem />
 
             <Link to="/challenges">
@@ -81,6 +88,13 @@ export function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
             <div className="flex flex-col gap-2">
+              <Link to="/store" onClick={() => setIsMenuOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Store className="h-4 w-4" />
+                  Store
+                </Button>
+              </Link>
+
               <Link to="/daily-missions" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <span aria-hidden="true">🔥</span>
