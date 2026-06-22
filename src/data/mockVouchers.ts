@@ -49,20 +49,20 @@ export interface Voucher {
 export const mockVouchers: Voucher[] = [
   // ─── BEST SELLERS ───
   {
-    id: 'v-steam-1',
-    brand: 'Steam Wallet',
-    description: 'Unlock thousands of PC games on the world\'s largest gaming platform.',
-    thumbnail: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400&h=300&fit=crop',
+    id: 'v-corsairs',
+    brand: 'Corsairs - Battle of the Caribbean',
+    description: 'Command your ship and conquer the Caribbean in this epic naval strategy adventure.',
+    thumbnail: '/__l5e/assets-v1/8c2ae622-f091-4eff-acca-b9ed48103c87/corsairs-battle-caribbean.png',
     category: 'best-sellers',
     type: 'games',
     platform: 'PC',
     spotlight: true,
     discountPercent: 15,
     variants: [
-      { id: 'steam-5', label: '$5', pointsCost: 500, dollarValue: 5 },
-      { id: 'steam-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
-      { id: 'steam-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
-      { id: 'steam-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
+      { id: 'corsairs-5', label: '$5', pointsCost: 500, dollarValue: 5 },
+      { id: 'corsairs-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
+      { id: 'corsairs-25', label: '$25', pointsCost: 2500, dollarValue: 25 },
+      { id: 'corsairs-50', label: '$50', pointsCost: 5000, dollarValue: 50 },
     ],
     tags: ['Popular', 'PC'],
     regions: [
@@ -73,11 +73,11 @@ export const mockVouchers: Voucher[] = [
       { code: 'AR', name: 'Argentina', flag: '🇦🇷', currency: 'ARS', currencySymbol: 'ARS$', priceMultiplier: 0.25 },
     ],
     instructions: [
-      'Log in to your Steam account on desktop or mobile.',
-      'Navigate to your account name → "Account Details".',
-      'Click "Add funds to your Steam Wallet".',
-      'Select "Redeem a Steam Wallet Code" and enter your code.',
-      'Funds will be added instantly to your wallet balance.',
+      'Purchase your Corsairs - Battle of the Caribbean code.',
+      'Visit the official Corsairs redemption portal.',
+      'Log in or create your game account.',
+      'Enter your unique code and confirm redemption.',
+      'Launch the game and set sail!',
     ],
   },
   {
