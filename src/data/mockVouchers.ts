@@ -132,7 +132,7 @@ export const mockVouchers: Voucher[] = [
     id: 'v-fifa-rivals',
     brand: 'FIFA Rivals',
     description: 'The ultimate football experience with FIFA Rivals — build your dream squad and compete online.',
-    thumbnail: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=300&fit=crop',
+    thumbnail: '/__l5e/assets-v1/5c8bad27-20c5-4b73-b317-dee4b8e3ebd6/fifa-rivals.png',
     category: 'best-sellers',
     type: 'subscriptions',
     platform: 'Multi',
