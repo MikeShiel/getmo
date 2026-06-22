@@ -669,6 +669,26 @@ function StoreTabContent({ searchQuery }: { searchQuery: string }) {
                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
                     {vouchers.map(v => <VoucherCard key={v.id} voucher={v} compact />)}
                   </div>
+                  {key === 'best-sellers' && (
+                    <a
+                      href="https://shop.marvelsnap.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block mt-6 rounded-2xl overflow-hidden relative group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-900/90 via-red-800/70 to-background/80" />
+                      <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 px-6 py-5 md:px-10 md:py-6">
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-widest text-red-300 mb-1">Official Store</p>
+                          <h3 className="text-lg md:text-xl font-bold font-[Orbitron] text-white">Marvel Snap Shop</h3>
+                          <p className="text-sm text-red-200/80 mt-1">Cards, bundles & exclusive merch</p>
+                        </div>
+                        <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600/90 text-white text-sm font-medium group-hover:bg-red-500 transition-colors shrink-0">
+                          Visit Shop <ExternalLink className="h-4 w-4" />
+                        </div>
+                      </div>
+                    </a>
+                  )}
                 </section>
               );
             })}
