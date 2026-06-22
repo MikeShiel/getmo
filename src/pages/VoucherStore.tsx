@@ -11,7 +11,7 @@ import {
   TrendingUp, Clock, Sparkles, Search, SlidersHorizontal, Gamepad2,
   Gift, CreditCard, Monitor, ChevronRight, X, ShoppingCart, Ticket,
   ShoppingBag, Filter, Eye, EyeOff, Copy, Check, AlertTriangle,
-  ChevronDown, ChevronUp, Flag, KeyRound, UserPlus
+  ChevronDown, ChevronUp, Flag, KeyRound, UserPlus, Globe, ExternalLink
 } from 'lucide-react';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
