@@ -146,6 +146,7 @@ function getPlatformColor(platform: string) {
 const categories = [
   { label: 'Gaming', icon: Gamepad2, slug: 'gaming' },
   { label: 'Gift Cards', icon: Gift, slug: 'gift-cards' },
+  { label: 'Webshops', icon: Globe, slug: 'webshops' },
   { label: 'Subscriptions', icon: CreditCard, slug: 'subscriptions' },
   { label: 'PC', icon: Monitor, slug: 'pc' },
   { label: 'PlayStation', icon: Gamepad2, slug: 'playstation' },
