@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
+import marvelSnapBanner from '@/assets/marvel-snap-banner.png.asset.json';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { VoucherCard } from '@/components/vouchers/VoucherCard';
