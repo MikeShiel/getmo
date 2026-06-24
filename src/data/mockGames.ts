@@ -11,6 +11,7 @@ export interface Game {
   screenshots: string[];
   rating: number;
   play_count: number;
+  tags?: string[];
 }
 
 export const mockGames: Game[] = [
