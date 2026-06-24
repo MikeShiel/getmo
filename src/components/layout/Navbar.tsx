@@ -1,138 +1,51 @@
 import { Link } from 'react-router-dom';
-import { Menu, X, Download, Trophy, Target, Store } from 'lucide-react';
-import { useState } from 'react';
+import { Download, Search, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useTheme } from '@/contexts/ThemeContext';
-import { UserStatsModal } from '@/components/stats/UserStatsModal';
-import { ProgressPanel } from './ProgressPanel';
-import { LeaderboardPanel } from './LeaderboardPanel';
-import { DailyMissionsNavItem } from './DailyMissionsNavItem';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import { ProfileMenu } from './ProfileMenu';
 import { NotificationsBell } from '@/components/notifications/NotificationsBell';
+import { useTheme } from '@/contexts/ThemeContext';
 import getmoLogo from '@/assets/getmo-logo.png';
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [statsModalOpen, setStatsModalOpen] = useState(false);
-  const [progressOpen, setProgressOpen] = useState(false);
-  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
   const { t } = useTheme();
-
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <img 
-              src={getmoLogo} 
-              alt="Getmo" 
-              className="h-10 transition-all group-hover:scale-105"
-            />
-          </Link>
+    <header
+      className="sticky top-0 z-40 h-16 flex items-center gap-3 px-3 md:px-6 border-b border-white/5"
+      style={{ background: 'hsl(268 45% 12%)' }}
+    >
+      <SidebarTrigger className="text-white/80 hover:text-white" />
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-4 ml-4">
-            <Link to="/store">
-              <Button variant="ghost" size="sm" className="gap-2 h-10">
-                <Store className="h-4 w-4" />
-                Store
-              </Button>
-            </Link>
+      <Link to="/" className="flex items-center gap-2 shrink-0">
+        <img src={getmoLogo} alt="Getmo" className="h-9" />
+      </Link>
 
-            <DailyMissionsNavItem />
-
-            <Link to="/challenges">
-              <Button variant="ghost" size="sm" className="gap-2 h-10">
-                <Target className="h-4 w-4" />
-                Challenges
-              </Button>
-            </Link>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-2"
-              onClick={() => setLeaderboardOpen(true)}
-            >
-              <Trophy className="h-4 w-4" />
-              Leaderboard
-            </Button>
-
-            <Button variant="ghost" size="sm" className="gap-2">
-              <Download className="h-4 w-4" />
-              {t('nav.install')}
-            </Button>
-
-            <NotificationsBell />
-
-            <ProfileMenu />
-          </div>
-
-          {/* Mobile right side: profile menu + hamburger */}
-          <div className="md:hidden flex items-center gap-1">
-            <NotificationsBell />
-            <ProfileMenu />
-            <button
-              className="min-h-[40px] min-w-[40px] p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-              type="button"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+      {/* Search */}
+      <div className="flex-1 max-w-2xl mx-auto hidden md:flex">
+        <div className="flex w-full items-center rounded-xl bg-black/40 border border-white/10 h-10 overflow-hidden">
+          <button className="flex items-center gap-1 px-3 text-sm text-white/70 border-r border-white/10 h-full hover:text-white">
+            All <ChevronDown className="h-3 w-3" />
+          </button>
+          <Search className="h-4 w-4 text-white/40 mx-3" />
+          <input
+            type="text"
+            placeholder="Search +1000 games, categories, or friends..."
+            className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/40 h-full pr-3"
+          />
         </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
-            <div className="flex flex-col gap-2">
-              <Link to="/store" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Store className="h-4 w-4" />
-                  Store
-                </Button>
-              </Link>
-
-              <Link to="/daily-missions" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <span aria-hidden="true">🔥</span>
-                  Daily Missions
-                </Button>
-              </Link>
-
-              <Link to="/challenges" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start gap-2">
-                  <Target className="h-4 w-4" />
-                  Challenges
-                </Button>
-              </Link>
-
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-2"
-                onClick={() => { setLeaderboardOpen(true); setIsMenuOpen(false); }}
-              >
-                <Trophy className="h-4 w-4" />
-                Leaderboard
-              </Button>
-
-              <Button variant="ghost" className="justify-start gap-2">
-                <Download className="h-4 w-4" />
-                {t('nav.install')}
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* User Stats Modal */}
-      <UserStatsModal open={statsModalOpen} onOpenChange={setStatsModalOpen} />
-
-      {/* Progress + Leaderboard panels */}
-      <ProgressPanel open={progressOpen} onOpenChange={setProgressOpen} />
-      <LeaderboardPanel open={leaderboardOpen} onOpenChange={setLeaderboardOpen} />
-    </nav>
+      <div className="ml-auto flex items-center gap-2">
+        <Button
+          size="sm"
+          className="hidden sm:inline-flex gap-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold rounded-full"
+        >
+          <span>{t('nav.install') || 'Install app'}</span>
+          <Download className="h-4 w-4" />
+        </Button>
+        <NotificationsBell />
+        <ProfileMenu />
+      </div>
+    </header>
   );
 }
