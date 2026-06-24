@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { AppSidebar } from './AppSidebar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -9,12 +11,17 @@ interface LayoutProps {
 
 export function Layout({ children, hideFooter = false }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-1 pt-16">
-        {children}
-      </main>
-      {!hideFooter && <Footer />}
-    </div>
+    <SidebarProvider defaultOpen={false}>
+      <div className="min-h-screen flex w-full bg-background">
+        <AppSidebar />
+        <div className="flex-1 flex flex-col min-w-0">
+          <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
+          {!hideFooter && <Footer />}
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }
