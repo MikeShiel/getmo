@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { SidebarProvider } from '@/components/ui/sidebar';
@@ -11,7 +11,10 @@ interface LayoutProps {
 
 export function Layout({ children, hideFooter = false }: LayoutProps) {
   return (
-    <SidebarProvider defaultOpen={true}>
+    <SidebarProvider
+      defaultOpen={true}
+      style={{ "--sidebar-width-icon": "8.75rem" } as CSSProperties}
+    >
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
