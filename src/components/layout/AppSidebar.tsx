@@ -55,14 +55,14 @@ export function AppSidebar() {
       end={item.url === "/"}
       title={item.title}
       className={({ isActive }) =>
-        `relative flex h-16 w-full items-center justify-center transition ${
+        `relative flex h-12 w-full items-center justify-center transition ${
           isActive
-            ? "bg-sidebar-accent text-secondary before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:bg-secondary"
+            ? "text-secondary before:absolute before:left-0 before:top-1 before:h-10 before:w-1 before:bg-secondary before:rounded-r"
             : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-foreground"
         }`
       }
     >
-      <item.icon className="h-8 w-8" strokeWidth={2.2} />
+      <item.icon className="h-6 w-6" strokeWidth={2} />
       <span className="sr-only">{item.title}</span>
     </NavLink>
   );
@@ -91,55 +91,52 @@ export function AppSidebar() {
   const renderCollapsedSidebar = () => (
     <Sidebar
       collapsible="icon"
-      className="border-r-0 md:!left-7 md:!top-[12.75rem] md:!bottom-7 md:!h-auto md:!w-28 md:overflow-hidden md:rounded-[2rem]"
+      className="border-r-0"
     >
-      <SidebarContent className="gap-0 overflow-hidden rounded-[2rem] bg-sidebar">
-        <nav className="flex min-h-full flex-col overflow-hidden rounded-[2rem]" aria-label="Primary">
-          <div className="overflow-hidden rounded-t-[2rem] bg-sidebar">
-            <div className="h-8 bg-sidebar" aria-hidden="true" />
-            {mainItems.map(renderCollapsedLink)}
-          </div>
+      <SidebarContent className="gap-0 bg-sidebar">
+        <div className="flex flex-col pt-3">
+          {mainItems.map(renderCollapsedLink)}
+        </div>
 
-          <div className="flex flex-col items-center gap-8 bg-sidebar py-8">
-            <div className="h-px w-12 bg-sidebar-foreground/70" />
-            {socialItems.map((item) => (
-              <NavLink
-                key={item.title}
-                to={item.url}
-                title={item.title}
-                className={({ isActive }) =>
-                  `flex h-12 w-full items-center justify-center transition ${
-                    isActive
-                      ? "text-secondary"
-                      : "text-sidebar-foreground hover:text-sidebar-foreground/80"
-                  }`
-                }
-              >
-                <item.icon className="h-8 w-8" strokeWidth={2.1} />
-                <span className="sr-only">{item.title}</span>
-              </NavLink>
-            ))}
-          </div>
+        <div className="flex flex-col items-center gap-1 py-4">
+          <div className="h-px w-8 bg-sidebar-foreground/30 mb-3" />
+          {socialItems.map((item) => (
+            <NavLink
+              key={item.title}
+              to={item.url}
+              title={item.title}
+              className={({ isActive }) =>
+                `flex h-12 w-full items-center justify-center transition ${
+                  isActive
+                    ? "text-secondary"
+                    : "text-sidebar-foreground hover:text-sidebar-foreground/80"
+                }`
+              }
+            >
+              <item.icon className="h-6 w-6" strokeWidth={2} />
+              <span className="sr-only">{item.title}</span>
+            </NavLink>
+          ))}
+        </div>
 
-          <div className="mt-auto flex flex-col items-center gap-4 bg-sidebar-accent px-3 py-7">
-            <button
-              onClick={quickPick}
-              title="Quick Pick"
-              className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-sidebar-foreground bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition hover:scale-105"
-            >
-              <Zap className="h-8 w-8 fill-current" />
-              <span className="sr-only">Quick Pick</span>
-            </button>
-            <button
-              onClick={randomPlay}
-              title="Random Play"
-              className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-sidebar-foreground bg-secondary text-secondary-foreground shadow-lg shadow-secondary/30 transition hover:scale-105"
-            >
-              <Play className="h-8 w-8 fill-current" />
-              <span className="sr-only">Random Play</span>
-            </button>
-          </div>
-        </nav>
+        <div className="mt-auto flex flex-col items-center gap-3 py-5">
+          <button
+            onClick={quickPick}
+            title="Quick Pick"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-sidebar-foreground/80 bg-primary text-primary-foreground transition hover:scale-105"
+          >
+            <Zap className="h-5 w-5 fill-current" />
+            <span className="sr-only">Quick Pick</span>
+          </button>
+          <button
+            onClick={randomPlay}
+            title="Random Play"
+            className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-sidebar-foreground/80 bg-secondary text-secondary-foreground transition hover:scale-105"
+          >
+            <Play className="h-5 w-5 fill-current" />
+            <span className="sr-only">Random Play</span>
+          </button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );
@@ -150,7 +147,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
-      <SidebarHeader className="bg-sidebar h-16 px-3 flex-row items-center gap-2">
+      <SidebarHeader className="bg-sidebar px-3 pt-3 pb-2 gap-2">
         <button
           onClick={toggleSidebar}
           className="h-9 w-9 flex items-center justify-center rounded-md text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/60"
@@ -158,8 +155,8 @@ export function AppSidebar() {
         >
           <X className="h-5 w-5" />
         </button>
-        <Link to="/" className="flex items-center">
-          <img src={getmoLogo} alt="Getmo" className="h-9" />
+        <Link to="/" className="flex items-center pl-1">
+          <img src={getmoLogo} alt="Getmo" className="h-10" />
         </Link>
       </SidebarHeader>
       <SidebarContent className="bg-sidebar gap-0">
