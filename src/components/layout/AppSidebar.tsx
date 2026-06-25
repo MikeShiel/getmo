@@ -10,10 +10,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarFooter,
+  SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { getFreeGames } from "@/data/mockGames";
+import getmoLogo from "@/assets/getmo-logo.png";
+import { X } from "lucide-react";
 
 const mainItems = [
   { title: "Home", url: "/", icon: Home },
@@ -48,6 +51,20 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
+      {!collapsed && (
+        <SidebarHeader className="bg-[hsl(268_45%_10%)] h-16 px-3 flex-row items-center gap-2">
+          <button
+            onClick={toggleSidebar}
+            className="h-9 w-9 flex items-center justify-center rounded-md text-white/80 hover:text-white hover:bg-white/5"
+            aria-label="Close sidebar"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <Link to="/" className="flex items-center">
+            <img src={getmoLogo} alt="Getmo" className="h-9" />
+          </Link>
+        </SidebarHeader>
+      )}
       <SidebarContent className="bg-[hsl(268_45%_10%)] gap-0">
         <SidebarGroup>
           <SidebarGroupContent>
