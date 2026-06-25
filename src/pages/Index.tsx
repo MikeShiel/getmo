@@ -125,15 +125,18 @@ function JumpBackIn({ games }: { games: Game[] }) {
       <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
         {visible.map((g) => (
           <div key={g.id} className="relative shrink-0" style={{ width: 110 }}>
-            <button
-              onClick={() => setDismissed((s) => new Set(s).add(g.id))}
-              className="absolute -top-1 -right-1 z-10 w-5 h-5 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:scale-110 transition"
-              aria-label="Dismiss"
-            >
-              <X className="w-3 h-3" />
-            </button>
             <Link to={`/game/${g.id}`}>
-              <div className="aspect-square rounded-2xl overflow-hidden ring-1 ring-white/10">
+              <div className="relative aspect-square rounded-2xl overflow-hidden ring-1 ring-white/10">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDismissed((s) => new Set(s).add(g.id));
+                  }}
+                  className="absolute -top-2 -right-2 z-10 w-6 h-6 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center hover:scale-110 transition shadow-md"
+                  aria-label="Dismiss"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
                 <img src={g.thumbnail} alt={g.title} className="w-full h-full object-cover" />
               </div>
               <p className="text-white text-xs font-medium mt-1.5 truncate">{g.title}</p>
