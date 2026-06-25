@@ -96,6 +96,7 @@ export function AppSidebar() {
       <SidebarContent className="gap-0 overflow-hidden rounded-[2rem] bg-sidebar">
         <nav className="flex min-h-full flex-col overflow-hidden rounded-[2rem]" aria-label="Primary">
           <div className="overflow-hidden rounded-t-[2rem] bg-sidebar">
+            <div className="h-8 bg-sidebar" aria-hidden="true" />
             {mainItems.map(renderCollapsedLink)}
           </div>
 
