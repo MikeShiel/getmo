@@ -13,7 +13,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
   return (
     <SidebarProvider
       defaultOpen={true}
-      style={{ "--sidebar-width-icon": "8.75rem" } as CSSProperties}
+      style={{ "--sidebar-width-icon": "4rem" } as CSSProperties}
     >
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
