@@ -56,6 +56,15 @@ export default function VoucherCategory() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const results = useMemo(() => {
+    if (isWebshopMode) {
+      let filtered = [...webshops];
+      if (query) {
+        const q = query.toLowerCase();
+        filtered = filtered.filter(w => w.brand.toLowerCase().includes(q) || w.description.toLowerCase().includes(q));
+      }
+      return filtered;
+    }
+
     let filtered = mockVouchers.filter(config.filter);
 
     if (query) {
@@ -90,7 +99,7 @@ export default function VoucherCategory() {
     }
 
     return filtered;
-  }, [config, query, selectedPlatform, selectedType, maxPrice, sortBy]);
+  }, [isWebshopMode, config, query, selectedPlatform, selectedType, maxPrice, sortBy]);
 
   const FilterSidebar = () => (
     <div className="space-y-6">
