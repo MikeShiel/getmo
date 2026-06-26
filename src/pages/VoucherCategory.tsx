@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockVouchers, getProductFromPrice, type Voucher } from '@/data/mockVouchers';
+import { mockVouchers, getProductFromPrice, type Voucher, webshops } from '@/data/mockVouchers';
 import { ArrowLeft, Search, X, LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
