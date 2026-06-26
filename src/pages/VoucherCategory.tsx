@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { VoucherCard } from '@/components/vouchers/VoucherCard';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
