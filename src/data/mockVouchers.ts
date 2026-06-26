@@ -1,3 +1,6 @@
+import marvelSnapWebshop from '@/assets/marvel-snap-webshop.png.asset.json';
+import cs2Webshop from '@/assets/cs2-webshop.png.asset.json';
+
 export interface VoucherVariant {
   id: string;
   label: string;
@@ -44,6 +47,15 @@ export interface Voucher {
   spotlight?: boolean;
   regions?: VoucherRegion[];
   instructions?: string[];
+}
+
+export interface Webshop {
+  id: string;
+  brand: string;
+  description: string;
+  thumbnail: string;
+  href: string;
+  badge?: string;
 }
 
 export const mockVouchers: Voucher[] = [
@@ -450,6 +462,25 @@ export const mockVouchers: Voucher[] = [
       { id: 'psp-12m', label: '12 Months', pointsCost: 6000, dollarValue: 60 },
     ],
     tags: ['New', 'Console'],
+  },
+];
+
+export const webshops: Webshop[] = [
+  {
+    id: 'marvel-snap',
+    brand: 'Marvel Snap',
+    description: 'Official Webshop',
+    thumbnail: marvelSnapWebshop.url,
+    href: 'https://marvelsnap.com/',
+    badge: 'Webshop',
+  },
+  {
+    id: 'counter-strike-2',
+    brand: 'Counter Strike 2',
+    description: 'Official Webshop',
+    thumbnail: cs2Webshop.url,
+    href: 'https://stash.clash.gg/',
+    badge: 'Webshop',
   },
 ];
 
