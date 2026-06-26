@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 const categoryConfig: Record<string, { title: string; filter: (v: Voucher) => boolean }> = {
   gaming: { title: 'Gaming', filter: v => v.type === 'games' },
   'gift-cards': { title: 'Gift Cards', filter: v => v.type === 'gift-cards' },
+  webshops: { title: 'Webshops', filter: () => false },
   subscriptions: { title: 'Subscriptions', filter: v => v.type === 'subscriptions' },
   pc: { title: 'PC', filter: v => v.platform === 'PC' },
   playstation: { title: 'PlayStation', filter: v => v.platform === 'PlayStation' },
