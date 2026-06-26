@@ -32,36 +32,38 @@ export function VoucherSpotlight({ vouchers }: VoucherSpotlightProps) {
 
         {/* Webshop feature cards 50/50 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-          {[
-            { id: 'marvel-snap', title: 'Marvel Snap', subtitle: 'Official Webshop', img: marvelSnapWebshop.url },
-            { id: 'counter-strike-2', title: 'Counter Strike 2', subtitle: 'Official Webshop', img: cs2Webshop.url },
-          ].map((card) => (
-            <Link
-              key={card.id}
-              to={`/store/${card.id}`}
-              className="group relative rounded-2xl overflow-hidden border-2 border-border/40 hover:border-primary/60 transition-all duration-300 bg-card hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.2)]"
-            >
-              <div className="relative aspect-[16/7] overflow-hidden">
-                <img
-                  src={card.img}
-                  alt={card.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
-                  <div>
-                    <h3 className="font-bold text-xl md:text-2xl text-white font-[Orbitron] uppercase drop-shadow-lg">
-                      {card.title}
-                    </h3>
-                    <p className="text-white/80 text-xs md:text-sm uppercase tracking-widest">{card.subtitle}</p>
-                  </div>
-                  <Badge className="bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest">
-                    Webshop
-                  </Badge>
+        {[
+          { id: 'marvel-snap', title: 'Marvel Snap', subtitle: 'Official Webshop', img: marvelSnapWebshop.url, href: 'https://marvelsnap.com/' },
+          { id: 'counter-strike-2', title: 'Counter Strike 2', subtitle: 'Official Webshop', img: cs2Webshop.url, href: 'https://stash.clash.gg/' },
+        ].map((card) => (
+          <a
+            key={card.id}
+            href={card.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative rounded-2xl overflow-hidden border-2 border-border/40 hover:border-primary/60 transition-all duration-300 bg-card hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.2)]"
+          >
+            <div className="relative aspect-[16/7] overflow-hidden">
+              <img
+                src={card.img}
+                alt={card.title}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+                <div>
+                  <h3 className="font-bold text-xl md:text-2xl text-white font-[Orbitron] uppercase drop-shadow-lg">
+                    {card.title}
+                  </h3>
+                  <p className="text-white/80 text-xs md:text-sm uppercase tracking-widest">{card.subtitle}</p>
                 </div>
+                <Badge className="bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest">
+                  Webshop
+                </Badge>
               </div>
-            </Link>
-          ))}
+            </div>
+          </a>
+        ))}
         </div>
 
         {/* Cards */}
