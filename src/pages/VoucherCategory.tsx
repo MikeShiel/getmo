@@ -45,6 +45,7 @@ const sortOptions = [
 export default function VoucherCategory() {
   const { slug } = useParams<{ slug: string }>();
   const config = categoryConfig[slug || ''] || categoryConfig.all;
+  const isWebshopMode = slug === 'webshops';
 
   const [query, setQuery] = useState('');
   const [selectedPlatform, setSelectedPlatform] = useState('All');
