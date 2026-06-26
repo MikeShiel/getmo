@@ -1,5 +1,6 @@
-import marvelSnapWebshop from '@/assets/marvel-snap-webshop.png.asset.json';
+import razerGold10 from '@/assets/razer-gold-10.png.asset.json';
 import cs2Webshop from '@/assets/cs2-webshop.png.asset.json';
+import marvelSnapWebshop from '@/assets/marvel-snap-webshop.png.asset.json';
 
 export interface VoucherVariant {
   id: string;
@@ -60,6 +61,21 @@ export interface Webshop {
 
 export const mockVouchers: Voucher[] = [
   // ─── BEST SELLERS ───
+  {
+    id: 'v-corsairs-razer',
+    brand: 'Corsairs - Razer Gold',
+    description: 'Power up your Corsairs adventure with Razer Gold — universal game credits and bonuses.',
+    thumbnail: razerGold10.url,
+    category: 'best-sellers',
+    type: 'gift-cards',
+    platform: 'PC',
+    spotlight: true,
+    discountPercent: 10,
+    variants: [
+      { id: 'corsairs-razer-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
+    ],
+    tags: ['Corsairs', 'Razer Gold', 'Popular'],
+  },
   {
     id: 'v-corsairs',
     brand: 'Corsairs - Battle of the Caribbean',
