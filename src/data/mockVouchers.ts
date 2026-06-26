@@ -1,4 +1,5 @@
 import razerGold10 from '@/assets/razer-gold-10.png.asset.json';
+import cs2Webshop from '@/assets/cs2-webshop.png.asset.json';
 import marvelSnapWebshop from '@/assets/marvel-snap-webshop.png.asset.json';
 
 export interface VoucherVariant {
