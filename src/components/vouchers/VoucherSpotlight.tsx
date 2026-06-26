@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Heart } from 'lucide-react';
-import { getProductFromPrice, type Voucher } from '@/data/mockVouchers';
-import marvelSnapWebshop from '@/assets/marvel-snap-webshop.png.asset.json';
-import cs2Webshop from '@/assets/cs2-webshop.png.asset.json';
+import { getProductFromPrice, type Voucher, webshops } from '@/data/mockVouchers';
 
 interface VoucherSpotlightProps {
   vouchers: Voucher[];
