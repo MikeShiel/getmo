@@ -283,42 +283,75 @@ export default function VoucherCategory() {
               <div
                 className={cn(
                   'gap-3',
-                  gridView
-                    ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-                    : 'flex flex-col'
+                  isWebshopMode
+                    ? 'grid grid-cols-1 md:grid-cols-2'
+                    : gridView
+                      ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
+                      : 'flex flex-col'
                 )}
               >
-                {results.map(v =>
-                  gridView ? (
-                    <VoucherCard key={v.id} voucher={v} compact />
-                  ) : (
-                    <Link key={v.id} to={`/store/${v.id}`} className="group">
-                      <div className="glass-card flex items-center gap-4 p-3 rounded-xl hover:border-primary/40 transition-all border border-transparent hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)]">
-                        <img
-                          src={v.thumbnail}
-                          alt={v.brand}
-                          className="w-16 h-16 rounded-lg object-cover shrink-0"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-sm font-[Orbitron] truncate">{v.brand}</h3>
-                          <p className="text-xs text-muted-foreground truncate">{v.description}</p>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs font-medium text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded">{v.platform}</span>
-                            {v.discountPercent && (
-                              <span className="text-xs font-bold text-secondary">-{v.discountPercent}%</span>
-                            )}
+                {isWebshopMode
+                  ? results.map(w => (
+                      <a
+                        key={w.id}
+                        href={w.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative rounded-2xl overflow-hidden border-2 border-border/40 hover:border-primary/60 transition-all duration-300 bg-card hover:shadow-[0_0_30px_hsl(var(--neon-primary)/0.2)]"
+                      >
+                        <div className="relative aspect-[16/7] overflow-hidden">
+                          <img
+                            src={w.thumbnail}
+                            alt={w.brand}
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                          <div className="absolute bottom-0 left-0 right-0 p-5 flex items-end justify-between">
+                            <div>
+                              <h3 className="font-bold text-xl md:text-2xl text-white font-[Orbitron] uppercase drop-shadow-lg">
+                                {w.brand}
+                              </h3>
+                              <p className="text-white/80 text-xs md:text-sm uppercase tracking-widest">{w.description}</p>
+                            </div>
+                            <Badge className="bg-primary text-primary-foreground border-0 text-[10px] uppercase tracking-widest">
+                              {w.badge}
+                            </Badge>
                           </div>
                         </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-sm font-bold text-secondary">
-                            From ${getProductFromPrice(v)?.price.toFixed(2) ?? '—'}
-                          </p>
-                          <p className="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Claim →</p>
+                      </a>
+                    ))
+                  : results.map(v =>
+                    gridView ? (
+                      <VoucherCard key={v.id} voucher={v} compact />
+                    ) : (
+                      <Link key={v.id} to={`/store/${v.id}`} className="group">
+                        <div className="glass-card flex items-center gap-4 p-3 rounded-xl hover:border-primary/40 transition-all border border-transparent hover:shadow-[0_0_15px_hsl(var(--neon-primary)/0.15)]">
+                          <img
+                            src={v.thumbnail}
+                            alt={v.brand}
+                            className="w-16 h-16 rounded-lg object-cover shrink-0"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-sm font-[Orbitron] truncate">{v.brand}</h3>
+                            <p className="text-xs text-muted-foreground truncate">{v.description}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="text-xs font-medium text-muted-foreground bg-muted/60 px-1.5 py-0.5 rounded">{v.platform}</span>
+                              {v.discountPercent && (
+                                <span className="text-xs font-bold text-secondary">-{v.discountPercent}%</span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <p className="text-sm font-bold text-secondary">
+                              From ${getProductFromPrice(v)?.price.toFixed(2) ?? '—'}
+                            </p>
+                            <p className="text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity">Claim →</p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  )
-                )}
+                      </Link>
+                    )
+                  )}
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-20 text-center">
