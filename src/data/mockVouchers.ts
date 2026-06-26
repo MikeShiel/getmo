@@ -62,9 +62,9 @@ export interface Webshop {
 export const mockVouchers: Voucher[] = [
   // ─── BEST SELLERS ───
   {
-    id: 'v-corsairs-razer',
-    brand: 'Corsairs - Razer Gold',
-    description: 'Power up your Corsairs adventure with Razer Gold — universal game credits and bonuses.',
+    id: 'v-razer-gold',
+    brand: 'Razer Gold',
+    description: 'Power up your gaming with Razer Gold — universal game credits and bonuses.',
     thumbnail: razerGold10.url,
     category: 'best-sellers',
     type: 'gift-cards',
@@ -72,9 +72,9 @@ export const mockVouchers: Voucher[] = [
     spotlight: true,
     discountPercent: 10,
     variants: [
-      { id: 'corsairs-razer-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
+      { id: 'razer-gold-10', label: '$10', pointsCost: 1000, dollarValue: 10 },
     ],
-    tags: ['Corsairs', 'Razer Gold', 'Popular'],
+    tags: ['Razer Gold', 'Popular'],
   },
   {
     id: 'v-corsairs',
